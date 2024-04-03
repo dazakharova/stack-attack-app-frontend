@@ -85,10 +85,15 @@ nav a:hover {
   border-radius: 10px;
 }
 
+.modal-content h2 {
+  margin-top: 20px; 
+  margin-bottom: 0px;/* Добавлен отступ сверху для заголовка */
+}
+
 /* The Close Button */
 .close {
   position: absolute; 
-  top: 1px; 
+  top: 10px; 
   right: 20px; 
   color: #aaa;
   float: left;
@@ -103,6 +108,7 @@ nav a:hover {
   text-decoration: none;
   cursor: pointer;
 }
+
 /* Input styles */
 input[type="text"] {
   text-align: center;
@@ -150,6 +156,7 @@ input[type="text"]:first-child {
   text-align: left;
   padding-left: 10px;
 }
+
 #loginLink {
   text-decoration: none;
   font-weight: bold;
@@ -185,7 +192,8 @@ input[type="text"]:first-child {
   display: block;
   padding: 30px;
   margin-top: 0px;
-  margin-bottom: 25px;
+  margin-bottom: 0px;
+
   font-family: Comfortaa, sans-serif;
 }
 
@@ -262,9 +270,10 @@ footer {
   font-size: 30px;
 }
 .social-media a img {
-  width: 30px;
+  width: 40px;
   height: auto;
-  margin-right: 5px;
+  margin-right: 8px;
+  margin-top: 20px;
   margin-bottom: 20px;
-  font-size: 30px;
+  font-size: 40px;
 }

@@ -32,6 +32,14 @@ document
     document.querySelector(".overlay-registration").style.display = "none";
   });
 
+  document.getElementById("loginLink").addEventListener("click", function () {
+    document.getElementById("registrationForm").style.display = "none";
+   
+    document.querySelector(".overlay-registration").style.display = "none"
+ 
+  });
+
+
 registrationForm.addEventListener("submit", function (event) {
   //
   event.preventDefault(); // prevent default

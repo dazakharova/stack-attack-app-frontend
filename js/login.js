@@ -34,16 +34,16 @@ document.querySelector(".closeLoginForm").addEventListener("click", function () 
 
 
     // get the links of the inputs
-    const usernameInput = document.getElementById("loginUsername");
+    const emailInput = document.getElementById("loginEmail");
     const passwordInput = document.getElementById("loginPassword");
 
     // get the values and delete spaces
-    const username = usernameInput.value.trim();
+    const email = emailInput.value.trim();
     const password = passwordInput.value.trim();
 
     //check if username is empty
-    if (username === "") {
-      console.log("Username field can not be empty");
+    if (email === "") {
+      console.log("E-mail field can not be empty");
       return; // interrupt
     }
     //check if password is empty
@@ -54,7 +54,7 @@ document.querySelector(".closeLoginForm").addEventListener("click", function () 
 
     // an object with the data to send to a server
     const data = {
-      username: username,
+      email: email,
       password: password,
     };
 
