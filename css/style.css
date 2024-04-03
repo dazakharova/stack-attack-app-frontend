@@ -1,0 +1,139 @@
+
+/* Header */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 20px;
+  padding-right: 20px;
+  padding-left: 20px;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+header img {
+  width: 300px;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+/* Navigation */
+nav ul {
+  padding-top: 20px;
+  list-style: none;
+  margin: 0;
+  font-family: Comfortaa, sans-serif;
+}
+nav li {
+  padding-top: 0px;
+  display: inline-block;
+  font-family: Comfortaa, sans-serif;
+}
+nav a {
+  color: #627fa3;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 5px 8px;
+  font-family: Comfortaa, sans-serif;
+  font-size: 25px;
+  margin-left: 20px;
+}
+nav a:hover {
+  color: #434881;
+}
+
+.slogan {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  padding-top: 20px;
+  padding-right: 20px;
+  padding-left: 20px;
+  background-color: rgba(0, 0, 0, 0); /* transparent background */
+  display: flex;
+  justify-content: center; /* fix in the centre */
+  align-items: center; /* vertically */
+  color: #ffffff; /* text colour */
+  font-family: "Finger Paint", Comfortaa, sans-serif;
+  font-size: 80px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Main */
+.slogan::after {
+  content: ""; /* empty content*/
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  bottom: 20px;
+  left: 20px;
+  background-image: url("./slogan2.jpg");
+  background-size: cover; /* spread the pic */
+  background-position: center;
+  z-index: -1; /* background layer*/
+}
+.howItWorks {
+  width: calc(100% - 40px);
+  height: 600px;
+  padding: 20px;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #d6bbad;
+  display: flex;
+  box-sizing: border-box;
+}
+
+.whyUs {
+  width: calc(100% - 40px);
+  height: 600px;
+  padding: 20px;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #6ea79e;
+  display: flex;
+  box-sizing: border-box;
+}
+.feedback {
+  width: calc(100% - 40px);
+  height: 600px;
+  padding: 20px;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #98aeb1;
+  display: flex;
+  box-sizing: border-box;
+}
+.OurTeam {
+  width: calc(100% - 40px);
+  height: 600px;
+  padding: 20px;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #627fa3;
+  display: flex;
+  box-sizing: border-box;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 10px;
+  background-color: #ffffff;
+  font-family: "Finger Paint", Comfortaa, sans-serif;
+  color: #434881;
+  font-size: 30px;
+}
+.contact-info {
+  margin-top: 20px;
+  font-size: 30px;
+}
+.social-media a img {
+  width: 30px;
+  height: auto;
+  margin-right: 5px;
+  margin-bottom: 20px;
+  font-size: 30px;
+}
