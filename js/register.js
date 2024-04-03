@@ -1,8 +1,8 @@
 const BACKEND_ROOT_URL = "http://localhost:3001";
 const registrationForm = document.getElementById("registrationForm");
-var modal = document.getElementById("signupModal");
-var btn = document.getElementById("signupLink");
-var span = document.getElementsByClassName("close")[0];
+const modal = document.getElementById("signupModal");
+const btn = document.getElementById("signupLink");
+const span = document.getElementsByClassName("close")[0];
 
 // registration (put into header)
 const signupLink = document.getElementById("signupLink");
