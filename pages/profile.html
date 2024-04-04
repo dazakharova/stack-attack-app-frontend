@@ -31,70 +31,81 @@
     </nav>
   </header>
 
-  <div class="flex-shrink-0" style="width: 2000px;">
-    <a class="a">My rooms</a>
-    
-      <svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
-            </div>
-        
-        
-            <div class="button-container">
-    <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#kitchen-collapse1" aria-expanded="false">
-        Kitchen
-    </button>
-    <div class="collapse" id="kitchen-collapse1">
-        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li>
-                <a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Black cupboard</a>
-                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#black-cupboard-collapse" aria-expanded="false">
-                    <svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
-                </button>
-                <div class="collapse" id="black-cupboard-collapse">
-                  <ul class="list-unstyled">
-                    <li><a href="#" class="link-item">Scissors</a></li>
-                    <li><a href="#" class="link-item">Candle</a></li>
-                </ul>
-                </div>
-            </li>
-            <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">White cupboard</a></li>
-            <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">New</a></li>
-        </ul>
-    </div>
-</div>
+  <div class="container-fluid">
+    <div class="row" >
+      <div class="col-md-5 ">
 
-          
+        <!-- Left container -->
+        <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+          <h2>My rooms</h2>
+         
+          <!-- Elements "Kitchen", "Bedroom" и "Balcony" -->
           <div class="button-container">
-              <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#bedroom-collapse2" aria-expanded="false">
-                  Bedroom
-              </button>
-              <div class="collapse" id="bedroom-collapse2">
-                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                      <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Bedside table</a></li>
-                      <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Wooden wardrobe</a></li>
-                      <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">New</a></li> 
-                  </ul>
-              </div>
+            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#kitchen-collapse1" aria-expanded="false">
+              Kitchen
+            </button>
+            <div class="collapse" id="kitchen-collapse1">
+              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li>
+                  <a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Black cupboard</a>
+                  <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#black-cupboard-collapse" aria-expanded="false">
+                    <svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
+                  </button>
+                  <div class="collapse" id="black-cupboard-collapse">
+                    <ul class="list-unstyled">
+                      <li><a href="#" class="link-item">Scissors</a></li>
+                      <li><a href="#" class="link-item">Candle</a></li>
+                    </ul>
+                  </div>
+                </li>
+                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">White cupboard</a></li>
+                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">New</a></li>
+              </ul>
+            </div>
           </div>
- <div class="button-container">
-              <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#balcony-collapse3" aria-expanded="false">
-                  Balcony
-              </button>
-              <div class="collapse" id="balcony-collapse3">
-                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                      <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Plastic box</a></li>
-                      <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Tool box</a></li>
-                      <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">New</a></li> 
-                  </ul>
-              </div>
+    
+          <div class="button-container">
+            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#bedroom-collapse2" aria-expanded="false">
+              Bedroom
+            </button>
+            <div class="collapse" id="bedroom-collapse2">
+              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Bedside table</a></li>
+                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Wooden wardrobe</a></li>
+                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">New</a></li> 
+              </ul>
+            </div>
           </div>
 
-   
-
-          <div class="dropdown border-top">
-
-            <button type="button" class="btn btn-outline-primary">New room</button>
+          <div class="button-container">
+            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#balcony-collapse3" aria-expanded="false">
+              Balcony
+            </button>
+            <div class="collapse" id="balcony-collapse3">
+              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Plastic box</a></li>
+                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Tool box</a></li>
+                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">New</a></li> 
+              </ul>
+            </div>
+          </div>
+          <button type="button" class="btn btn-outline-primary">New room</button>
+        </div>
+      </div>
+  
+      <div class="col-md-7" style="height: 360px; overflow-y: auto;">
+        <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+          <h2>My items</h2>
+          <p>Missing something valuable?</p>
+          <button class="btn btn-outline-secondary" type="button">Example button</button>
+    
+          
+  
+      </div>
+    </div>
+  </div>
             <div class="d-flex align-items-center justify-content-left link-body-emphasis text-decoration-none dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="preventDefaultClick(event)" style="margin-left: 20px; margin-top: 80px;">
-              <img src="../image/profile/profilepic.jpg" alt="mypic" width="28" height="24" class="rounded-circle">
+              <img src="../image/profile/profilepic.jpg" alt="mypic" width="180" height="180" class="rounded-circle">
             </div>
           
             <ul class="dropdown-menu text-small shadow">
@@ -104,9 +115,7 @@
               <li><a class="dropdown-item" href="#">Sign out</a></li>
             </ul>
           </div>
-          
-
-
+  
   <footer>
     <div class="footer-content">
 
