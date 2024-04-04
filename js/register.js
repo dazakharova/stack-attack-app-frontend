@@ -33,7 +33,7 @@ registrationForm.addEventListener("submit", function (event) {
   const emailInput = document.getElementById("registerEmail")
   const passwordInput = document.getElementById("registerPassword");
 
-  // const name = nameInput.value;
+  const name = nameInput.value;
   const email = emailInput.value;
   const password = passwordInput.value;
 
@@ -48,16 +48,16 @@ registrationForm.addEventListener("submit", function (event) {
     return; // interrupt the code
   }
   // in case of succesfull check
-  sendDataToBackend(email, password);
+  sendDataToBackend(name, email, password);
 });
 
-function sendDataToBackend(email, password) {
+function sendDataToBackend(name, email, password) {
   const requestOptions = {
     method: "POST",
     headers: {
       "Content-type": "application/json",
     },
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({ name, email, password }),
   };
 
   fetch(BACKEND_ROOT_URL + "/auth/register", requestOptions)
