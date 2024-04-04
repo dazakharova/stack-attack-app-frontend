@@ -41,13 +41,13 @@ registrationForm.addEventListener("submit", function (event) {
   const passwordRegex =
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#$%^&!])[A-Za-z\d@#$%^&!]{8,}$/;
 
-  //regex to check password
-  //"Password must be at least 8 characters long and include at least one letter, one number, and one special character (e.g., @, #, $, %)."
-  // if (!passwordRegex.test(password)) {
-  //   alert("Please create a more secure password");
-  //   return; // interrupt the code
-  // }
-  //in case of succesfull check
+  // regex to check password
+  // "Password must be at least 8 characters long and include at least one letter, one number, and one special character (e.g., @, #, $, %)."
+  if (!passwordRegex.test(password)) {
+    alert("Please create a more secure password");
+    return; // interrupt the code
+  }
+  // in case of succesfull check
   sendDataToBackend(email, password);
 });
 
