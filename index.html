@@ -39,14 +39,14 @@
       <span class="close">&times;</span>
       <h2>Signup</h2>
       <!-- Your form goes here -->
-      <form>
+      <form id="registrationForm">
         <!-- Form fields -->
-        <input type="text" id="registerUsername" placeholder="Full name" name="name" required>
+        <input type="text" id="registerName" placeholder="Full name" name="name" required>
         <input type="email" id="registerEmail" placeholder="E-mail" name="email" required>
         <input type="password" id="registerPassword" placeholder="Password" name="password" required>
         <input type="submit" value="Signup">
       </form>
-      <p>Already have an account? <a href="#" id="loginLink">Login</a></p>
+      <p>Already have an account? <a href="#" id="switchToLogin">Login</a></p>
     </div>
   </div>
 
@@ -56,10 +56,10 @@
   <div id="loginModal" class="modal">
     <!-- Modal content -->
     <div class="modal-content">
-      <span class="closeLoginForm">&times;</span>
+      <span class="close">&times;</span>
       <h2>Login</h2>
       <!-- Your form goes here -->
-      <form>
+      <form id="loginForm">
         <!-- Form fields -->
 
         <input type="text" id="loginEmail" placeholder="E-mail" name="name" required>
@@ -67,7 +67,7 @@
         <p id="forgotPasswordParagraph"><a href="#" id="forgotPasswordLink">Forgot your password?</a></p>
         <input type="submit" value="Login">
       </form>
-      <p>Don't have an account? <a href="#" id="signupLink">Signup</a></p>
+      <p>Don't have an account? <a href="#" id="switchToSignup">Signup</a></p>
     </div>
   </div>
   <main>
