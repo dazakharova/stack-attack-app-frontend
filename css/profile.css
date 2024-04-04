@@ -10,6 +10,26 @@ body {
   min-height: -webkit-fill-available;
 }
 
+h2 {
+  font-family: "Finger Paint", Comfortaa, sans-serif;
+  color: #6EA79E;
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  margin-left: 0px;
+  align-items: center;
+}
+
+
+h1 {
+  font-family: "Finger Paint", Comfortaa, sans-serif;
+  color: #627fa3;
+  font-size: 30px;
+  display: flex;
+  justify-content: left;
+  margin-left: 150px;
+  align-items: center;
+}
 
 html {
   height: -webkit-fill-available;
@@ -22,12 +42,24 @@ main {
   overflow-y: hidden;
 }
 
+.container-fluid {
+  width: 100%; /* Занимает всю доступную ширину экрана */
+  padding-right: 15px; /* Добавляет отступ справа */
+  padding-left: 15px; /* Добавляет отступ слева */
+  margin-right: auto; /* Автоматическое выравнивание по правому краю */
+  margin-left: auto; /* Автоматическое выравнивание по левому краю */
+}
+
+
 .a {
   display: flex;
   align-items: center;
   padding-bottom: 3px;
   margin-bottom: 3px;
-  color: var(--bs-emphasis-color);
+  margin-left: 20px;
+  font-family: "Finger Paint", Comfortaa, sans-serif;
+  color: #627fa3;
+  font-size: 30px;
   font-weight: semibold; /* Уточните, что вы имели в виду */
   font-size: 30px;
   text-decoration: none;
@@ -101,13 +133,28 @@ main {
 .btn.btn-outline-primary {
   
   background-color: #98AEB1; 
-  color: white; 
+  color: #ffffff; 
   border-color: #98AEB1; 
-  width: 10%;
+  width: 30%;
   margin-top: 30px;
-  margin-left: 10px;
-  font-size: 14px; /* Уменьшаем размер текста */
-  padding: 5px 10px; 
+  margin-left: 160px;
+  font-size: 30 px; /* Уменьшаем размер текста */
+  padding: 10px 20px; 
 
 
+}
+
+.btn.btn-outline-primary::before {
+  content: "+"; /* Устанавливаем содержимое псевдоэлемента как плюсик */
+  margin-right: 5px; /* Добавляем небольшой отступ между плюсиком и текстом кнопки */
+  font-size: 60 px;
+}
+
+
+.bg-body-tertiary {
+  background-color: white !important; /* Или transparent */
+}
+
+.border {
+  border-color: white; /* Или transparent */
 }
