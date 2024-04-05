@@ -1,13 +1,28 @@
+
 :root {
   --bs-emphasis-color: #434881;
 }
 
+html {
+  height: -webkit-fill-available;
+}
+
 header {
-  margin-bottom: 80px; /* Задайте желаемый отступ снизу */
+  margin-bottom: 80px; 
 }
 
 body {
   min-height: -webkit-fill-available;
+}
+
+h1 {
+  font-family: "Finger Paint", Comfortaa, sans-serif;
+  color: #627fa3;
+  font-size: 30px;
+  display: flex;
+  justify-content: left;
+  margin-left: 150px;
+  align-items: center;
 }
 
 h2 {
@@ -20,21 +35,6 @@ h2 {
   align-items: center;
 }
 
-
-h1 {
-  font-family: "Finger Paint", Comfortaa, sans-serif;
-  color: #627fa3;
-  font-size: 30px;
-  display: flex;
-  justify-content: left;
-  margin-left: 150px;
-  align-items: center;
-}
-
-html {
-  height: -webkit-fill-available;
-}
-
 main {
   height: -webkit-fill-available;
   max-height: 100vh;
@@ -43,13 +43,12 @@ main {
 }
 
 .container-fluid {
-  width: 100%; /* Занимает всю доступную ширину экрана */
-  padding-right: 15px; /* Добавляет отступ справа */
-  padding-left: 15px; /* Добавляет отступ слева */
-  margin-right: auto; /* Автоматическое выравнивание по правому краю */
-  margin-left: auto; /* Автоматическое выравнивание по левому краю */
+  width: 100%;
+  padding-right: 15px; 
+  padding-left: 15px; 
+  margin-right: auto; 
+  margin-left: auto; 
 }
-
 
 .a {
   display: flex;
@@ -60,7 +59,7 @@ main {
   font-family: "Finger Paint", Comfortaa, sans-serif;
   color: #627fa3;
   font-size: 30px;
-  font-weight: semibold; /* Уточните, что вы имели в виду */
+  font-weight: semibold; 
   font-size: 30px;
   text-decoration: none;
   border-bottom: 1px solid #98AEB1;
@@ -76,10 +75,11 @@ main {
   color: var(--bs-emphasis-color);
   background-color: transparent;
 }
+
 .btn-toggle:hover,
 .btn-toggle:focus {
   color: rgba(var(--bs-emphasis-color-rgb), .85);
-  background-color: var(--bs-tertiary-bg); /* Уточните, что вы имели в виду */
+  background-color: var(--bs-tertiary-bg); 
 }
 
 .btn-toggle::before {
@@ -93,6 +93,7 @@ main {
 .btn-toggle[aria-expanded="true"] {
   color: rgba(var(--bs-emphasis-color-rgb), .85);
 }
+
 .btn-toggle[aria-expanded="true"]::before {
   transform: rotate(90deg);
 }
@@ -102,6 +103,7 @@ main {
   margin-top: .125rem;
   margin-left: 1.25rem;
 }
+
 .btn-toggle-nav a:hover,
 .btn-toggle-nav a:focus {
   background-color: var(--bs-tertiary-bg); 
@@ -111,8 +113,7 @@ main {
   overflow-y: auto;
 }
 
-
-.dropdown-item.active, /*НУЖНО оч*/
+.dropdown-item.active,
 .dropdown-item:active {
     color: #434881; 
     background-color: transparent;
@@ -120,14 +121,14 @@ main {
 }
 
 .link-body-emphasis {
-  color: #627FA3; /* Устанавливаем красный цвет для текста */
+  color: #627FA3; 
 }
+
 .link-item {
   display: inline-flex;
   text-decoration: none;
   color: #6EA79E;
-  border-radius: 10px; /* Пример значения, можете изменить по вашему усмотрению */
-  /* Дополнительные стили, если необходимо */
+  border-radius: 10px; 
 }
 
 .btn.btn-outline-primary {
@@ -138,23 +139,20 @@ main {
   width: 30%;
   margin-top: 30px;
   margin-left: 160px;
-  font-size: 30 px; /* Уменьшаем размер текста */
+  font-size: 30 px; 
   padding: 10px 20px; 
-
-
 }
 
 .btn.btn-outline-primary::before {
-  content: "+"; /* Устанавливаем содержимое псевдоэлемента как плюсик */
-  margin-right: 5px; /* Добавляем небольшой отступ между плюсиком и текстом кнопки */
+  content: "+"; /* pseudoelement*/
+  margin-right: 5px;
   font-size: 60 px;
 }
 
-
 .bg-body-tertiary {
-  background-color: white !important; /* Или transparent */
+  background-color: white !important; /* add super-priority*/
 }
 
 .border {
-  border-color: white; /* Или transparent */
+  border-color: white; 
 }
