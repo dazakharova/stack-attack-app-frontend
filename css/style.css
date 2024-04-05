@@ -9,7 +9,7 @@ header {
   background: rgba(255, 255, 255, 0.5);
 }
 
-header img {
+header video, header img {
   width: 300px;
   margin-top: 20px;
   margin-left: 20px;
