@@ -1,3 +1,6 @@
+import { Containers } from './class/Containers.js';
+const containers = new Containers('http://localhost:3001')
+
 document.addEventListener("DOMContentLoaded", function () {
   //search for the login form
   const loginForm = document.getElementById("loginForm");
@@ -62,6 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
+      credentials: 'include'
     };
 
     // send to server
@@ -70,13 +74,25 @@ document.addEventListener("DOMContentLoaded", function () {
           if (!response.ok) {
             throw new Error("Network response was not ok");
           }
-          window.location.href = '/pages/profile.html';
+          // In success case fetch containers and items from the server
           console.log("Data sent successfully!");
+          fetchUsersData();
         })
         .catch((error) => {
           console.error("There was an error!", error);
         });
   });
-
 });
+
+
+async function fetchUsersData() {
+  try {
+    let intermediateResult = await containers.getContainers()
+    let result = await containers.getItems()
+    console.log(result)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 

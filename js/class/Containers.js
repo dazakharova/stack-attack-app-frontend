@@ -12,8 +12,14 @@ class Containers {
 
     getContainers = async () => {
         try {
-            const url = this.#backendUrl
-            const response = await fetch(url)
+            const url = this.#backendUrl + '/containers'
+            const response = await fetch(url, {
+                method: 'GET',
+                credentials: 'include', // Ensure credentials are included with cross-site requests
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
             const json = await response.json()
             this.#readJsonContainers(json)
             return this.#containers
@@ -25,7 +31,13 @@ class Containers {
     getItems = async () => {
         try {
             const url = this.#backendUrl + '/items'
-            const response = await fetch(url)
+            const response = await fetch(url, {
+                method: 'GET',
+                credentials: 'include', // Ensure credentials are included with cross-site requests
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
             const json = await response.json()
             this.#readJsonItems(json)
             return this.#containers
