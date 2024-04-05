@@ -1,5 +1,5 @@
-import { Item } from './Item';
-import { Container } from './Container';
+import { Item } from './Item.js';
+import { Container } from './Container.js';
 
 class Containers {
     #containers = new Map();
