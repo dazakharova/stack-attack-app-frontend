@@ -70,6 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
           if (!response.ok) {
             throw new Error("Network response was not ok");
           }
+          window.location.href = '/pages/profile.html';
           console.log("Data sent successfully!");
         })
         .catch((error) => {
