@@ -1,4 +1,5 @@
 const logoutLink = document.getElementById("logoutLink");
+const BACKEND_ROOT_URL= 'http://localhost:3001'
 
 logoutLink.addEventListener("click", function (event) {
 event.preventDefault();
@@ -20,7 +21,7 @@ function logoutUser() {
       throw new Error("Network response was not ok");
     }
     // 
-    window.location.href = 'http://127.0.0.1:5500/'; 
+    window.location.href = '/';
   })
   .catch((error) => {
     console.error("Error: ", error);
