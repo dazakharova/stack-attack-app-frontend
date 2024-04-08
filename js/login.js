@@ -67,6 +67,9 @@ document.addEventListener("DOMContentLoaded", function () {
       body: JSON.stringify(data),
       credentials: 'include'
     };
+    
+    emailInput.value = "";
+    passwordInput.value = "";
 
     // send to server
     fetch(BACKEND_ROOT_URL + "/auth/login", options)
