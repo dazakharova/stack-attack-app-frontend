@@ -80,6 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
           // In success case fetch containers and items from the server
           console.log("Data sent successfully!");
           fetchUsersData();
+          window.location.href = 'pages/profile.html';
         })
         .catch((error) => {
           console.error("There was an error!", error);
