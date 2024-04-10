@@ -1,62 +1,76 @@
-import {Containers} from "./class/Containers.js";
+import { getContainers, readJsonContainers, getItems, readJsonItems, addNewContainer, addToContainersMap, addNewItem } from './containerServices.js';
+import { Container } from "./class/Container.js";
+import { Item } from "./class/Item.js"
+import { InventoryService } from "./class/InventoryService.js"
+
+const backend_url = 'http://localhost:3001'
+
+
+const assets = new InventoryService(backend_url)
+
 
 const addRoomButton = document.getElementById("addRoomButton")
 const roomsHierarchy = document.getElementById("roomsHierarchy")
 
-const containers = new Containers('http://localhost:3001')
 
-addRoomButton.addEventListener("click", (event) => {
-    event.preventDefault()
-    // Create popup input field for name of the new room
-    const input= document.createElement("input")
-    input.type = "text"
-    input.className = "dynamic-input"
+const processRooms = (data) => {
+    // Extract only parent containers from the given data (which have 'null' as a parent_id):
+    const roomsArray = data[null]
+    roomsArray.forEach(room => {
+        renderRoom(room, data)
+    })
+}
 
-    // Popup button for submitting name of the new room
-    const createButton = document.createElement("button")
-    createButton.textContent = "Create"
-    createButton.type = "submit"
-    createButton.className = "dynamic-button"
+const renderRoom = (room, data) => {
+    console.log('Current room is ', room)
+    const roomId = room.getId()
+    const roomName = room.getName()
+    const contents = data[roomId]
+    if (contents) {
+        renderContents(contents, data)
+    }
+}
 
-
-    // Once button is clicked, data is sent to the server and the new room is rendered on the screen
-    createButton.addEventListener("click", (event) => {
-        event.preventDefault()
-        const newRoomName = input.value
-
-        try {
-            containers.addNewContainer(newRoomName).then(returnedContainer => {
-                renderRoom(returnedContainer)
-            })
-        } catch (error) {
-            console.error(error)
+const renderContents = (roomContent, data) => {
+    roomContent.forEach(c => {
+        if (c instanceof Container) {
+            console.log('Container ', c)
+            renderBox(c, data)
+        } else if (c instanceof Item) {
+            console.log('Item ', c)
+            renderItem(c, data)
         }
     })
-
-    addRoomButton.after(input)
-    input.after(createButton)
-
-    addRoomButton.style.display = "none"
-
-    input.focus();
-    // const newRoom = document.createElement("div")
-    // newRoom.className = "button-container"
-})
-
-const renderRoom = container => {
-    const newRoom = document.createElement("div")
-    newRoom.className = "button-container"
-    newRoom.setAttribute("data-id", container.getId())
-
-    const targetCollapse = "collapse" + container.getId().toString()
-    const button = document.createElement('button');
-    button.className = 'btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed';
-    button.dataset.bsToggle = 'collapse';
-    button.dataset.bsTarget = targetCollapse;
-    button.setAttribute('aria-expanded', 'false');
-    button.textContent = container.getName()
-
-    newRoom.appendChild(button)
-
-    roomsHierarchy.appendChild(newRoom)
 }
+
+const renderBox = (box, data) => {
+    console.log('Got box', box)
+    const boxId = box.getId()
+    const boxContents = data[boxId]
+    if (boxContents) {
+        console.log("There is more boxes inside")
+        boxContents.forEach(b => {
+            if (b instanceof Container) {
+                renderBox(b, data)
+            } else if (b instanceof Item) {
+                renderItem(b, data)
+            }
+        })
+    }
+}
+
+const renderItem = (item, data) => {
+    console.log('Current item: ', item)
+}
+
+const getAllData = async() => {
+    try {
+        const intermediateResult = await assets.getContainers()
+        const result = await assets.getItems()
+        processRooms(result)
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+getAllData();
