@@ -9,7 +9,7 @@ header {
   background: rgba(255, 255, 255, 0.5);
 }
 
-header img {
+header video, header img {
   width: 300px;
   margin-top: 20px;
   margin-left: 20px;
@@ -38,23 +38,6 @@ nav a {
 }
 nav a:hover {
   color: #434881;
-}
-
-.slogan {
-  position: relative;
-  width: 100%;
-  height: 600px;
-  padding-top: 20px;
-  padding-right: 20px;
-  padding-left: 20px;
-  background-color: rgba(0, 0, 0, 0); /* transparent background */
-  display: flex;
-  justify-content: center; /* fix in the centre */
-  align-items: center; /* vertically */
-  color: #ffffff; /* text colour */
-  font-family: "Finger Paint", Comfortaa, sans-serif;
-  font-size: 80px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 /* REGISTRATION FORM*/
@@ -198,18 +181,31 @@ input[type="text"]:first-child {
 }
 
 /* Main */
-.slogan::after {
-  content: ""; /* empty content*/
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  bottom: 20px;
-  left: 20px;
-  background-image: url("./slogan2.jpg");
-  background-size: cover; /* spread the pic */
-  background-position: center;
-  z-index: -1; /* background layer*/
+
+.slogan {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  padding-top: 20px;
+  padding-right: 20px;
+  padding-left: 20px;
+  background-color: rgba(0, 0, 0, 0); /* transparent background */
+  display: flex;
+  justify-content: center; /* fix in the centre */
+  align-items: center; /* vertically */
+  color: #6ea79e; /* text colour */
+  font-family: Comfortaa, sans-serif;
+  font-size: 90px;
+  text-align: center; 
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
+
+
+.slogan .highlightName {
+  color: #627FA3 
+}
+
+
 .howItWorks {
   width: calc(100% - 40px);
   height: 600px;
