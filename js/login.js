@@ -1,6 +1,3 @@
-import { Containers } from './class/Containers.js';
-const containers = new Containers('http://localhost:3001')
-
 document.addEventListener("DOMContentLoaded", function () {
   //search for the login form
   const loginForm = document.getElementById("loginForm");
@@ -79,7 +76,6 @@ document.addEventListener("DOMContentLoaded", function () {
           }
           // In success case fetch containers and items from the server
           console.log("Data sent successfully!");
-          fetchUsersData();
           window.location.href = 'pages/profile.html';
         })
         .catch((error) => {
@@ -88,15 +84,5 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-
-async function fetchUsersData() {
-  try {
-    let intermediateResult = await containers.getContainers()
-    let result = await containers.getItems()
-    console.log(result)
-  } catch (error) {
-    console.log(error)
-  }
-}
 
 
