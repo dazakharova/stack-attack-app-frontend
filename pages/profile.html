@@ -130,9 +130,20 @@ document.getElementById('item-category').textContent = 'Black cupboard';
 document.getElementById('selected-item').textContent = ' > Knife';
     -->
       </div>
+
+ <!--Modal window for boxes" -->
+ <div id="modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 id="modal-title">My Item</h2>
+        <img id="modal-image" src="" alt="myItemPicture"> 
+        <p id="modal-description">My item description</p> 
+    </div>
+</div>
+
       <!--Box blocks" -->
         <div class="space-container">
-        <div class="box">
+        <div class="box" data-description="This is item desciption">
           <span class="title">Green box</span>
         </div>
         <div class="box">
@@ -144,10 +155,10 @@ document.getElementById('selected-item').textContent = ' > Knife';
         <div class="box">
           <span class="title">Pink purse</span>
         </div>
-        <div class="item2">
+        <div class="item2" data-description="This is item desciption">
           <img src="../image/profile/perfume_example_pic.png" alt="itemPic">
           <span class="title">Perfume</span>
-      </div>
+        </div>
         <div class="box"><span class="title"></span></div>
         <div class="box"><span class="title"></span></div>
       
@@ -156,12 +167,12 @@ document.getElementById('selected-item').textContent = ' > Knife';
           <img src="../image/profile/item_example_pic.png" alt="itemPic">
           <span class="title">Picture</span>
       </div>
-      <div class="item2">
+      <div class="item2" data-description="This is item desciption">
         <img src="../image/profile/scissorx_example_pic.png" alt="itemPic">
         <span>Pink scissors</span>
     </div>
-    <div class="box"><span></span></div>
-    <div class="box"><span>Test text</span></div>
+    <div class="box"><span class="title"></span></div>
+    <div class="box"><span class="title">Test text</span></div>
     <div class="box"><span class="title"></span></div>
     <div class="box"><span class="title"></span></div>
     <div class="box"><span class="title"></span></div>
@@ -196,5 +207,6 @@ document.getElementById('selected-item').textContent = ' > Knife';
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+        <script type="module" src="../js/item.js"></script>
 </body>
 </html>
