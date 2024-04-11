@@ -92,6 +92,7 @@ nav a:hover {
 main {
   display: flex;
   flex-direction: row;
+  min-height: 100vh;
 }
 
 h2 {
@@ -118,8 +119,9 @@ h2 {
   border-radius: 10px; 
   font-family: Comfortaa, sans-serif;
   font-size: 20px;
-  max-height: auto;
-  overflow-y: auto;
+  /*max-height: auto;*/
+  overflow:hidden;
+  height:1%;
   border: 1px solid #98AEB1;  
 }
 
