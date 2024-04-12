@@ -1,6 +1,6 @@
-import { Container } from "./class/Container.js";
-import { Item } from "./class/Item.js"
-import { InventoryService } from "./class/InventoryService.js"
+import { Container } from "../class/Container.js";
+import { Item } from "../class/Item.js"
+import { InventoryService } from "../class/InventoryService.js"
 
 const backend_url = 'http://localhost:3001'
 
@@ -202,10 +202,10 @@ getAllData().then(() => {
 
 const attachEventListenersToDynamicContent = () => {
     // Select all room buttons
-    const buttons = document.querySelectorAll(".button-container > button")
+    const roomMenuButtons = document.querySelectorAll(".button-container > button")
 
     // Add click listener for each room button, once it's clicked - location path on the right container changes accordingly
-    buttons.forEach(b => {
+    roomMenuButtons.forEach(b => {
         b.addEventListener("click", () => {
             if (currentLocationPathDiv) {
                 currentLocationPathDiv.innerHTML = ''
@@ -256,11 +256,11 @@ const attachEventListenersToDynamicContent = () => {
     })
 
 
-    const toggleButtons = Array.from(document.querySelectorAll('.button-container > .btn-toggle'));
-    const collapses = toggleButtons.map(button => new bootstrap.Collapse(button.nextElementSibling, {toggle: false}));
+    const roomToggleButtons = Array.from(document.querySelectorAll('.button-container > .btn-toggle'));
+    const collapses = roomToggleButtons.map(button => new bootstrap.Collapse(button.nextElementSibling, {toggle: false}));
 
     // Add event listener which prevent room buttons to be showed before the previous showed one is closed
-    toggleButtons.forEach((button, index) => {
+    roomToggleButtons.forEach((button, index) => {
         button.addEventListener('click', function(event) {
             // Prevent default if manually handling collapse
             event.preventDefault();
@@ -282,10 +282,20 @@ const attachEventListenersToDynamicContent = () => {
             }
         });
     })
+    const roomButtons = document.querySelectorAll('.btn-room, span#room-name')
+    roomButtons.forEach(b => {
+        b.addEventListener('click', (event) => {
+            assetsBlocksDiv.innerHTML = ''
+
+
+        })
+    })
+
 }
 
 const currentLocationPathDiv = document.getElementById("location-info")
 
 const assetsBlocksDiv = document.querySelector(".space-container")
+
 
 
