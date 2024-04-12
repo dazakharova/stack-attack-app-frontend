@@ -113,39 +113,45 @@ const renderContainer = (parentNode, container, data) => {
     // Set the containerButton's text content
     containerButton.textContent = containerName;
 
-    // Create block for items elements
-    const itemsDiv = document.createElement("div")
-    itemsDiv.className = "collapse"
+    // Create block for nested elements
+    const childrenDiv = document.createElement("div")
+    childrenDiv.className = "collapse"
 
     // Assigning collapse target from the container as an items block id
-    itemsDiv.setAttribute("id", collapseTarget.substring(1))
+    childrenDiv.setAttribute("id", collapseTarget.substring(1))
 
-    // Create an inner list of items block for holding each item
+    // Create a nested list of items block for holding each item
     const itemsUl = document.createElement("ul")
     itemsUl.className = "list-unstyled"
 
     // Append items list to the items div
-    itemsDiv.appendChild(itemsUl)
+    childrenDiv.appendChild(itemsUl)
 
     // Append the container button to the list item
     containerLi.appendChild(containerButton);
 
     // Append the items div to the container list item
-    containerLi.appendChild(itemsDiv)
+    containerLi.appendChild(childrenDiv)
 
-    // Append the container list item to the ul node, given as an argument
+    // Append the container list item to the containersUl node, given as an argument
     parentNode.appendChild(containerLi)
 
     // Sub assets of current container (inside the data Map)
-    const boxContents = data[containerId]
+    const containerContents = data[containerId]
+
+    // Create a nested list of containers block for holding each nested container (if so)
+    const containersUl = document.createElement("ul")
+    containersUl.classList.add("containers-list", "btn-toggle-nav", "list-unstyled", "fw-normal", "pb-1", "small")
+    containersUl.setAttribute('data-bs-target', collapseTarget)
+    childrenDiv.appendChild(containersUl)
 
     // If current container has any assets inside it, then render them
-    if (boxContents) {
-        console.log("There is boxes inside:", boxContents)
+    if (containerContents) {
+        console.log("There is boxes inside:", containerContents)
 
-        boxContents.forEach(b => {
+        containerContents.forEach(b => {
             if (b instanceof Container) {
-                renderContainer(parentNode, b, data)
+                renderContainer(containersUl, b, data)
             } else if (b instanceof Item) {
                 renderItem(itemsUl, b, data)
             }
