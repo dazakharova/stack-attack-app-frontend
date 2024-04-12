@@ -2,6 +2,8 @@ import { Container } from "../class/Container.js";
 import { Item } from "../class/Item.js"
 import { InventoryService } from "../class/InventoryService.js"
 import rightContainer from './containerRenderHelpers.js';
+import { addRoomToPath, addContainerToPath } from "./locationPath.js";
+import {controlRoomButton, renderRoom} from "./collapseFunctionality.js";
 
 const backend_url = 'http://localhost:3001'
 
@@ -20,182 +22,11 @@ const processRooms = (data) => {
     })
 }
 
-const renderRoom = (room, data) => {
-    console.log('Current room is ', room)
-
-    // Getting data of the room
-    const roomId = room.getId()
-    const roomName = room.getName()
-
-    // Create block for room button
-    const roomDiv = document.createElement("div")
-    roomDiv.className = "button-container"
-
-    // Create room button
-    const roomButton = document.createElement("button")
-
-    // Assign unique collapse target for room button, which will be used as id in inner list storing subassets
-    const collapseTarget = `#${roomName}${roomId}-collapse`
-
-    // Assign rooms attributes
-    roomButton.classList.add('btn', 'btn-toggle', 'btn-room', 'd-inline-flex', 'align-items-center', 'rounded', 'border-0', 'collapsed');
-    roomButton.setAttribute('data-bs-toggle', 'collapse');
-    roomButton.setAttribute('data-bs-target', collapseTarget);
-    roomButton.setAttribute('aria-expanded', 'false');
-    roomButton.setAttribute("data-id", roomId)
-    roomButton.textContent = roomName;
-
-    // Create div element for all inner elements stored inside the room
-    const containersDiv = document.createElement("div")
-    containersDiv.className = "collapse"
-    containersDiv.setAttribute("id", collapseTarget.substring(1))
-
-    // Create list element inside the containers div
-    const ul = document.createElement("ul")
-    ul.classList.add("containers-list", "btn-toggle-nav", "list-unstyled", "fw-normal", "pb-1", "small")
-
-    // Append ul to the containers div
-    containersDiv.appendChild(ul)
-
-    // Append roomButton to the room div
-    roomDiv.appendChild(roomButton)
-
-    // Append container div to room div
-    roomDiv.appendChild(containersDiv)
-
-    // Append room div to room hierarchy div
-    roomsHierarchy.appendChild(roomDiv)
-
-    // Sub assets of current room (inside the data Map)
-    const contents = data.get(roomId)
-
-    // If current room has other assets inside it, render them
-    if (contents) {
-        console.log("There is something inside:", contents)
-
-        contents.forEach(b => {
-            if (b instanceof Container) {
-                renderContainer(ul, b, data)
-            } else if (b instanceof Item) {
-                renderItem(ul, b, data)
-            }
-        })
-    }
-}
-
-const renderContainer = (parentNode, container, data) => {
-    console.log('Got box', container)
-
-    // Get data of the container
-    const containerId = container.getId()
-    const containerName = container.getName()
-    const containerParentId = container.getParentId()
-
-    // Create the list item (li) element for holding one container
-    let containerLi = document.createElement('li');
-
-    // Create the button element for container
-    let containerButton = document.createElement('button');
-
-    // Add classes to the container button
-    containerButton.classList.add('btn', 'btn-toggle', 'btn-furniture', 'd-inline-flex', 'align-items-center', 'rounded', 'border-0', 'collapsed');
-
-    // Assign unique collapse target for container button, which will be used as id in inner list storing subassets of that container
-    const collapseTarget = `#${containerName}${containerId}-collapse`
-
-    // Set attributes for the container button
-    containerButton.setAttribute('data-bs-toggle', 'collapse');
-    containerButton.setAttribute('data-bs-target', collapseTarget);
-    containerButton.setAttribute('aria-expanded', 'false');
-
-    // Set unique attributes for container button in order to be able to access them later
-    containerButton.setAttribute("data-id", containerId)
-    containerButton.setAttribute("data-parentId", containerParentId)
-    
-    // Set the containerButton's text content
-    containerButton.textContent = containerName;
-
-    // Create block for nested elements
-    const childrenDiv = document.createElement("div")
-    childrenDiv.className = "collapse"
-
-    // Assigning collapse target from the container as an items block id
-    childrenDiv.setAttribute("id", collapseTarget.substring(1))
-
-    // Create a nested list of items block for holding each item
-    const itemsUl = document.createElement("ul")
-    itemsUl.className = "list-unstyled"
-
-    // Append items list to the items div
-    childrenDiv.appendChild(itemsUl)
-
-    // Append the container button to the list item
-    containerLi.appendChild(containerButton);
-
-    // Append the items div to the container list item
-    containerLi.appendChild(childrenDiv)
-
-    // Append the container list item to the containersUl node, given as an argument
-    parentNode.appendChild(containerLi)
-
-    // Sub assets of current container (inside the data Map)
-    const containerContents = data.get(containerId)
-
-    // Create a nested list of containers block for holding each nested container (if so)
-    const containersUl = document.createElement("ul")
-    containersUl.classList.add("containers-list", "btn-toggle-nav", "list-unstyled", "fw-normal", "pb-1", "small")
-    containersUl.setAttribute('data-bs-target', collapseTarget)
-    childrenDiv.appendChild(containersUl)
-
-    // If current container has any assets inside it, then render them
-    if (containerContents) {
-        console.log("There is boxes inside:", containerContents)
-
-        containerContents.forEach(b => {
-            if (b instanceof Container) {
-                renderContainer(containersUl, b, data)
-            } else if (b instanceof Item) {
-                renderItem(itemsUl, b, data)
-            }
-        })
-    }
-}
-
-const renderItem = (parentNode, item, data) => {
-    // Get data of the item
-    const itemId = item.getId()
-    const itemName = item.getName()
-    const itemContainerId = item.getContainerId()
-
-    // Create item list element for holding item link
-    const itemElement = document.createElement("li")
-
-    // Create item link
-    const a = document.createElement("a")
-    a.className = "link-item"
-    a.setAttribute("href", "#")
-    a.innerText = itemName
-
-    // Set unique attributes to item link in order to be able to access it later
-    a. setAttribute("data-id", itemId)
-    a.setAttribute("data-containerId", itemContainerId)
-
-    // Append item link to item list element
-    itemElement.appendChild(a)
-
-    // Append item list element to the given ul element as an argument
-    parentNode.appendChild(itemElement)
-}
-
 // Fetch all data (parent containers (rooms), containers and items from the browser
 const getAllData = async() => {
     try {
         const intermediateResult = await assets.getContainers()
-        console.log('Intermediate result', intermediateResult)
         const result = await assets.getItems()
-        console.log('Result', result)
-        // console.log('Fetch result: ', result)
-        // console.log('Map value at 14 ', result.get(14))
         processRooms(result)
     } catch (error) {
         console.error(error)
@@ -213,28 +44,7 @@ const attachEventListenersToDynamicContent = () => {
     // Add click listener for each room button, once it's clicked - location path on the right container changes accordingly
     roomMenuButtons.forEach(b => {
         b.addEventListener("click", () => {
-            if (currentLocationPathDiv) {
-                currentLocationPathDiv.innerHTML = ''
-            }
-            if (document.getElementById("room-name")) {
-                return
-            }
-
-            const roomButton = document.createElement("button")
-            roomButton.setAttribute("id", "room-name")
-            const dataId = b.getAttribute("data-id")
-            roomButton.setAttribute("data-id", dataId)
-            roomButton.innerText = b.innerText
-
-            roomButton.addEventListener("click", (event) => {
-                // Clean the assets block
-                assetsBlocksDiv.innerHTML = ''
-                // Select all the nested containers inside the chosen room
-                const roomId = b.getAttribute("data-id")
-                console.log(roomId)
-            })
-
-            currentLocationPathDiv.appendChild(roomButton)
+            addRoomToPath(b, currentLocationPathDiv, assetsBlocksDiv)
         })
     })
 
@@ -242,32 +52,7 @@ const attachEventListenersToDynamicContent = () => {
     const containerButtons = document.querySelectorAll(".containers-list > li > button")
     containerButtons.forEach(b => {
         b.addEventListener("click", () => {
-
-            // Select last location span added to the path
-            const lastLocation = currentLocationPathDiv.lastElementChild;
-            // Check last location parent id
-            const lastLocationParentId = lastLocation.getAttribute("data-parentId")
-            // Check parent id of the clicked container button
-            const triggeredLocationParentId = b.getAttribute("data-parentId")
-
-            // If parent_id of the last location and clicked container button is the same, then replace the last added location with the just clicked
-            if (triggeredLocationParentId === lastLocationParentId) {
-                lastLocation.remove()
-            }
-
-            // If this container button is already added to path, then ignore
-            if (document.getElementById(`container-name${b.getAttribute("data-id")}`)) {
-                return
-            }
-
-            // const containerSpan = document.createElement("span")
-            const containerButton = document.createElement("buttons")
-            const buttonId = `container-name${b.getAttribute("data-id")}`
-            containerButton.setAttribute("id", buttonId)
-            containerButton.setAttribute("data-id", b.getAttribute("data-id"))
-            containerButton.setAttribute("data-parentId", b.getAttribute("data-parentId"))
-            containerButton.innerText = " > " + b.innerText
-            currentLocationPathDiv.appendChild(containerButton)
+            addContainerToPath(b, currentLocationPathDiv)
         })
     })
 
@@ -281,21 +66,7 @@ const attachEventListenersToDynamicContent = () => {
             // Prevent default if manually handling collapse
             event.preventDefault();
 
-            const currentCollapse = collapses[index];
-            let isAnyOtherExpanded = false;
-
-            // Hide other collapses if they are shown
-            collapses.forEach((collapse, ci) => {
-                if (ci !== index && collapse._element.classList.contains('show')) {
-                    collapse.hide();
-                    isAnyOtherExpanded = true;
-                }
-            });
-
-            // Only toggle the current collapse if no other collapses are expanded
-            if (!isAnyOtherExpanded) {
-                currentCollapse.toggle();
-            }
+            controlRoomButton(collapses, index)
         });
     })
 
@@ -309,15 +80,20 @@ const attachEventListenersToDynamicContent = () => {
             const roomId = parseInt(b.getAttribute("data-id"))
             const assetsMap = assets.getAssets()
 
+            // Get room content if exist
             const roomContent = assetsMap.get(roomId)
             console.log(roomContent)
-            roomContent.forEach(c => {
-                if (c instanceof Container) {
-                    rightContainer.renderContainer(assetsBlocksDiv, c, assetsMap)
-                } else if (c instanceof Item) {
-                    rightContainer.renderItem(assetsBlocksDiv, c, assetsMap)
-                }
-            })
+
+            // If there content inside room, display it in the assets block
+            if (roomContent) {
+                roomContent.forEach(c => {
+                    if (c instanceof Container) {
+                        rightContainer.renderContainer(assetsBlocksDiv, c, assetsMap)
+                    } else if (c instanceof Item) {
+                        rightContainer.renderItem(assetsBlocksDiv, c, assetsMap)
+                    }
+                })
+            }
         })
     })
 }
