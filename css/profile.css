@@ -445,7 +445,7 @@ input[type="text"]::placeholder {
   padding: 2px; 
 }
 
-.box, .item2 {
+.box, .item {
   position: relative;
   width: calc(33.33% - 10px); 
   margin: 5px; 
@@ -464,14 +464,14 @@ input[type="text"]::placeholder {
   min-height: 150px; 
   border-radius: 10px;
 }
-.item2 img {
+.item img {
   width: 100%; 
   height: 100%; 
   min-height: 150px; 
   border-radius: 10px;
 }
 
-.box span, .item2 span {
+.box span, .item span {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -484,7 +484,7 @@ input[type="text"]::placeholder {
   height: 50px; 
 }
 
-.box .title, .item2 .title {
+.box .title, .item .title {
   background-color: rgba(255, 255, 255, 0.5); /* transparent .title */
 }
 
