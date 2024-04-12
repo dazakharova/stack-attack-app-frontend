@@ -2,11 +2,11 @@ import { Item } from './Item.js';
 import { Container } from './Container.js';
 
 class InventoryService {
-    #containers = new Map();
+    #assets = new Map();
     #backendUrl = ''
 
     constructor(url) {
-        this.#containers = new Map()
+        this.#assets = new Map()
         this.#backendUrl = url
     }
 
@@ -22,7 +22,7 @@ class InventoryService {
             })
             const json = await response.json()
             this.#readJsonContainers(json)
-            return this.#containers
+            return this.#assets
         } catch (error) {
             return error
         }
@@ -40,7 +40,7 @@ class InventoryService {
             })
             const json = await response.json()
             this.#readJsonItems(json)
-            return this.#containers
+            return this.#assets
         } catch (error) {
             return error
         }
@@ -65,6 +65,10 @@ class InventoryService {
         }
     }
 
+    getAssets = () => {
+        return this.#assets
+    }
+
     addNewItem = async(name, parent_id) => {
         try {
             const url = `${this.#backendUrl}/items`
@@ -86,29 +90,31 @@ class InventoryService {
 
     #addToContainersMap = (id, name, parent_id, user_id) => {
         const newContainer = new Container(id, name, parent_id, user_id)
-        this.#containers.set(newContainer.getParentId(), newContainer)
+        this.#assets.set(newContainer.getParentId(), newContainer)
         return newContainer
     }
 
     #readJsonContainers = containersAsJson => {
-        console.log(containersAsJson)
+        console.log('Containers as JSON', containersAsJson)
         containersAsJson.forEach(c => {
             const container = new Container(c.id, c.name, c.parent_id, c.user_id)
-            if (!this.#containers[c.parent_id]) this.#containers[c.parent_id] = [];
-            this.#containers[c.parent_id].push(container);
-            // const container = new Container(c.id, c.name, c.parent_id, c.user_id);
-            // this.#containers.set(container.getParentId(), container)
+            if (!this.#assets.get(c.parent_id)) {
+                this.#assets.set(c.parent_id, []);
+            }
+
+            this.#assets.get(c.parent_id).push(container);
         })
     }
 
     #readJsonItems = (itemsAsJson) => {
-        console.log(itemsAsJson)
+        console.log('Items as JSON', itemsAsJson)
         itemsAsJson.forEach(i => {
             const item = new Item(i.id, i.name, i.description, i.container_id, i.user_id)
-            if (!this.#containers[i.container_id]) this.#containers[i.container_id] = [];
-            this.#containers[i.container_id].push(item);
-            // const item = new Item(i.id, i.name, i.description, i.container_id, i.user_id)
-            // this.#containers.set(item.getContainerId(), item)
+            if (!this.#assets.get(i.container_id)) {
+                this.#assets.set(i.container_id, []);
+            }
+
+            this.#assets.get(i.container_id).push(item);
         })
     }
 }

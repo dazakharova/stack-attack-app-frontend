@@ -1,6 +1,7 @@
-import { Container } from "./class/Container.js";
-import { Item } from "./class/Item.js"
-import { InventoryService } from "./class/InventoryService.js"
+import { Container } from "../class/Container.js";
+import { Item } from "../class/Item.js"
+import { InventoryService } from "../class/InventoryService.js"
+import rightContainer from './containerRenderHelpers.js';
 
 const backend_url = 'http://localhost:3001'
 
@@ -12,7 +13,8 @@ const roomsHierarchy = document.getElementById("roomsHierarchy")
 
 const processRooms = (data) => {
     // Extract only parent containers from the given data (which have 'null' as a parent_id):
-    const roomsArray = data[null]
+    const roomsArray = data.get(null)
+    console.log("Rooms array", roomsArray)
     roomsArray.forEach(room => {
         renderRoom(room, data)
     })
@@ -65,7 +67,7 @@ const renderRoom = (room, data) => {
     roomsHierarchy.appendChild(roomDiv)
 
     // Sub assets of current room (inside the data Map)
-    const contents = data[roomId]
+    const contents = data.get(roomId)
 
     // If current room has other assets inside it, render them
     if (contents) {
@@ -137,7 +139,7 @@ const renderContainer = (parentNode, container, data) => {
     parentNode.appendChild(containerLi)
 
     // Sub assets of current container (inside the data Map)
-    const containerContents = data[containerId]
+    const containerContents = data.get(containerId)
 
     // Create a nested list of containers block for holding each nested container (if so)
     const containersUl = document.createElement("ul")
@@ -189,7 +191,11 @@ const renderItem = (parentNode, item, data) => {
 const getAllData = async() => {
     try {
         const intermediateResult = await assets.getContainers()
+        console.log('Intermediate result', intermediateResult)
         const result = await assets.getItems()
+        console.log('Result', result)
+        // console.log('Fetch result: ', result)
+        // console.log('Map value at 14 ', result.get(14))
         processRooms(result)
     } catch (error) {
         console.error(error)
@@ -202,10 +208,10 @@ getAllData().then(() => {
 
 const attachEventListenersToDynamicContent = () => {
     // Select all room buttons
-    const buttons = document.querySelectorAll(".button-container > button")
+    const roomMenuButtons = document.querySelectorAll(".button-container > button")
 
     // Add click listener for each room button, once it's clicked - location path on the right container changes accordingly
-    buttons.forEach(b => {
+    roomMenuButtons.forEach(b => {
         b.addEventListener("click", () => {
             if (currentLocationPathDiv) {
                 currentLocationPathDiv.innerHTML = ''
@@ -214,18 +220,26 @@ const attachEventListenersToDynamicContent = () => {
                 return
             }
 
-            const roomSpan = document.createElement("span")
-            roomSpan.setAttribute("id", "room-name")
+            const roomButton = document.createElement("button")
+            roomButton.setAttribute("id", "room-name")
             const dataId = b.getAttribute("data-id")
-            roomSpan.setAttribute("data-id", dataId)
-            roomSpan.innerText = b.innerText
-            currentLocationPathDiv.appendChild(roomSpan)
+            roomButton.setAttribute("data-id", dataId)
+            roomButton.innerText = b.innerText
+
+            roomButton.addEventListener("click", (event) => {
+                // Clean the assets block
+                assetsBlocksDiv.innerHTML = ''
+                // Select all the nested containers inside the chosen room
+                const roomId = b.getAttribute("data-id")
+                console.log(roomId)
+            })
+
+            currentLocationPathDiv.appendChild(roomButton)
         })
     })
 
     // Add click listener for each container button followed by room button, once it's clicked - it gets added to the location path
     const containerButtons = document.querySelectorAll(".containers-list > li > button")
-    console.log(containerButtons)
     containerButtons.forEach(b => {
         b.addEventListener("click", () => {
 
@@ -245,22 +259,24 @@ const attachEventListenersToDynamicContent = () => {
             if (document.getElementById(`container-name${b.getAttribute("data-id")}`)) {
                 return
             }
-            const containerSpan = document.createElement("span")
-            const spanId = `container-name${b.getAttribute("data-id")}`
-            containerSpan.setAttribute("id", spanId)
-            containerSpan.setAttribute("data-id", b.getAttribute("data-id"))
-            containerSpan.setAttribute("data-parentId", b.getAttribute("data-parentId"))
-            containerSpan.innerText = " > " + b.innerText
-            currentLocationPathDiv.appendChild(containerSpan)
+
+            // const containerSpan = document.createElement("span")
+            const containerButton = document.createElement("buttons")
+            const buttonId = `container-name${b.getAttribute("data-id")}`
+            containerButton.setAttribute("id", buttonId)
+            containerButton.setAttribute("data-id", b.getAttribute("data-id"))
+            containerButton.setAttribute("data-parentId", b.getAttribute("data-parentId"))
+            containerButton.innerText = " > " + b.innerText
+            currentLocationPathDiv.appendChild(containerButton)
         })
     })
 
 
-    const toggleButtons = Array.from(document.querySelectorAll('.button-container > .btn-toggle'));
-    const collapses = toggleButtons.map(button => new bootstrap.Collapse(button.nextElementSibling, {toggle: false}));
+    const roomToggleButtons = Array.from(document.querySelectorAll('.button-container > .btn-toggle'));
+    const collapses = roomToggleButtons.map(button => new bootstrap.Collapse(button.nextElementSibling, {toggle: false}));
 
     // Add event listener which prevent room buttons to be showed before the previous showed one is closed
-    toggleButtons.forEach((button, index) => {
+    roomToggleButtons.forEach((button, index) => {
         button.addEventListener('click', function(event) {
             // Prevent default if manually handling collapse
             event.preventDefault();
@@ -282,10 +298,33 @@ const attachEventListenersToDynamicContent = () => {
             }
         });
     })
+
+    const roomButtons = document.querySelectorAll('.btn-room')
+    roomButtons.forEach(b => {
+        b.addEventListener('click', (event) => {
+            // Clean the assets block
+            assetsBlocksDiv.innerHTML = ''
+
+            // Select all the nested containers inside the chosen room
+            const roomId = parseInt(b.getAttribute("data-id"))
+            const assetsMap = assets.getAssets()
+
+            const roomContent = assetsMap.get(roomId)
+            console.log(roomContent)
+            roomContent.forEach(c => {
+                if (c instanceof Container) {
+                    rightContainer.renderContainer(assetsBlocksDiv, c, assetsMap)
+                } else if (c instanceof Item) {
+                    rightContainer.renderItem(assetsBlocksDiv, c, assetsMap)
+                }
+            })
+        })
+    })
 }
 
 const currentLocationPathDiv = document.getElementById("location-info")
 
 const assetsBlocksDiv = document.querySelector(".space-container")
+
 
 
