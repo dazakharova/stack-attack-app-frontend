@@ -50,7 +50,7 @@ const renderRoom = (room, data) => {
 
     // Create list element inside the containers div
     const ul = document.createElement("ul")
-    ul.classList.add("btn-toggle-nav", "list-unstyled", "fw-normal", "pb-1", "small")
+    ul.classList.add("containers-list", "btn-toggle-nav", "list-unstyled", "fw-normal", "pb-1", "small")
 
     // Append ul to the containers div
     containersDiv.appendChild(ul)
@@ -190,4 +190,96 @@ const getAllData = async() => {
     }
 }
 
-getAllData();
+getAllData().then(() => {
+    attachEventListenersToDynamicContent();
+});
+
+const attachEventListenersToDynamicContent = () => {
+    // Select all room buttons
+    const buttons = document.querySelectorAll(".button-container > button")
+
+    // Add click listener for each room button, once it's clicked - location path on the right container changes accordingly
+    buttons.forEach(b => {
+        b.addEventListener("click", () => {
+            if (currentLocationPathDiv) {
+                currentLocationPathDiv.innerHTML = ''
+            }
+            if (document.getElementById("room-name")) {
+                return
+            }
+
+            const roomSpan = document.createElement("span")
+            roomSpan.setAttribute("id", "room-name")
+            const dataId = b.getAttribute("data-id")
+            roomSpan.setAttribute("data-id", dataId)
+            roomSpan.innerText = b.innerText
+            currentLocationPathDiv.appendChild(roomSpan)
+        })
+    })
+
+    // Add click listener for each container button followed by room button, once it's clicked - it gets added to the location path
+    const containerButtons = document.querySelectorAll(".containers-list > li > button")
+    console.log(containerButtons)
+    containerButtons.forEach(b => {
+        b.addEventListener("click", () => {
+
+            // Select last location span added to the path
+            const lastLocation = currentLocationPathDiv.lastElementChild;
+            // Check last location parent id
+            const lastLocationParentId = lastLocation.getAttribute("data-parentId")
+            // Check parent id of the clicked container button
+            const triggeredLocationParentId = b.getAttribute("data-parentId")
+
+            // If parent_id of the last location and clicked container button is the same, then replace the last added location with the just clicked
+            if (triggeredLocationParentId === lastLocationParentId) {
+                lastLocation.remove()
+            }
+
+            // If this container button is already added to path, then ignore
+            if (document.getElementById(`container-name${b.getAttribute("data-id")}`)) {
+                return
+            }
+            const containerSpan = document.createElement("span")
+            const spanId = `container-name${b.getAttribute("data-id")}`
+            containerSpan.setAttribute("id", spanId)
+            containerSpan.setAttribute("data-id", b.getAttribute("data-id"))
+            containerSpan.setAttribute("data-parentId", b.getAttribute("data-parentId"))
+            containerSpan.innerText = " > " + b.innerText
+            currentLocationPathDiv.appendChild(containerSpan)
+        })
+    })
+
+
+    const toggleButtons = Array.from(document.querySelectorAll('.button-container > .btn-toggle'));
+    const collapses = toggleButtons.map(button => new bootstrap.Collapse(button.nextElementSibling, {toggle: false}));
+
+    // Add event listener which prevent room buttons to be showed before the previous showed one is closed
+    toggleButtons.forEach((button, index) => {
+        button.addEventListener('click', function(event) {
+            // Prevent default if manually handling collapse
+            event.preventDefault();
+
+            const currentCollapse = collapses[index];
+            let isAnyOtherExpanded = false;
+
+            // Hide other collapses if they are shown
+            collapses.forEach((collapse, ci) => {
+                if (ci !== index && collapse._element.classList.contains('show')) {
+                    collapse.hide();
+                    isAnyOtherExpanded = true;
+                }
+            });
+
+            // Only toggle the current collapse if no other collapses are expanded
+            if (!isAnyOtherExpanded) {
+                currentCollapse.toggle();
+            }
+        });
+    })
+}
+
+const currentLocationPathDiv = document.getElementById("location-info")
+
+const assetsBlocksDiv = document.querySelector(".space-container")
+
+
