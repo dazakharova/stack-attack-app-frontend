@@ -36,7 +36,7 @@ const renderRoom = (room, data) => {
     const collapseTarget = `#${roomName}${roomId}-collapse`
 
     // Assign rooms attributes
-    roomButton.classList.add('btn', 'btn-toggle', 'd-inline-flex', 'align-items-center', 'rounded', 'border-0', 'collapsed');
+    roomButton.classList.add('btn', 'btn-toggle', 'btn-room', 'd-inline-flex', 'align-items-center', 'rounded', 'border-0', 'collapsed');
     roomButton.setAttribute('data-bs-toggle', 'collapse');
     roomButton.setAttribute('data-bs-target', collapseTarget);
     roomButton.setAttribute('aria-expanded', 'false');
@@ -96,7 +96,7 @@ const renderContainer = (parentNode, container, data) => {
     let containerButton = document.createElement('button');
 
     // Add classes to the container button
-    containerButton.classList.add('btn', 'btn-toggle', 'd-inline-flex', 'align-items-center', 'rounded', 'border-0', 'collapsed');
+    containerButton.classList.add('btn', 'btn-toggle', 'btn-furniture', 'd-inline-flex', 'align-items-center', 'rounded', 'border-0', 'collapsed');
 
     // Assign unique collapse target for container button, which will be used as id in inner list storing subassets of that container
     const collapseTarget = `#${containerName}${containerId}-collapse`
