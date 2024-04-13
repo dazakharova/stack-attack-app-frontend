@@ -1,7 +1,13 @@
+import { addContainerToPath } from "./locationPath.js";
+import {Container} from "../class/Container.js";
+import {Item} from "../class/Item.js";
+
 const renderContainer = (parentNode, container, data) => {
     // Create block for container
     const containerDiv = document.createElement('div')
     containerDiv.className = 'box'
+
+    const containerContents = data.get(container.getId())
 
     // Create span for container with its title inside
     const containerSpan = document.createElement('span')
@@ -11,6 +17,23 @@ const renderContainer = (parentNode, container, data) => {
     containerSpan.setAttribute('data-id', container.getId())
     containerSpan.setAttribute('data-parentId', container.getParentId())
     containerSpan.innerText = container.getName()
+
+    if (containerContents) {
+        containerDiv.addEventListener('click', () => {
+            // Clean the assets block
+            parentNode.innerHTML = ''
+            addContainerToPath(containerSpan, document.getElementById('location-info'), data)
+
+            containerContents.forEach(c => {
+                if (c instanceof Container) {
+                    renderContainer(parentNode, c, data)
+                } else if (c instanceof Item) {
+                    renderItem(parentNode, c, data)
+                }
+            })
+        })
+
+    }
 
     // Append span to div
     containerDiv.appendChild(containerSpan)

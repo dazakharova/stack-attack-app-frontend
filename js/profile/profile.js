@@ -44,7 +44,7 @@ const attachEventListenersToDynamicContent = () => {
     // Add click listener for each room button, once it's clicked - location path on the right container changes accordingly
     roomMenuButtons.forEach(b => {
         b.addEventListener("click", () => {
-            addRoomToPath(b, currentLocationPathDiv, assetsBlocksDiv)
+            addRoomToPath(b, currentLocationPathDiv, assetsBlocksDiv, assets.getAssets())
         })
     })
 
@@ -52,7 +52,7 @@ const attachEventListenersToDynamicContent = () => {
     const containerButtons = document.querySelectorAll(".containers-list > li > button")
     containerButtons.forEach(b => {
         b.addEventListener("click", () => {
-            addContainerToPath(b, currentLocationPathDiv)
+            addContainerToPath(b, currentLocationPathDiv, assets.getAssets())
         })
     })
 
@@ -88,7 +88,7 @@ const attachEventListenersToDynamicContent = () => {
             if (roomContent) {
                 roomContent.forEach(c => {
                     if (c instanceof Container) {
-                        rightContainer.renderContainer(assetsBlocksDiv, c, assetsMap)
+                        rightContainer.renderContainer(assetsBlocksDiv, c, assetsMap, assets.getAssets())
                     } else if (c instanceof Item) {
                         rightContainer.renderItem(assetsBlocksDiv, c, assetsMap)
                     }
@@ -96,6 +96,8 @@ const attachEventListenersToDynamicContent = () => {
             }
         })
     })
+
+
 }
 
 const currentLocationPathDiv = document.getElementById("location-info")
