@@ -84,7 +84,7 @@ const attachEventListenersToDynamicContent = () => {
             const roomContent = assetsMap.get(roomId)
             console.log(roomContent)
 
-            // If there content inside room, display it in the assets block
+            // If there is content inside room, display it in the assets block
             if (roomContent) {
                 roomContent.forEach(c => {
                     if (c instanceof Container) {
@@ -97,7 +97,52 @@ const attachEventListenersToDynamicContent = () => {
         })
     })
 
+    const newRoomButton = document.getElementById("new-room-btn")
+    newRoomButton.addEventListener("click", () => {
+        console.log(newRoomButton.classList)
+        newRoomButton.style.display = "none" // Hide the button
 
+        const newRoomDiv = document.createElement("div")
+        newRoomDiv.setAttribute("id", "new-room-form")
+
+        const input = document.createElement("input")
+        input.setAttribute("id", "room-name-input")
+
+        const button = document.createElement("button")
+        button.setAttribute("id", "create-room")
+        button.setAttribute("type", "submit")
+        button.innerText = "Create room"
+
+        newRoomDiv.appendChild(input)
+        newRoomDiv.appendChild(button)
+
+        const heading = document.querySelector("#roomsHierarchy > h2")
+
+        // Instead of roomsHierarchy.appendChild(form);
+        roomsHierarchy.insertBefore(newRoomDiv, heading.nextSibling);
+
+
+        button.addEventListener("click", async(event) => {
+            event.preventDefault()
+
+            newRoomDiv.remove()
+            newRoomButton.style.display = "block"
+
+            const newRoomName = input.value
+            const result = await assets.addNewContainer(newRoomName)
+            console.log(result)
+            processRooms(result)
+        })
+
+        // Detect click outside form to cancel
+        document.addEventListener('click', function(e) {
+            console.log(e.target)
+            if (!newRoomDiv.contains(e.target) && e.target !== newRoomButton) {
+                newRoomDiv.remove();
+                newRoomButton.style.display = "block"
+            }
+        })
+    })
 }
 
 const currentLocationPathDiv = document.getElementById("location-info")
