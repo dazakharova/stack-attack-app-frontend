@@ -59,7 +59,8 @@ class InventoryService {
                 body: body
             })
             const json = await response.json()
-            return this.#addToContainersMap(json.id, json.name, json.parent_id, json.user_id)
+            this.#addToContainersMap(json[0].id, json[0].name, json[0].parent_id, json[0].user_id)
+            return this.#assets
         } catch (error) {
             return error
         }
@@ -89,9 +90,14 @@ class InventoryService {
     }
 
     #addToContainersMap = (id, name, parent_id, user_id) => {
+        console.log(id)
         const newContainer = new Container(id, name, parent_id, user_id)
-        this.#assets.set(newContainer.getParentId(), newContainer)
-        return newContainer
+        console.log('Add to map new: ', newContainer)
+        if (!this.#assets.get(newContainer.getParentId())) {
+            this.#assets.set(newContainer.getParentId(), []);
+        }
+        this.#assets.get(newContainer.getParentId()).push(newContainer);
+        return this.#assets
     }
 
     #readJsonContainers = containersAsJson => {
