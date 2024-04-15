@@ -33,7 +33,11 @@ const renderContainer = (parentNode, container, data) => {
                 }
             })
         })
-
+    } else {
+        containerDiv.addEventListener("click", () => {
+            parentNode.innerHTML = ''
+            addContainerToPath(containerSpan, document.getElementById('location-info'), data)
+        })
     }
 
     // Append span to div
