@@ -560,7 +560,7 @@ footer {
   cursor: pointer;
 }
 
-#item-name-input, #item-description-input {
+#item-name-input, #item-description-input, #place-name-input {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -584,6 +584,4 @@ footer {
 .btn4:hover {
   background-color: #5d948f; /* Slightly darker shade of the base color for hover effect */
 }
-
-
 

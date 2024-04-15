@@ -1,5 +1,10 @@
 import {Container} from "../class/Container.js";
 import {Item} from "../class/Item.js";
+import rightContainer from "./containerRenderHelpers.js";
+import {addContainerToPath, addRoomToPath} from "./locationPath.js";
+
+const assetsBlocksDiv = document.querySelector(".space-container")
+const currentLocationPathDiv = document.getElementById("location-info")
 
 const renderRoom = (room, data) => {
     console.log('Current room is ', room)
@@ -16,7 +21,7 @@ const renderRoom = (room, data) => {
     const roomButton = document.createElement("button")
 
     // Assign unique collapse target for room button, which will be used as id in inner list storing subassets
-    const collapseTarget = `#${roomName}${roomId}-collapse`
+    const collapseTarget = `#${roomName.replace(/\s+/g, '')}${roomId}-collapse`
 
     // Assign rooms attributes
     roomButton.classList.add('btn', 'btn-toggle', 'btn-room', 'd-inline-flex', 'align-items-center', 'rounded', 'border-0', 'collapsed');
@@ -25,6 +30,31 @@ const renderRoom = (room, data) => {
     roomButton.setAttribute('aria-expanded', 'false');
     roomButton.setAttribute("data-id", roomId)
     roomButton.textContent = roomName;
+
+    // Sub assets of current room (inside the data Map)
+    const contents = data.get(roomId)
+
+    roomButton.addEventListener('click', (event) => {
+        console.log("Room Button clicked")
+        // Add room to the path section
+        addRoomToPath(roomButton, currentLocationPathDiv, data)
+        // Clean the assets block
+        assetsBlocksDiv.innerHTML = ''
+
+        // Get room content if exist
+        const roomContent = data.get(roomId)
+
+        // If there is content inside room, display it in the assets block
+        if (contents) {
+            contents.forEach(c => {
+                if (c instanceof Container) {
+                    rightContainer.renderContainer(assetsBlocksDiv, c, data)
+                } else if (c instanceof Item) {
+                    rightContainer.renderItem(assetsBlocksDiv, c, data)
+                }
+            })
+        }
+    })
 
     // Create div element for all inner elements stored inside the room
     const containersDiv = document.createElement("div")
@@ -47,9 +77,6 @@ const renderRoom = (room, data) => {
     // Append room div to room hierarchy div
     roomsHierarchy.appendChild(roomDiv)
 
-    // Sub assets of current room (inside the data Map)
-    const contents = data.get(roomId)
-
     // If current room has other assets inside it, render them
     if (contents) {
         console.log("There is something inside:", contents)
@@ -71,6 +98,9 @@ const renderContainer = (parentNode, container, data) => {
     const containerId = container.getId()
     const containerName = container.getName()
     const containerParentId = container.getParentId()
+
+    // Sub assets of current container (inside the data Map)
+    const containerContents = data.get(containerId)
 
     // Create the list item (li) element for holding one container
     let containerLi = document.createElement('li');
@@ -96,6 +126,25 @@ const renderContainer = (parentNode, container, data) => {
     // Set the containerButton's text content
     containerButton.textContent = containerName;
 
+    containerButton.addEventListener("click", () => {
+        // Add container to path section
+        addContainerToPath(containerButton, currentLocationPathDiv, data)
+
+        if (containerContents) {
+            assetsBlocksDiv.innerHTML = ''
+            containerContents.forEach(c => {
+                if (c instanceof Container) {
+                    rightContainer.renderContainer(assetsBlocksDiv, c, data)
+                } else if (c instanceof Item) {
+                    rightContainer.renderItem(assetsBlocksDiv, c, data)
+                }
+            })
+        } else {
+            assetsBlocksDiv.innerHTML = ''
+        }
+
+    })
+
     // Create block for nested elements
     const childrenDiv = document.createElement("div")
     childrenDiv.className = "collapse"
@@ -118,9 +167,6 @@ const renderContainer = (parentNode, container, data) => {
 
     // Append the container list item to the containersUl node, given as an argument
     parentNode.appendChild(containerLi)
-
-    // Sub assets of current container (inside the data Map)
-    const containerContents = data.get(containerId)
 
     // Create a nested list of containers block for holding each nested container (if so)
     const containersUl = document.createElement("ul")
@@ -187,7 +233,7 @@ const controlRoomButton = (collapses, index) => {
 }
 
 const leftContainer = {
-    renderRoom, controlRoomButton
+    renderRoom, controlRoomButton, renderContainer, renderItem
 }
 
 export default leftContainer

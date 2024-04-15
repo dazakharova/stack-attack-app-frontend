@@ -221,6 +221,19 @@ document.getElementById('selected-item').textContent = ' > Knife';
         </div>
     </div>
 
+<!--    Window for creating a new place -->
+    <div id="new-place-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add New Place</h2>
+            <form id="new-place-form">
+                <input type="text" id="place-name-input" placeholder="Place Name" required>
+                <button type="submit" class="btn btn4">Add Place</button>
+            </form>
+        </div>
+    </div>
+
+
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

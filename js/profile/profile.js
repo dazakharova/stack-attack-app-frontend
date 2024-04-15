@@ -1,8 +1,5 @@
-import { Container } from "../class/Container.js";
-import { Item } from "../class/Item.js"
 import { InventoryService } from "../class/InventoryService.js"
 import rightContainer from './containerRenderHelpers.js';
-import { addRoomToPath, addContainerToPath } from "./locationPath.js";
 import leftContainer from "./collapseFunctionality.js";
 
 const backend_url = 'http://localhost:3001'
@@ -41,39 +38,6 @@ getAllData().then(() => {
 });
 
 const attachEventListenersToDynamicContent = () => {
-    // Select all room buttons
-    const roomMenuButtons = document.querySelectorAll(".button-container > button")
-
-    // Add click listener for each room button, once it's clicked - location path on the right container changes accordingly
-    roomMenuButtons.forEach(b => {
-        b.addEventListener("click", () => {
-            addRoomToPath(b, currentLocationPathDiv, assets.getAssets())
-        })
-    })
-
-    // Add click listener for each container button followed by room button, once it's clicked - it gets added to the location path
-    const containerButtons = document.querySelectorAll(".containers-list > li > button")
-    containerButtons.forEach(b => {
-        b.addEventListener("click", () => {
-            addContainerToPath(b, currentLocationPathDiv, assets.getAssets())
-
-            const id = parseInt(b.getAttribute("data-id"))
-            const containerContents = assets.getAssets().get(id)
-
-            if (containerContents) {
-                assetsBlocksDiv.innerHTML = ''
-                containerContents.forEach(c => {
-                    if (c instanceof Container) {
-                        rightContainer.renderContainer(assetsBlocksDiv, c, assets.getAssets())
-                    } else if (c instanceof Item) {
-                        rightContainer.renderItem(assetsBlocksDiv, c, assets.getAssets())
-                    }
-                })
-            }
-        })
-    })
-
-
     const roomToggleButtons = Array.from(document.querySelectorAll('.button-container > .btn-toggle'));
     const collapses = roomToggleButtons.map(button => new bootstrap.Collapse(button.nextElementSibling, {toggle: false}));
 
@@ -85,33 +49,6 @@ const attachEventListenersToDynamicContent = () => {
 
             leftContainer.controlRoomButton(collapses, index)
         });
-    })
-
-    const roomButtons = document.querySelectorAll('.btn-room')
-    roomButtons.forEach(b => {
-        b.addEventListener('click', (event) => {
-            // Clean the assets block
-            assetsBlocksDiv.innerHTML = ''
-
-            // Select all the nested containers inside the chosen room
-            const roomId = parseInt(b.getAttribute("data-id"))
-            const assetsMap = assets.getAssets()
-
-            // Get room content if exist
-            const roomContent = assetsMap.get(roomId)
-            console.log(roomContent)
-
-            // If there is content inside room, display it in the assets block
-            if (roomContent) {
-                roomContent.forEach(c => {
-                    if (c instanceof Container) {
-                        rightContainer.renderContainer(assetsBlocksDiv, c, assets.getAssets())
-                    } else if (c instanceof Item) {
-                        rightContainer.renderItem(assetsBlocksDiv, c, assetsMap)
-                    }
-                })
-            }
-        })
     })
 
     const newRoomButton = document.getElementById("new-room-btn")
@@ -137,7 +74,6 @@ const attachEventListenersToDynamicContent = () => {
 
         // Instead of roomsHierarchy.appendChild(form);
         roomsHierarchy.insertBefore(newRoomDiv, heading.nextSibling);
-
 
         button.addEventListener("click", async(event) => {
             event.preventDefault()
@@ -181,26 +117,70 @@ const attachEventListenersToDynamicContent = () => {
         document.getElementById("new-item-form").addEventListener("submit", async function(event) {
             event.preventDefault(); // Prevent the form from submitting to a server
 
+            // Get id of container inside which a new item must be rendered
             const containerId = parseInt(currentLocationPathDiv.lastElementChild.getAttribute("data-id"))
-            console.log(containerId)
+            const containerName = currentLocationPathDiv.lastElementChild.innerText
 
+            // Get given name and description for a new item
             const itemName = document.getElementById("item-name-input").value;
             const itemDescription = document.getElementById("item-description-input").value;
 
             // Returns just added new item id
             const newItem = await assets.addNewItem(itemName, itemDescription, containerId)
 
+            // Hide the modal after handling the data
             newItemModal.style.display = 'none';
 
+            const parentNode = document.querySelector(`#${containerName.replace(/\s+/g)}${containerId}-collapse > .list-unstyled`)
+            console.log("new item parent", parentNode)
+
+            // Update contents of the current container, the user is in
             rightContainer.renderItem(assetsBlocksDiv, newItem, assets.getAssets())
+            leftContainer.renderItem(parentNode, newItem, assets.getAssets())
 
         });
     })
 
     // Add event listener for add-new-place button
-    // document.getElementById("new-place-btn").addEventListener("click", () => {
-    //
-    // })
+    document.getElementById("new-place-btn").addEventListener("click", () => {
+        // Display the modal
+        const newPlaceModal = document.getElementById('new-place-modal')
+        newPlaceModal.style.display = 'block'
+
+        // Close button functionality
+        document.getElementsByClassName("close")[2].addEventListener("click", () => {
+                newPlaceModal.style.display = 'none';
+        })
+
+        document.getElementById("new-place-form").addEventListener("submit", async function(event) {
+            event.preventDefault(); // Prevent the form from submitting to a server
+
+            // Get id of parent container inside which a new place must be rendered
+            const parentId = parseInt(currentLocationPathDiv.lastElementChild.getAttribute("data-id"))
+            const parentName = currentLocationPathDiv.lastElementChild.innerText
+            console.log("parent id:", parentId)
+
+            // Get given name for a new place
+            const placeName = document.getElementById("place-name-input").value
+
+            // Returns just added new item id
+            const newContainer = await assets.addNewContainer(placeName, parentId)
+
+            console.log("Parent container", parentName)
+
+            const parentNode = document.querySelector(`#${parentName.replace(/\s+/g)}${parentId}-collapse > ul`)
+            console.log("new place parent", parentNode)
+
+            // Update contents of the current container, the user is in
+            rightContainer.renderContainer(assetsBlocksDiv, newContainer, assets.getAssets())
+            leftContainer.renderContainer(parentNode, newContainer, assets.getAssets())
+
+            // Hide the modal after handling the data
+            newPlaceModal.style.display = 'none';
+        })
+
+
+    })
 
 }
 

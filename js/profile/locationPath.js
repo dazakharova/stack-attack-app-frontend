@@ -55,12 +55,19 @@ const addRoomToPath = (button, currentLocationPathDiv, assetsMap) => {
 }
 
 const addContainerToPath = (button, currentLocationPathDiv, assetsMap) => {
+
     // Select last location span added to the path
     const lastLocation = currentLocationPathDiv.lastElementChild;
     // Check last location parent id
     const lastLocationParentId = lastLocation.getAttribute("data-parentId")
     // Check parent id of the clicked container button
     const triggeredLocationParentId = button.getAttribute("data-parentId")
+
+    if (lastLocation.getAttribute("id") != 'room-name') {
+        while (button.getAttribute("data-id") < currentLocationPathDiv.lastElementChild.getAttribute("data-id")) {
+            currentLocationPathDiv.lastElementChild.remove()
+        }
+    }
 
     // If parent_id of the last location and clicked container button is the same, then replace the last added location with the just clicked
     if (triggeredLocationParentId === lastLocationParentId) {
