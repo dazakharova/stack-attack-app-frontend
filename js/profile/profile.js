@@ -53,6 +53,20 @@ const attachEventListenersToDynamicContent = () => {
     containerButtons.forEach(b => {
         b.addEventListener("click", () => {
             addContainerToPath(b, currentLocationPathDiv, assets.getAssets())
+
+            const id = parseInt(b.getAttribute("data-id"))
+            const containerContents = assets.getAssets().get(id)
+
+            if (containerContents) {
+                assetsBlocksDiv.innerHTML = ''
+                containerContents.forEach(c => {
+                    if (c instanceof Container) {
+                        rightContainer.renderContainer(assetsBlocksDiv, c, assets.getAssets())
+                    } else if (c instanceof Item) {
+                        rightContainer.renderItem(assetsBlocksDiv, c, assets.getAssets())
+                    }
+                })
+            }
         })
     })
 
