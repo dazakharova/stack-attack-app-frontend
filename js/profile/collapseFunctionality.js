@@ -186,4 +186,8 @@ const controlRoomButton = (collapses, index) => {
     }
 }
 
-export { renderRoom, controlRoomButton }
+const leftContainer = {
+    renderRoom, controlRoomButton
+}
+
+export default leftContainer

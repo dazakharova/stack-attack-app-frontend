@@ -1,6 +1,7 @@
 import { addContainerToPath } from "./locationPath.js";
 import {Container} from "../class/Container.js";
 import {Item} from "../class/Item.js";
+import leftContainer from "./collapseFunctionality.js";
 
 const renderContainer = (parentNode, container, data) => {
     // Create block for container
