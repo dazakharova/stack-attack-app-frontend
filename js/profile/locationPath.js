@@ -21,6 +21,16 @@ const addRoomToPath = (button, currentLocationPathDiv, assetsMap) => {
     roomButton.addEventListener("click", (event) => {
         // Clean the assets block
         assetsBlocksDiv.innerHTML = ''
+
+        let nextSibling = roomButton.nextElementSibling;
+
+        // Loop through all next siblings and remove them
+        while (nextSibling) {
+            const toRemove = nextSibling;
+            nextSibling = nextSibling.nextElementSibling;
+            toRemove.remove();
+        }
+
         // Select all the nested containers inside the chosen room
         const roomId = parseInt(button.getAttribute("data-id"))
 

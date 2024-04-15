@@ -3,7 +3,7 @@ import { Item } from "../class/Item.js"
 import { InventoryService } from "../class/InventoryService.js"
 import rightContainer from './containerRenderHelpers.js';
 import { addRoomToPath, addContainerToPath } from "./locationPath.js";
-import {controlRoomButton, renderRoom} from "./collapseFunctionality.js";
+import leftContainer from "./collapseFunctionality.js";
 
 const backend_url = 'http://localhost:3001'
 
@@ -18,7 +18,7 @@ const processRooms = (data) => {
     const roomsArray = data.get(null)
     console.log("Rooms array", roomsArray)
     roomsArray.forEach(room => {
-        renderRoom(room, data)
+        leftContainer.renderRoom(room, data)
     })
 }
 
@@ -44,7 +44,7 @@ const attachEventListenersToDynamicContent = () => {
     // Add click listener for each room button, once it's clicked - location path on the right container changes accordingly
     roomMenuButtons.forEach(b => {
         b.addEventListener("click", () => {
-            addRoomToPath(b, currentLocationPathDiv, assetsBlocksDiv, assets.getAssets())
+            addRoomToPath(b, currentLocationPathDiv, assets.getAssets())
         })
     })
 
@@ -66,7 +66,7 @@ const attachEventListenersToDynamicContent = () => {
             // Prevent default if manually handling collapse
             event.preventDefault();
 
-            controlRoomButton(collapses, index)
+            leftContainer.controlRoomButton(collapses, index)
         });
     })
 
@@ -88,7 +88,7 @@ const attachEventListenersToDynamicContent = () => {
             if (roomContent) {
                 roomContent.forEach(c => {
                     if (c instanceof Container) {
-                        rightContainer.renderContainer(assetsBlocksDiv, c, assetsMap, assets.getAssets())
+                        rightContainer.renderContainer(assetsBlocksDiv, c, assets.getAssets())
                     } else if (c instanceof Item) {
                         rightContainer.renderItem(assetsBlocksDiv, c, assetsMap)
                     }
