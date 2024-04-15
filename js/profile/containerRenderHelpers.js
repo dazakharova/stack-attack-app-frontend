@@ -70,15 +70,17 @@ const renderItem = (parentNode, item, data) => {
 
         // Display the modal window
         modal.style.display = "block";
+
+        // Close the modal window when the close button is clicked
+        let closeButton = document.querySelector(".close");
+        if (closeButton) {
+            closeButton.onclick = function () {
+                modal.style.display = "none";
+            };
+        }
     })
 
-    // Close the modal window when the close button is clicked
-    let closeButton = document.querySelector(".close");
-    if (closeButton) {
-        closeButton.onclick = function () {
-            modal.style.display = "none";
-        };
-    }
+
 
     // Create img for item
     const itemImg = document.createElement('img')

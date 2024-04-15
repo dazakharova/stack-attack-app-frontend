@@ -207,6 +207,32 @@ const renderItem = (parentNode, item, data) => {
     a. setAttribute("data-id", itemId)
     a.setAttribute("data-containerId", itemContainerId)
 
+    a.addEventListener("click", () => {
+        // Get the modal window
+        let modal = document.getElementById("modal")
+
+        // Get the elements of the modal window after opening it
+        let modalImage = document.getElementById("modal-image");
+        let modalTitle = document.getElementById("modal-title");
+        let modalDescription = document.getElementById("modal-description");
+
+        // Set the data in the modal window
+        modalTitle.textContent = item.getName();
+        // modalImage.src = image;
+        modalDescription.textContent = item.getDescription();
+
+        // Display the modal window
+        modal.style.display = "block";
+
+        // Close the modal window when the close button is clicked
+        let closeButton = document.querySelector(".close");
+        if (closeButton) {
+            closeButton.onclick = function () {
+                modal.style.display = "none";
+            };
+        }
+    })
+
     // Append item link to item list element
     itemElement.appendChild(a)
 
