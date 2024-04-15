@@ -82,7 +82,7 @@ const renderContainer = (parentNode, container, data) => {
     containerButton.classList.add('btn', 'btn-toggle', 'btn-furniture', 'd-inline-flex', 'align-items-center', 'rounded', 'border-0', 'collapsed');
 
     // Assign unique collapse target for container button, which will be used as id in inner list storing subassets of that container
-    const collapseTarget = `#${containerName}${containerId}-collapse`
+    const collapseTarget = `#${containerName.replace(/\s+/g, '')}${containerId}-collapse`
 
     // Set attributes for the container button
     containerButton.setAttribute('data-bs-toggle', 'collapse');
