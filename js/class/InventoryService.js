@@ -59,8 +59,7 @@ class InventoryService {
                 body: body
             })
             const json = await response.json()
-            this.#addToContainersMap(json[0].id, json[0].name, json[0].parent_id, json[0].user_id)
-            return this.#assets
+            return this.#addToContainersMap(json[0].id, json[0].name, json[0].parent_id, json[0].user_id)
         } catch (error) {
             return error
         }
@@ -70,10 +69,10 @@ class InventoryService {
         return this.#assets
     }
 
-    addNewItem = async(name, parent_id) => {
+    addNewItem = async(name, description, container_id) => {
         try {
             const url = `${this.#backendUrl}/items`
-            const body = JSON.stringify({ name, parent_id })
+            const body = JSON.stringify({ name, description, container_id })
             const response = await fetch(url, {
                 method: 'POST',
                 credentials: 'include',
@@ -83,21 +82,30 @@ class InventoryService {
                 body: body
             })
             const json = await response.json()
-
+            return this.#addItemToMap(json[0].id, json[0].name, json[0].description, json[0].container_id, json[0].user_id)
         } catch (error) {
             return error
         }
     }
 
+    #addItemToMap = (id, name, description, container_id, user_id) => {
+        const newItem = new Item(id, name, description, container_id, user_id)
+        if (!this.#assets.get(newItem.getContainerId())) {
+            this.#assets.set(newItem.getContainerId(), [])
+        }
+        this.#assets.get(newItem.getContainerId()).push(newItem)
+
+        return newItem
+    }
+
     #addToContainersMap = (id, name, parent_id, user_id) => {
-        console.log(id)
         const newContainer = new Container(id, name, parent_id, user_id)
         console.log('Add to map new: ', newContainer)
         if (!this.#assets.get(newContainer.getParentId())) {
             this.#assets.set(newContainer.getParentId(), []);
         }
         this.#assets.get(newContainer.getParentId()).push(newContainer);
-        return this.#assets
+        return newContainer
     }
 
     #readJsonContainers = containersAsJson => {

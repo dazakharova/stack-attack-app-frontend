@@ -14,6 +14,9 @@ const assets = new InventoryService(backend_url)
 const roomsHierarchy = document.getElementById("roomsHierarchy")
 
 const processRooms = (data) => {
+    while (roomsHierarchy.children.length > 2) {
+        roomsHierarchy.removeChild(roomsHierarchy.lastChild);
+    }
     // Extract only parent containers from the given data (which have 'null' as a parent_id):
     const roomsArray = data.get(null)
     console.log("Rooms array", roomsArray)
@@ -143,9 +146,14 @@ const attachEventListenersToDynamicContent = () => {
             newRoomButton.style.display = "block"
 
             const newRoomName = input.value
+            if (newRoomName === "") {
+                newRoomDiv.remove();
+                newRoomButton.style.display = "block"
+                return
+            }
             const result = await assets.addNewContainer(newRoomName)
-            console.log(result)
-            processRooms(result)
+            leftContainer.renderRoom(result, assets.getAssets())
+
         })
 
         // Detect click outside form to cancel
@@ -157,6 +165,43 @@ const attachEventListenersToDynamicContent = () => {
             }
         })
     })
+
+    // Get the modal
+    const newItemModal = document.getElementById('new-item-modal');
+
+    // Add event listener for add-new-item button
+    document.getElementById("new-item-btn").addEventListener("click", () => {
+        newItemModal.style.display = 'block';
+
+        // Close the modal
+        document.getElementsByClassName('close')[1].addEventListener("click", () => {
+            newItemModal.style.display = 'none';
+        })
+
+        document.getElementById("new-item-form").addEventListener("submit", async function(event) {
+            event.preventDefault(); // Prevent the form from submitting to a server
+
+            const containerId = parseInt(currentLocationPathDiv.lastElementChild.getAttribute("data-id"))
+            console.log(containerId)
+
+            const itemName = document.getElementById("item-name-input").value;
+            const itemDescription = document.getElementById("item-description-input").value;
+
+            // Returns just added new item id
+            const newItem = await assets.addNewItem(itemName, itemDescription, containerId)
+
+            newItemModal.style.display = 'none';
+
+            rightContainer.renderItem(assetsBlocksDiv, newItem, assets.getAssets())
+
+        });
+    })
+
+    // Add event listener for add-new-place button
+    // document.getElementById("new-place-btn").addEventListener("click", () => {
+    //
+    // })
+
 }
 
 const currentLocationPathDiv = document.getElementById("location-info")
