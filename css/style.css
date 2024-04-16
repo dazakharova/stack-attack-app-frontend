@@ -207,7 +207,7 @@ body {
   padding: 20px;
   text-align: center;
   font-size: 20px;
-  background-image: radial-gradient(circle at bottom, white, transparent 300%);
+  background-image: radial-gradient(circle at bottom, white, transparent 350%);
   animation: bg 10s infinite alternate linear;
 }
 
