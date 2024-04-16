@@ -40,7 +40,7 @@ getAllData().then(() => {
 
 const attachEventListenersToDynamicContent = () => {
     const roomToggleButtons = Array.from(document.querySelectorAll('.button-container > .btn-toggle'));
-    const collapses = roomToggleButtons.map(button => new bootstrap.Collapse(button.nextElementSibling, {toggle: false}));
+    const collapses = roomToggleButtons.map(button => new bootstrap.Collapse(button.nextElementSibling.nextElementSibling, {toggle: false}));
 
     // Add event listener which prevent room buttons to be showed before the previous showed one is closed
     roomToggleButtons.forEach((button, index) => {

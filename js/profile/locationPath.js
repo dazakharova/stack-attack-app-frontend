@@ -63,15 +63,15 @@ const addContainerToPath = (button, currentLocationPathDiv, assetsMap) => {
     // Check parent id of the clicked container button
     const triggeredLocationParentId = button.getAttribute("data-parentId")
 
-    if (lastLocation.getAttribute("id") != 'room-name') {
-        while (button.getAttribute("data-id") < currentLocationPathDiv.lastElementChild.getAttribute("data-id")) {
-            currentLocationPathDiv.lastElementChild.remove()
-        }
-    }
-
     // If parent_id of the last location and clicked container button is the same, then replace the last added location with the just clicked
     if (triggeredLocationParentId === lastLocationParentId) {
         lastLocation.remove()
+    }
+
+    if (lastLocation.getAttribute("id") !== 'room-name') {
+        while (button.getAttribute("data-parentid") < currentLocationPathDiv.lastElementChild.getAttribute("data-parentid")) {
+            currentLocationPathDiv.lastElementChild.remove()
+        }
     }
 
     // If this container button is already added to path, then ignore
