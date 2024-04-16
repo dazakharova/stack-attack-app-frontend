@@ -330,8 +330,8 @@ button.btn2 {
   background-position: center; 
   background-repeat: no-repeat;
   margin: 0 auto;
-  margin-top: 40px;
-  margin-bottom: 60px; 
+  margin-top: 60px;
+  margin-bottom: 10px;
   display: block; 
 }
 
@@ -585,3 +585,31 @@ footer {
   background-color: #5d948f; /* Slightly darker shade of the base color for hover effect */
 }
 
+.delete-icon {
+  display: none;
+  cursor: pointer;
+  color: #6EA79E; /* Bootstrap's danger color */
+  margin-left: 10px; /* Spacing from the room name */
+}
+
+.delete-icon:hover {
+  color: #5d948f; /* A slightly darker red for hover effect */
+}
+
+/* When delete mode is active, show the icons */
+.delete-mode .delete-icon {
+  display: inline-block; /* Show icon in delete mode */
+}
+
+.btn5 {
+  color: #ffffff;
+  background-color: #6EA79E;
+  font-size: 20px;
+  margin: 10px auto; /* Adjusted to center the button horizontally */
+  margin-bottom: 60px;
+  padding: 15px;
+  border-radius: 10px;
+  border: 0.2px solid #6EA79E;
+  display: block; /* Ensure the button is treated as a block-level element */
+  width: fit-content; /* This will make the width of the button fit its content */
+}

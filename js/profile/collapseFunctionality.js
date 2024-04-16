@@ -3,10 +3,12 @@ import {Item} from "../class/Item.js";
 import rightContainer from "./containerRenderHelpers.js";
 import {addContainerToPath, addRoomToPath} from "./locationPath.js";
 
+import { assets } from './profile.js'
+
 const assetsBlocksDiv = document.querySelector(".space-container")
 const currentLocationPathDiv = document.getElementById("location-info")
 
-const renderRoom = (room, data) => {
+const renderRoom = (parentNode, room, data) => {
     console.log('Current room is ', room)
 
     // Getting data of the room
@@ -22,6 +24,11 @@ const renderRoom = (room, data) => {
 
     // Assign unique collapse target for room button, which will be used as id in inner list storing subassets
     const collapseTarget = `#${roomName.replace(/\s+/g, '')}${roomId}-collapse`
+
+    // Create delete button
+    const deleteBtn = document.createElement('span')
+    deleteBtn.className = 'delete-icon'
+    deleteBtn.innerHTML = '<i class="bi bi-trash"></i>'
 
     // Assign rooms attributes
     roomButton.classList.add('btn', 'btn-toggle', 'btn-room', 'd-inline-flex', 'align-items-center', 'rounded', 'border-0', 'collapsed');
@@ -71,11 +78,32 @@ const renderRoom = (room, data) => {
     // Append roomButton to the room div
     roomDiv.appendChild(roomButton)
 
+    // Append delete button to the room div
+    roomDiv.appendChild(deleteBtn)
+
     // Append container div to room div
     roomDiv.appendChild(containersDiv)
 
     // Append room div to room hierarchy div
-    roomsHierarchy.appendChild(roomDiv)
+    parentNode.appendChild(roomDiv)
+
+    // Once delete button is clicked it removes selected room from the layout
+    deleteBtn.addEventListener("click", async(event) => {
+
+        try {
+            const response = await assets.removeContainer(roomId)
+
+            // Prevent the event from bubbling up to the room button click listener
+            event.stopPropagation();
+
+            // Remove the roomDiv from the parentNode
+            parentNode.removeChild(roomDiv)
+        } catch (error) {
+            console.error(error)
+        }
+
+
+    })
 
     // If current room has other assets inside it, render them
     if (contents) {

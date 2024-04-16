@@ -5,20 +5,21 @@ import leftContainer from "./collapseFunctionality.js";
 const backend_url = 'http://localhost:3001'
 
 // Create new storage container (Map) for all data of the user which will be received from the server
-const assets = new InventoryService(backend_url)
+export const assets = new InventoryService(backend_url)
 
 // Access div for holding rooms hierarchy on the left page container
 const roomsHierarchy = document.getElementById("roomsHierarchy")
 
 const processRooms = (data) => {
-    while (roomsHierarchy.children.length > 2) {
+    // Exclude first 3 elements of left container (heading and 2 buttons) from removing before rendering all rooms
+    while (roomsHierarchy.children.length > 3) {
         roomsHierarchy.removeChild(roomsHierarchy.lastChild);
     }
     // Extract only parent containers from the given data (which have 'null' as a parent_id):
     const roomsArray = data.get(null)
     console.log("Rooms array", roomsArray)
     roomsArray.forEach(room => {
-        leftContainer.renderRoom(room, data)
+        leftContainer.renderRoom(roomsHierarchy, room, data)
     })
 }
 
@@ -88,18 +89,35 @@ const attachEventListenersToDynamicContent = () => {
                 return
             }
             const result = await assets.addNewContainer(newRoomName)
-            leftContainer.renderRoom(result, assets.getAssets())
+            leftContainer.renderRoom(roomsHierarchy, result, assets.getAssets())
 
         })
+
+        let triggerCount = 0; // Initialize a counter for the click event
 
         // Detect click outside form to cancel
-        document.addEventListener('click', function(e) {
-            console.log(e.target)
+        const clickHandler = function(e) {
+            console.log(e.target);
             if (!newRoomDiv.contains(e.target) && e.target !== newRoomButton) {
                 newRoomDiv.remove();
-                newRoomButton.style.display = "block"
+                newRoomButton.style.display = "block";
             }
-        })
+            triggerCount++; // Increment the counter each time the event is triggered
+            if (triggerCount >= 2) {
+                // If the event has been triggered twice, remove the event listener
+                document.removeEventListener('click', clickHandler);
+            }
+        };
+
+        document.addEventListener('click', clickHandler);
+
+        // document.addEventListener('click', function(e) {
+        //     console.log(e.target)
+        //     if (!newRoomDiv.contains(e.target) && e.target !== newRoomButton) {
+        //         newRoomDiv.remove();
+        //         newRoomButton.style.display = "block"
+        //     }
+        // }, { once: true })
     })
 
     // Get the modal
@@ -178,9 +196,22 @@ const attachEventListenersToDynamicContent = () => {
             // Hide the modal after handling the data
             newPlaceModal.style.display = 'none';
         })
-
-
     })
+
+    // Get delete mode button
+    const toggleDeleteBtn = document.getElementById('toggle-delete-mode-btn');
+
+    // Event listener for deleting room
+    toggleDeleteBtn.addEventListener('click', () => {
+        roomsHierarchy.classList.toggle('delete-mode');
+
+        // Check if 'delete-mode' is now active and update button text
+        if (roomsHierarchy.classList.contains('delete-mode')) {
+            toggleDeleteBtn.textContent = 'Cancel Delete';
+        } else {
+            toggleDeleteBtn.textContent = 'Delete Room';
+        }
+    });
 
 }
 
