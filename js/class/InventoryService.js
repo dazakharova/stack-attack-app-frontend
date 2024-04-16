@@ -88,6 +88,25 @@ class InventoryService {
         }
     }
 
+    removeContainer = async(id) => {
+        try {
+            const url = `${this.#backendUrl}/containers/${id}`
+            const response = await fetch(url, {
+                method: 'DELETE',
+                credentials: 'include'
+            })
+            const json = await response.json()
+            this.#removeContainerFromMap(id)
+            return json
+        } catch (error) {
+            return error
+        }
+    }
+
+    #removeContainerFromMap = (id) => {
+        this.#assets.delete(id)
+    }
+
     #addItemToMap = (id, name, description, container_id, user_id) => {
         const newItem = new Item(id, name, description, container_id, user_id)
         if (!this.#assets.get(newItem.getContainerId())) {
