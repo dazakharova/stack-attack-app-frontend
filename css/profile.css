@@ -1,13 +1,15 @@
 
 /* Header */
 header {
-  display: flex;
+  display: flex;  
   align-items: center;
   justify-content: space-between;
-  padding-top: 20px;
-  padding-right: 20px;
-  padding-left: 20px;
-  background: rgba(255, 255, 255, 0.5);
+  padding-top: 0px;
+  padding-right: 0px;
+  padding-left: 0px;
+  
+  background: rgba(255, 255, 255, 0);
+  box-sizing: border-box;
 }
 
 header video, header img {
@@ -24,7 +26,7 @@ nav ul {
   font-family: Comfortaa, sans-serif;
 }
 nav li {
-  padding-top: 0px;
+  padding-bottom: 20px;
   display: inline-block;
   font-family: Comfortaa, sans-serif;
 }
@@ -41,53 +43,51 @@ nav a:hover {
   color: #434881;
 }
 
-.howItWorks {
-  width: calc(100% - 40px);
-  height: 600px;
-  padding: 20px;
-  margin-bottom: 20px;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: #d6bbad;
+/* Navbar */
+.navbar {
+  position: fixe;
+
+  margin: 0;
+  padding: 0;
+  width: calc(100%);
+  background-color: rgba(255, 255, 255, 0.1);
   display: flex;
-  box-sizing: border-box;
+  align-items: right;
+  justify-content: right;
+  z-index: 999;
+  opacity: 1; 
+  transition: opacity 1s ease, top 1s ease; 
 }
-.whyUs {
-  width: calc(100% - 40px);
-  height: 600px;
-  padding: 20px;
-  margin-top: 20px;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: #6ea79e;
-  display: flex;
-  box-sizing: border-box;
+
+.navbar.active {
+  top: -100px;
+  opacity: 0.1;
 }
-.feedback {
-  width: calc(100% - 40px);
-  height: 600px;
-  padding: 20px;
-  margin-top: 20px;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: #98aeb1;
-  display: flex;
-  box-sizing: border-box;
-}
-.OurTeam {
-  width: calc(100% - 40px);
-  height: 600px;
-  padding: 20px;
-  margin-top: 20px;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: #627fa3;
-  display: flex;
-  box-sizing: border-box;
-}
+
+
 
 /* MAIN*/
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  background-color: #ffffff;
+  color: #627FA3;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(186, 191, 104, 0.);
+  padding: 20px;
+  text-align: center;
+  font-size: 20px;
+  background-image: radial-gradient(circle at bottom, white, transparent 400%);
+  animation: bg 10s infinite alternate linear;
+}
 
+@keyframes bg {
+  0% { background-color: #D6BBAD; }
+  25% { background-color: #98AEB1; }
+  50% { background-color: #627FA3; }
+  75% { background-color: #6EA79E; }
+}
 /*containers*/
 main {
   display: flex;
@@ -122,9 +122,8 @@ h2 {
   /*max-height: auto;*/
   overflow:hidden;
   height:1%;
-  border: 1px solid #98AEB1;  
+  border: 0px solid #98AEB1;  
 }
-
 
 
 
@@ -136,7 +135,7 @@ h2 {
   background-color: #ffffff;
   margin-left: 10px;
   border-radius: 10px;
-  border: 1px solid #98AEB1;
+  border: 0px solid #98AEB1;
   position: relative;
 }
 
@@ -150,7 +149,6 @@ h2 {
   font-family: Comfortaa, sans-serif; 
   font-size: 20px;
 }
-
 
 .btn-toggle {
   padding: .25rem .5rem;
@@ -194,7 +192,6 @@ h2 {
 .btn-toggle-nav a:focus {
   background-color: var(--bs-tertiary-bg); 
 }
-
 
 /* For room buttons */
 .btn-room {
@@ -288,7 +285,6 @@ h2 {
 }
 
 
-
 .scrollarea {
   overflow-y: auto;
 }
@@ -348,7 +344,6 @@ button.btn2 {
   right: 20px;
 }
 
-
 /*placeholder*/
 input[type="text"] {
   border-radius: 10px; 
@@ -369,7 +364,6 @@ input[type="text"]::placeholder {
   padding: 3px; 
   width: 60%; /* Adjust the width as needed */
 }
-
 
 /* Modal windows styles*/
 /* Modal window styles */
@@ -396,7 +390,6 @@ input[type="text"]::placeholder {
   text-align: center;
   position: relative;
 }
-
 
 
 #modal-title {
@@ -434,7 +427,6 @@ input[type="text"]::placeholder {
   text-decoration: none;
   cursor: pointer;
 }
-
 
 /*BOXES in container*/
 .space-container {
@@ -496,32 +488,64 @@ input[type="text"]::placeholder {
   font-size: 20px;
 }
 
-/* Under the containers (need to fix)*/
+/* Положение окна с картинкой */
+/* Стили для контейнера */
 .dropdown-container {
-  position: relative;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  margin: 20px;
 }
 
+/* Стили для выпадающего меню */
 .dropdown-menu {
   position: absolute;
-  top: 100%;
+  left: 0;
+  bottom: 10%;
 }
 
+/* Стили для кнопки */
 .dropdown-toggle {
   display: flex;
   align-items: center;
   justify-content: left;
-  margin-left: 20px;
-  margin-top: 80px;
+  position: fixed;
+  width: 5%; 
+  height: 10%; 
+  left: 0px;
+  bottom: 10px;
 }
 
+.rounded-circle {
+  width: 150px;
+  height: 150px;
+  margin-bottom: 140%;
+  margin-left: 40%;
+  object-fit: fill !important;
+  border-radius: 40%; /* Это создаст круглое изображение */
+}
+
+.fixed-dropdown-container {
+  position: fixed;
+  bottom: 20px; /* Adjust as needed */
+  left: 20px; /* Adjust as needed */
+  z-index: 1030; /* Ensures it's on top of other content */
+}
 /* Footer */
 footer {
+  position:relative;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
   text-align: center;
   padding: 10px;
-  background-color: #ffffff;
+  background: rgba(255, 255, 255, 0);
   font-family: "Finger Paint", Comfortaa, sans-serif;
   color: #434881;
   font-size: 30px;
+  margin: 0; 
 }
 .contact-info {
   margin-top: 20px;
@@ -613,3 +637,4 @@ footer {
   display: block; /* Ensure the button is treated as a block-level element */
   width: fit-content; /* This will make the width of the button fit its content */
 }
+
