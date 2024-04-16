@@ -27,6 +27,10 @@ class Container {
         return this.#userId
     }
 
+    setName(newName) {
+        this.#name = newName
+    }
+
 }
 
 export { Container }

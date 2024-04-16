@@ -2,8 +2,12 @@ import { addContainerToPath } from "./locationPath.js";
 import {Container} from "../class/Container.js";
 import {Item} from "../class/Item.js";
 import leftContainer from "./collapseFunctionality.js";
+import {assets} from "./profile.js";
 
 const renderContainer = (parentNode, container, data) => {
+    const containerId = container.getId()
+    const containerParentId = container.getParentId()
+
     // Create block for container
     const containerDiv = document.createElement('div')
     containerDiv.className = 'box'
@@ -19,8 +23,8 @@ const renderContainer = (parentNode, container, data) => {
     containerSpan.className = 'title'
 
     // Set attributes holding its unique information in order to be able to access them later
-    containerSpan.setAttribute('data-id', container.getId())
-    containerSpan.setAttribute('data-parentId', container.getParentId())
+    containerSpan.setAttribute('data-id', containerId)
+    containerSpan.setAttribute('data-parentId', containerParentId)
     containerSpan.innerText = container.getName()
 
     // Create edit icon
@@ -31,26 +35,75 @@ const renderContainer = (parentNode, container, data) => {
     const deleteIcon = document.createElement('i')
     deleteIcon.classList.add('bi', 'bi-trash', 'delete-box-icon')
 
-    if (containerContents) {
-        containerDiv.addEventListener('click', () => {
-            // Clean the assets block
-            parentNode.innerHTML = ''
-            addContainerToPath(containerSpan, document.getElementById('location-info'), data)
+    containerDiv.addEventListener('click', (event) => {
+        if (!event.target.matches('.edit-box-icon, .delete-box-icon, .edit-box-icon *, .delete-box-icon *, .ok-button, .title-input')) {
+            if (containerContents) {
+                // Clean the assets block
+                parentNode.innerHTML = ''
+                addContainerToPath(containerSpan, document.getElementById('location-info'), data)
 
-            containerContents.forEach(c => {
-                if (c instanceof Container) {
-                    renderContainer(parentNode, c, data)
-                } else if (c instanceof Item) {
-                    renderItem(parentNode, c, data)
+                containerContents.forEach(c => {
+                    if (c instanceof Container) {
+                        renderContainer(parentNode, c, data)
+                    } else if (c instanceof Item) {
+                        renderItem(parentNode, c, data)
+                    }
+                })
+            } else {
+                parentNode.innerHTML = ''
+                addContainerToPath(containerSpan, document.getElementById('location-info'), data)
+            }
+        }
+    })
+
+    editIcon.addEventListener('click', () => {
+        // containerDiv.style.width = 'calc(45.33% - 10px)';
+        // Replace span with inout field
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.value = containerSpan.textContent;
+        input.classList.add('title-input');
+        containerFooter.replaceChild(input, containerSpan)
+
+        // Replace edit icon with 'OK' button
+        const okButton = document.createElement('button');
+        okButton.textContent = 'OK';
+        okButton.classList.add('ok-button'); // For styling, if needed
+        containerFooter.replaceChild(okButton, editIcon);
+
+        // Focus on the input and select its content
+        input.focus();
+        input.select();
+
+        okButton.addEventListener('click', async function() {
+            try {
+                containerSpan.textContent = input.value;
+                containerFooter.replaceChild(containerSpan, input);
+
+                const response = await assets.editContainerName(containerId, input.value)
+
+                containerFooter.replaceChild(editIcon, okButton);
+            } catch (error) {
+                console.error(error)
+            }
+        });
+
+        // Add event listener for Enter key
+        input.addEventListener('keypress', async function(e) {
+            if (e.key === 'Enter') {const newSpan = document.createElement('span');
+                try {
+                    containerSpan.textContent = input.value;
+                    containerFooter.replaceChild(containerSpan, input)
+
+                    const response = await assets.editContainerName(containerId, input.value)
+
+                    containerFooter.replaceChild(editIcon, okButton);
+                } catch (error) {
+                    console.error(error)
                 }
-            })
+            }
         })
-    } else {
-        containerDiv.addEventListener("click", () => {
-            parentNode.innerHTML = ''
-            addContainerToPath(containerSpan, document.getElementById('location-info'), data)
-        })
-    }
+    })
 
     containerFooter.appendChild(containerSpan)
     containerFooter.appendChild(editIcon)

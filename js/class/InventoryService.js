@@ -88,6 +88,21 @@ class InventoryService {
         }
     }
 
+    editContainerName = async (id, name) => {
+        const url = `${this.#backendUrl}/containers/${id}`
+        const body = JSON.stringify({ name: name })
+        const response = await fetch(url, {
+            method: 'PUT',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: body
+        })
+        const json = await response.json()
+        return this.#editContainerNameInMap(json.id, json.name, json.parent_id)
+    }
+
     removeContainer = async(id) => {
         try {
             const url = `${this.#backendUrl}/containers/${id}`
@@ -101,6 +116,15 @@ class InventoryService {
         } catch (error) {
             return error
         }
+    }
+
+    #editContainerNameInMap = (id, name, parent_id) => {
+        this.#assets.get(parent_id).forEach(asset => {
+            if (asset instanceof Container && asset.getId() === id) {
+                asset.setName(name)
+            }
+        })
+
     }
 
     #removeContainerFromMap = (id) => {
