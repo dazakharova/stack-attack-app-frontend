@@ -42,7 +42,6 @@ const renderRoom = (parentNode, room, data) => {
     const contents = data.get(roomId)
 
     roomButton.addEventListener('click', (event) => {
-        console.log("Room Button clicked")
         // Add room to the path section
         addRoomToPath(roomButton, currentLocationPathDiv, data)
         // Clean the assets block
@@ -89,20 +88,21 @@ const renderRoom = (parentNode, room, data) => {
 
     // Once delete button is clicked it removes selected room from the layout
     deleteBtn.addEventListener("click", async(event) => {
+        const isConfirmed = confirm(`Are you sure you want to delete room "${roomName}"?`);
 
-        try {
-            const response = await assets.removeContainer(roomId)
+        if (isConfirmed) {
+            try {
+                const response = await assets.removeContainer(roomId)
 
-            // Prevent the event from bubbling up to the room button click listener
-            event.stopPropagation();
+                // Prevent the event from bubbling up to the room button click listener
+                event.stopPropagation();
 
-            // Remove the roomDiv from the parentNode
-            parentNode.removeChild(roomDiv)
-        } catch (error) {
-            console.error(error)
+                // Remove the roomDiv from the parentNode
+                parentNode.removeChild(roomDiv)
+            } catch (error) {
+                console.error(error)
+            }
         }
-
-
     })
 
     // If current room has other assets inside it, render them

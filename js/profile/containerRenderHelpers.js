@@ -10,6 +10,10 @@ const renderContainer = (parentNode, container, data) => {
 
     const containerContents = data.get(container.getId())
 
+    // Create container footer
+    const containerFooter = document.createElement('div')
+    containerFooter.className = 'box-footer'
+
     // Create span for container with its title inside
     const containerSpan = document.createElement('span')
     containerSpan.className = 'title'
@@ -18,6 +22,14 @@ const renderContainer = (parentNode, container, data) => {
     containerSpan.setAttribute('data-id', container.getId())
     containerSpan.setAttribute('data-parentId', container.getParentId())
     containerSpan.innerText = container.getName()
+
+    // Create edit icon
+    const editIcon = document.createElement('i')
+    editIcon.classList.add('bi', 'bi-pencil-square', 'edit-box-icon')
+
+    // Create delete icon
+    const deleteIcon = document.createElement('i')
+    deleteIcon.classList.add('bi', 'bi-trash', 'delete-box-icon')
 
     if (containerContents) {
         containerDiv.addEventListener('click', () => {
@@ -40,8 +52,12 @@ const renderContainer = (parentNode, container, data) => {
         })
     }
 
+    containerFooter.appendChild(containerSpan)
+    containerFooter.appendChild(editIcon)
+    containerFooter.appendChild(deleteIcon)
+
     // Append span to div
-    containerDiv.appendChild(containerSpan)
+    containerDiv.appendChild(containerFooter)
 
     // Append div to parent node given as an argument
     parentNode.appendChild(containerDiv)
