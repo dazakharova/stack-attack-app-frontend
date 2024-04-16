@@ -6,7 +6,7 @@ import {addContainerToPath, addRoomToPath} from "./locationPath.js";
 const assetsBlocksDiv = document.querySelector(".space-container")
 const currentLocationPathDiv = document.getElementById("location-info")
 
-const renderRoom = (room, data) => {
+const renderRoom = (parentNode, room, data) => {
     console.log('Current room is ', room)
 
     // Getting data of the room
@@ -75,7 +75,7 @@ const renderRoom = (room, data) => {
     roomDiv.appendChild(containersDiv)
 
     // Append room div to room hierarchy div
-    roomsHierarchy.appendChild(roomDiv)
+    parentNode.appendChild(roomDiv)
 
     // If current room has other assets inside it, render them
     if (contents) {

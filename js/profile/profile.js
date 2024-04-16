@@ -11,14 +11,15 @@ const assets = new InventoryService(backend_url)
 const roomsHierarchy = document.getElementById("roomsHierarchy")
 
 const processRooms = (data) => {
-    while (roomsHierarchy.children.length > 2) {
+    // Exclude first 3 elements of left container (heading and 2 buttons) from removing before rendering all rooms
+    while (roomsHierarchy.children.length > 3) {
         roomsHierarchy.removeChild(roomsHierarchy.lastChild);
     }
     // Extract only parent containers from the given data (which have 'null' as a parent_id):
     const roomsArray = data.get(null)
     console.log("Rooms array", roomsArray)
     roomsArray.forEach(room => {
-        leftContainer.renderRoom(room, data)
+        leftContainer.renderRoom(roomsHierarchy, room, data)
     })
 }
 
@@ -88,7 +89,7 @@ const attachEventListenersToDynamicContent = () => {
                 return
             }
             const result = await assets.addNewContainer(newRoomName)
-            leftContainer.renderRoom(result, assets.getAssets())
+            leftContainer.renderRoom(roomsHierarchy, result, assets.getAssets())
 
         })
 
