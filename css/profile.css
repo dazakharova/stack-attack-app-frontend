@@ -339,7 +339,7 @@ button.btn2 {
   padding: 20px;
   border-radius: 10px; 
   border: 0.2px solid #6EA79E; 
-  position: absolute; /* Change to absolute positioning */
+  /*position: absolute; !* Change to absolute positioning *!*/
   top: 140px; /* Adjust top position as needed */
   right: 20px;
 }
@@ -712,4 +712,9 @@ footer {
 .title-input:focus {
   outline: none;
   border-bottom: 2px solid #627fa3; /* Highlight on focus */
+}
+
+
+#assets-navigation-block {
+  margin-top: 20px;
 }
