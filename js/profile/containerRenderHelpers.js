@@ -7,6 +7,7 @@ import {assets} from "./profile.js";
 const renderContainer = (parentNode, container, data) => {
     const containerId = container.getId()
     const containerParentId = container.getParentId()
+    const containerName = container.getName()
 
     // Create block for container
     const containerDiv = document.createElement('div')
@@ -25,7 +26,7 @@ const renderContainer = (parentNode, container, data) => {
     // Set attributes holding its unique information in order to be able to access them later
     containerSpan.setAttribute('data-id', containerId)
     containerSpan.setAttribute('data-parentId', containerParentId)
-    containerSpan.innerText = container.getName()
+    containerSpan.innerText = containerName
 
     // Create edit icon
     const editIcon = document.createElement('i')
@@ -57,8 +58,6 @@ const renderContainer = (parentNode, container, data) => {
     })
 
     editIcon.addEventListener('click', () => {
-        // containerDiv.style.width = 'calc(45.33% - 10px)';
-        // Replace span with inout field
         const input = document.createElement('input');
         input.type = 'text';
         input.value = containerSpan.textContent;
@@ -119,6 +118,23 @@ const renderContainer = (parentNode, container, data) => {
                 }
             }
         })
+    })
+
+    deleteIcon.addEventListener('click', async (event) => {
+        const isConfirmed = confirm(`Are you sure you want to delete "${containerName}"?`);
+
+        if (isConfirmed) {
+            try {
+                const response = await assets.removeContainer(containerId)
+
+                // Prevent the event from bubbling up to the room button click listener
+                event.stopPropagation();
+
+                parentNode.removeChild(containerDiv)
+            } catch (error) {
+                console.error(error)
+            }
+        }
     })
 
     containerFooter.appendChild(containerSpan)
