@@ -92,14 +92,37 @@
 </main>
    <!--SMALL MENU" -->
    <div class="fixed-dropdown-container">
-    <div class="d-flex align-items-center justify-content-left link-body-emphasis text-decoration-none dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="preventDefaultClick(event)" style="margin-left: 20px; margin-top: 80px;">
+    <div class="d-flex align-items-center justify-content-left link-body-emphasis text-decoration-none dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"  style="margin-left: 20px; margin-top: 80px;">
         <img src="../image/profile/perfume_example_pic.png" alt="mypic" width="180" height="180" class="rounded-circle">
     </div>
     <ul class="dropdown-menu text-small shadow">
-        <li><a class="dropdown-item" href="#">New picture...</a></li>
+        <li><a class="dropdown-item" href="#" id="new-picture-btn">New picture...</a></li>
         <li><a class="dropdown-item" href="#">Change password</a></li>
     </ul>
 </div>
+
+<div id="picture-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <img id="current-picture" alt="Current Picture" width="200">
+      <div id="image-options">
+        <img src="../image/avatars/man-hat1.png" class="image-option">
+        <img src="../image/avatars/wmn-blond2.png" class="image-option">
+        <img src="../image/avatars/old-man.png" class="image-option">
+        <img src="../image/avatars/asian-grl.png" class="image-option">
+        <img src="../image/avatars/hoodie-man.png" class="image-option">
+        <img src="../image/avatars/wmn-clth.png" class="image-option">
+        <img src="../image/avatars/ginger-man.png" class="image-option">
+        <img src="../image/avatars/ginger-grl.png" class="image-option">
+
+      </div>
+      <button id="save-picture-btn">Save</button>
+    </div>
+  </div>
+
+
+
+
 
 
   
@@ -146,6 +169,7 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
         <script type="module" src="../js/modals.js"></script>
+        <script type="module" src="../js/profile/personalSettings.js"></script>
      
       
 <!--<script type="module" src="../js/border.js"></script>-->
