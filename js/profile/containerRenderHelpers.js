@@ -80,7 +80,6 @@ const renderContainer = (parentNode, container, data) => {
 
             // Get parent node in the left collapse menu in order to update container name there
             const parentNode = document.querySelector(`#${parentName.replace(/\s/g, '')}${containerParentId}-collapse`)
-
             try {
                 containerSpan.textContent = input.value;
                 containerFooter.replaceChild(containerSpan, input);
@@ -178,42 +177,30 @@ const renderItem = (parentNode, item, data) => {
         itemModal.style.display = "block";
 
         const editNameBtn = document.getElementById('edit-item-name')
+        const newNameDiv = document.querySelector('.new-item-name-div')
 
-        //
-        // Create new name div
-        const newNameDiv = document.createElement('div')
-        newNameDiv.className = 'new-item-name-div'
-
-        // Create input field instead of item title to edit it
-        const input = document.createElement('input')
-        input.type = 'text';
-        input.classList.add('item-title-input');
-        input.value = modalTitle.textContent
-
-        // Create ok button for submitting new name
-        const okButton = document.createElement('button');
-        okButton.textContent = 'OK';
-        okButton.classList.add('ok-button');
-
-        // Append input and ok button to new div
-        newNameDiv.appendChild(input)
-        newNameDiv.appendChild(okButton)
-
-        //
+        const okButton = document.querySelector('.new-item-name-div .ok-button')
 
         editNameBtn.addEventListener('click', () => {
 
-            // Replace item title with new div for editing
-            modalContent.replaceChild(newNameDiv, modalTitle)
-
+            const input = document.querySelector('.new-item-name-div .item-title-input')
             // Focus on the input and select its content
+
+            // Replace item title with new div for editing
+            newNameDiv.style.display = 'block'
+
+            input.value = modalTitle.innerText
+
+            modalTitle.style.display = 'none'
+
             input.focus();
             input.select();
 
             okButton.addEventListener('click', async () => {
                 try {
                     modalTitle.textContent = input.value;
-                    modalContent.replaceChild(modalTitle, newNameDiv);
+                    newNameDiv.style.display = 'none'
+                    modalTitle.style.display = 'block'
 
                     const response = await assets.editItemName(itemId, modalTitle.textContent)
 
@@ -223,11 +210,23 @@ const renderItem = (parentNode, item, data) => {
             })
         })
 
+        const parentName = document.getElementById('location-info').lastElementChild.innerText
+        const leftParentNode = document.querySelector(`#${parentName.replace(/\s/g, '')}${itemParentId}-collapse > .left-items-list`)
+        console.log('left parent:', leftParentNode)
         // Close the modal window when the close button is clicked
         let closeButton = document.querySelector("#close-item");
         if (closeButton) {
             closeButton.onclick = function () {
                 itemModal.style.display = "none";
+
+                leftParentNode.innerHTML = ''
+                data.get(itemParentId).forEach(c => {
+                    if (c instanceof Container) {
+                        leftContainer.renderItem(leftParentNode, c, data)
+                    } else if (c instanceof Item) {
+                        leftContainer.renderItem(leftParentNode, c, data)
+                    }
+                })
 
                 // Re-render all the contents of the current container
                 parentNode.innerHTML = ''
