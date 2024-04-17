@@ -58,16 +58,28 @@
              <div class="space-container"></div>
          </div>
 
-              <!--Modal window for boxes" -->
- <div id="modal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2 id="modal-title">My Item</h2>
-        <img id="modal-image" src="" alt="myItemPicture"> 
-        <p id="modal-description">My item description</p> 
-    </div>
-</div>
-  </div>
+              <!--Modal window for items -->
+         <div id="modal" class="modal">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <div class="dropdown">
+                         <i data-bs-toggle="dropdown" aria-expanded="false" id="more-btn" class="bi bi-three-dots"></i>
+                         <div id="item-menu" class="dropdown-menu text-small shadow" aria-labelledby="more-btn">
+                             <a class="dropdown-item" id="edit-item-name" href="#">Edit Name</a>
+                             <a class="dropdown-item" id="edit-item-description" href="#">Edit Description</a>
+                             <a class="dropdown-item" id="edit-item-photo" href="#">Change Photo</a>
+                             <a class="dropdown-item" id="delete-item" href="#">Delete</a>
+                         </div>
+                     </div>
+                     <span id="close-item">&times;</span>
+                 </div>
+                 <h2 id="modal-title"></h2>
+                 <img id="modal-image" src="" alt="myItemPicture">
+                 <p id="modal-description"></p>
+             </div>
+         </div>
+
+     </div>
 </div>
 </main>
    <!--SMALL MENU" -->
