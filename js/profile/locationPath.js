@@ -86,7 +86,7 @@ const addContainerToPath = (button, currentLocationPathDiv, assetsMap) => {
     containerButton.setAttribute("id", buttonId)
     containerButton.setAttribute("data-id", button.getAttribute("data-id"))
     containerButton.setAttribute("data-parentId", button.getAttribute("data-parentId"))
-    containerButton.innerText = " > " + button.innerText
+    containerButton.innerText = button.innerText
 
     containerButton.addEventListener("click", () => {
         // Get the next sibling of the clicked button

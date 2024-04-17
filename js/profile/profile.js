@@ -186,7 +186,7 @@ const attachEventListenersToDynamicContent = () => {
 
             console.log("Parent container", parentName)
 
-            const parentNode = document.querySelector(`#${parentName.replace(/\s+/g)}${parentId}-collapse > ul`)
+            const parentNode = document.querySelector(`#${parentName.replace(/\s/g, '')}${parentId}-collapse > ul`)
             console.log("new place parent", parentNode)
 
             // Update contents of the current container, the user is in
