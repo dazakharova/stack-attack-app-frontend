@@ -14,6 +14,7 @@
       rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Finger+Paint&display=swap"
       rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="stylesheet" href="../css/profile.css">
   <script type="module" src="../js/profile/profile.js"></script>
 
@@ -43,9 +44,13 @@
      <div class="right-container">
              <div id="right-container-header">
                  <h2>My items</h2>
-                 <input type="text" placeholder="Missing something valuable?" >
+                 <div class="boxquest">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Missing something valuable?" class="input" name="txt" onmouseout="this.value = ''; this.blur();">
+                </div>
+
                  <!--Button "Add new room" -->
-                 <button class="btn3" data-bs-toggle="dropdown" aria-expanded="false">Add new item</button>
+                 <div id="addbtn"><button class="btn3" data-bs-toggle="dropdown" aria-expanded="false">Add new item</button></div>
                  <div id="new-item-menu" class="dropdown-menu" aria-labelledby="new-item-btn">
                      <a id="new-item-btn" class="dropdown-item" href="#">Add new item</a>
                      <a id="new-place-btn" class="dropdown-item" href="#">Add new place</a>
