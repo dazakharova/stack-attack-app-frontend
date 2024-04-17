@@ -214,20 +214,22 @@ const renderItem = (parentNode, item, data) => {
         }
 
         const parentName = document.getElementById('location-info').lastElementChild.innerText
-        const leftParentNode = document.querySelector(`#${parentName.replace(/\s/g, '')}${itemParentId}-collapse > .left-items-list`)
-        console.log('left parent:', leftParentNode)
+        const leftParentContainersNode =document.querySelector(`#${parentName.replace(/\s/g, '')}${itemParentId}-collapse > .containers-list`)
+        const leftParentItemsNode = document.querySelector(`#${parentName.replace(/\s/g, '')}${itemParentId}-collapse > .left-items-list`)
+
         // Close the modal window when the close button is clicked
         let closeButton = document.querySelector("#close-item");
         if (closeButton) {
             closeButton.onclick = function () {
                 itemModal.style.display = "none";
 
-                leftParentNode.innerHTML = ''
+                leftParentContainersNode.innerHTML = ''
+                leftParentItemsNode.innerHTML = ''
                 data.get(itemParentId).forEach(c => {
                     if (c instanceof Container) {
-                        leftContainer.renderItem(leftParentNode, c, data)
+                        leftContainer.renderContainer(leftParentContainersNode, c, data)
                     } else if (c instanceof Item) {
-                        leftContainer.renderItem(leftParentNode, c, data)
+                        leftContainer.renderItem(leftParentItemsNode, c, data)
                     }
                 })
 

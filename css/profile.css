@@ -1499,6 +1499,7 @@ footer {
 
 #item-window-content {
   padding: 0px;
+  width: 60%;
 }
 
 .dropdown {
@@ -1605,12 +1606,12 @@ footer {
 }
 
 /*New item and new place windows styles */
-.new-item-modal-content {
+.modal-window {
   background-color: #ffffff;
   margin: 10% auto;
   padding: 20px;
   border: 1px solid #ffffff;
-  width: 60%;
+  width: 40%;
   height: auto;
   text-align: center;
   position: relative;
