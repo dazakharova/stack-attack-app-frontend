@@ -68,11 +68,16 @@ const renderRoom = (parentNode, room, data) => {
     containersDiv.setAttribute("id", collapseTarget.substring(1))
 
     // Create list element inside the containers div
-    const ul = document.createElement("ul")
-    ul.classList.add("containers-list", "btn-toggle-nav", "list-unstyled", "fw-normal", "pb-1", "small")
+    const containersUl = document.createElement("ul")
+    containersUl.classList.add("containers-list", "btn-toggle-nav", "list-unstyled", "fw-normal", "pb-1", "small")
+
+    // Create a nested list of items block for holding each item
+    const itemsUl = document.createElement("ul")
+    itemsUl.classList.add("list-unstyled", "left-items-list")
 
     // Append ul to the containers div
-    containersDiv.appendChild(ul)
+    containersDiv.appendChild(containersUl)
+    containersDiv.appendChild(itemsUl)
 
     // Append roomButton to the room div
     roomDiv.appendChild(roomButton)
@@ -111,9 +116,9 @@ const renderRoom = (parentNode, room, data) => {
 
         contents.forEach(b => {
             if (b instanceof Container) {
-                renderContainer(ul, b, data)
+                renderContainer(containersUl, b, data)
             } else if (b instanceof Item) {
-                renderItem(ul, b, data)
+                renderItem(itemsUl, b, data)
             }
         })
     }
@@ -182,7 +187,7 @@ const renderContainer = (parentNode, container, data) => {
 
     // Create a nested list of items block for holding each item
     const itemsUl = document.createElement("ul")
-    itemsUl.className = "list-unstyled"
+    itemsUl.classList.add("list-unstyled", "left-items-list")
 
     // Append items list to the items div
     childrenDiv.appendChild(itemsUl)
@@ -220,7 +225,7 @@ const renderItem = (parentNode, item, data) => {
     // Get data of the item
     const itemId = item.getId()
     const itemName = item.getName()
-    const itemContainerId = item.getContainerId()
+    const itemParentId = item.getContainerId()
 
     // Create item list element for holding item link
     const itemElement = document.createElement("li")
@@ -233,7 +238,7 @@ const renderItem = (parentNode, item, data) => {
 
     // Set unique attributes to item link in order to be able to access it later
     a. setAttribute("data-id", itemId)
-    a.setAttribute("data-containerId", itemContainerId)
+    a.setAttribute("data-containerId", itemParentId)
 
     a.addEventListener("click", () => {
         // Get the modal window
@@ -254,18 +259,38 @@ const renderItem = (parentNode, item, data) => {
         // Display the modal window
         itemModal.style.display = "block";
 
+        const newNameDiv = document.querySelector('.new-item-name-div')
+        const okButton = document.querySelector('.new-item-name-div .ok-button')
+
+        const input = document.querySelector('.new-item-name-div .item-title-input')
+        // Focus on the input and select its content
+
+
         const editNameBtn = document.getElementById('edit-item-name')
         editNameBtn.addEventListener('click', () => {
-            const input = document.createElement('input')
-            input.type = 'text';
-            input.classList.add('item-title-input');
-            input.value = modalTitle.textContent
-            modalContent.replaceChild(input, modalTitle)
+            // Replace item title with new div for editing
+            newNameDiv.style.display = 'block'
 
-            const okButton = document.createElement('button');
-            okButton.textContent = 'OK';
-            okButton.classList.add('ok-button');
-            modalContent.insertBefore(okButton, modalImage)
+            input.value = modalTitle.innerText
+
+            modalTitle.style.display = 'none'
+
+            input.focus();
+            input.select();
+
+            okButton.addEventListener('click', async () => {
+                try {
+                    modalTitle.textContent = input.value;
+                    newNameDiv.style.display = 'none'
+                    modalTitle.style.display = 'block'
+
+                    const response = await assets.editItemName(itemId, modalTitle.textContent)
+
+                } catch (error) {
+                    console.error(error)
+                }
+            })
+
         })
 
         // Close the modal window when the close button is clicked
@@ -274,7 +299,28 @@ const renderItem = (parentNode, item, data) => {
             closeButton.onclick = function () {
                 itemModal.style.display = "none";
 
-                containerFooter.replaceChild(input, containerSpan)
+                // Re-render all the contents of the current container in the left menu
+                parentNode.innerHTML = ''
+                data.get(parseInt(itemParentId)).forEach(c => {
+                    if (c instanceof Container) {
+                        renderContainer(parentNode, c, data)
+                    } else if (c instanceof Item) {
+                        renderItem(parentNode, c, data)
+                    }
+                })
+
+                // Re-render all the contents of the current container in the right container
+                const leftParentNode = document.querySelector('.space-container')
+                leftParentNode.innerHTML = ''
+
+                data.get(parseInt(itemParentId)).forEach(c => {
+                    if (c instanceof Container) {
+                        rightContainer.renderContainer(leftParentNode, c, data)
+                    } else if (c instanceof Item) {
+                        rightContainer.renderItem(leftParentNode, c, data)
+                    }
+                })
+
             };
         }
     })

@@ -1550,6 +1550,10 @@ footer {
 
 /*Item dropdown menu options handling*/
 
+.new-item-name-div {
+  display: none;
+}
+
 .item-title-input {
   margin-top: 20px;
   width: 30%;
