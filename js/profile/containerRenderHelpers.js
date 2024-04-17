@@ -157,7 +157,7 @@ const renderItem = (parentNode, item, data) => {
     // Add event listener to item div, once it's clicked - popup window with detailed info about the item shows up
     itemDiv.addEventListener('click', () => {
         // Get the modal window
-        let modal = document.getElementById("modal")
+        let itemModal = document.getElementById("item-modal")
 
         // Get the elements of the modal window after opening it
         let modalImage = document.getElementById("modal-image");
@@ -170,13 +170,13 @@ const renderItem = (parentNode, item, data) => {
         modalDescription.textContent = item.getDescription();
 
         // Display the modal window
-        modal.style.display = "block";
+        itemModal.style.display = "block";
 
         // Close the modal window when the close button is clicked
-        let closeButton = document.querySelector(".close");
+        let closeButton = document.querySelector("#close-item");
         if (closeButton) {
             closeButton.onclick = function () {
-                modal.style.display = "none";
+                itemModal.style.display = "none";
             };
         }
     })

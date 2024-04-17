@@ -166,7 +166,7 @@ const attachEventListenersToDynamicContent = () => {
         newPlaceModal.style.display = 'block'
 
         // Close button functionality
-        document.getElementsByClassName("close")[2].addEventListener("click", () => {
+        document.getElementsByClassName("close")[3].addEventListener("click", () => {
                 newPlaceModal.style.display = 'none';
         })
 
