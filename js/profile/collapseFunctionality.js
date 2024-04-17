@@ -267,7 +267,7 @@ const renderItem = (parentNode, item, data) => {
 
 
         const editNameBtn = document.getElementById('edit-item-name')
-        editNameBtn.addEventListener('click', () => {
+        editNameBtn.onclick =() => {
             // Replace item title with new div for editing
             newNameDiv.style.display = 'block'
 
@@ -277,21 +277,20 @@ const renderItem = (parentNode, item, data) => {
 
             input.focus();
             input.select();
+        }
 
-            okButton.addEventListener('click', async () => {
-                try {
-                    modalTitle.textContent = input.value;
-                    newNameDiv.style.display = 'none'
-                    modalTitle.style.display = 'block'
+        okButton.onclick = async () => {
+            try {
+                modalTitle.textContent = input.value;
+                newNameDiv.style.display = 'none'
+                modalTitle.style.display = 'block'
 
-                    const response = await assets.editItemName(itemId, modalTitle.textContent)
+                const response = await assets.editItemName(itemId, modalTitle.textContent)
 
-                } catch (error) {
-                    console.error(error)
-                }
-            })
-
-        })
+            } catch (error) {
+                console.error(error)
+            }
+        }
 
         // Close the modal window when the close button is clicked
         let closeButton = document.querySelector("#close-item");

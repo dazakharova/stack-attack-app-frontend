@@ -180,10 +180,10 @@ const renderItem = (parentNode, item, data) => {
         const newNameDiv = document.querySelector('.new-item-name-div')
 
         const okButton = document.querySelector('.new-item-name-div .ok-button')
+        const input = document.querySelector('.new-item-name-div .item-title-input')
 
-        editNameBtn.addEventListener('click', () => {
+        editNameBtn.onclick = () => {
 
-            const input = document.querySelector('.new-item-name-div .item-title-input')
             // Focus on the input and select its content
 
             // Replace item title with new div for editing
@@ -196,19 +196,22 @@ const renderItem = (parentNode, item, data) => {
             input.focus();
             input.select();
 
-            okButton.addEventListener('click', async () => {
-                try {
-                    modalTitle.textContent = input.value;
-                    newNameDiv.style.display = 'none'
-                    modalTitle.style.display = 'block'
 
-                    const response = await assets.editItemName(itemId, modalTitle.textContent)
+        }
 
-                } catch (error) {
-                    console.error(error)
-                }
-            })
-        })
+        okButton.onclick = async () => {
+            try {
+                modalTitle.textContent = input.value;
+                newNameDiv.style.display = 'none'
+                modalTitle.style.display = 'block'
+
+
+                const response = await assets.editItemName(itemId, modalTitle.textContent)
+
+            } catch (error) {
+                console.error(error)
+            }
+        }
 
         const parentName = document.getElementById('location-info').lastElementChild.innerText
         const leftParentNode = document.querySelector(`#${parentName.replace(/\s/g, '')}${itemParentId}-collapse > .left-items-list`)
@@ -267,5 +270,7 @@ const rightContainer = {
     renderContainer,
     renderItem
 }
+
+
 
 export default rightContainer
