@@ -149,7 +149,7 @@ const attachEventListenersToDynamicContent = () => {
             // Hide the modal after handling the data
             newItemModal.style.display = 'none';
 
-            const parentNode = document.querySelector(`#${containerName.replace(/\s+/g)}${containerId}-collapse > .list-unstyled`)
+            const parentNode = document.querySelector(`#${containerName.replace(/\s+/g, '')}${containerId}-collapse > .list-unstyled`)
             console.log("new item parent", parentNode)
 
             // Update contents of the current container, the user is in
