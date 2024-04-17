@@ -166,13 +166,13 @@ const attachEventListenersToDynamicContent = () => {
         newPlaceModal.style.display = 'block'
 
         // Close button functionality
-        document.getElementsByClassName("close")[3].addEventListener("click", () => {
-                newPlaceModal.style.display = 'none';
-        })
+        // document.getElementsByClassName("close")[3].addEventListener("click", () => {
+        //         newPlaceModal.style.display = 'none';
+        // })
 
         document.getElementById("new-place-form").addEventListener("submit", async function(event) {
             event.preventDefault(); // Prevent the form from submitting to a server
-
+            console.log("submitted")
             // Get id of parent container inside which a new place must be rendered
             const parentId = parseInt(currentLocationPathDiv.lastElementChild.getAttribute("data-id"))
             const parentName = currentLocationPathDiv.lastElementChild.innerText
