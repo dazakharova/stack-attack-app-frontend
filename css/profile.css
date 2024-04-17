@@ -7,7 +7,6 @@ header {
   padding-top: 0px;
   padding-right: 0px;
   padding-left: 0px;
-  
   background: rgba(255, 255, 255, 0);
   box-sizing: border-box;
 }
@@ -46,7 +45,6 @@ nav a:hover {
 /* Navbar */
 .navbar {
   position: fixe;
-
   margin: 0;
   padding: 0;
   width: calc(100%);
@@ -74,7 +72,7 @@ body {
   background-color: #ffffff;
   color: #627FA3;
   border-radius: 20px;
-  box-shadow: 0 0 10px rgba(186, 191, 104, 0.);
+  box-shadow: 0 0 10px rgba(186, 191, 104, 0.1);
   padding: 20px;
   text-align: center;
   font-size: 20px;
@@ -133,10 +131,19 @@ h2 {
   margin: 40px;
   padding: 20px;
   background-color: #ffffff;
+  background-image: url("../image/profile/boxes.png");
+  background-repeat: no-repeat;
+  background-size: 40% 50%;
+  background-position: calc(100% - 3%) calc(100% - 1%);;
   margin-left: 10px;
   border-radius: 10px;
+  font-family: Comfortaa, sans-serif; 
+  font-size: 20px;
   border: 0px solid #98AEB1;
   position: relative;
+}
+#boxes-id{
+  width: 10%;
 }
 
 /* btns to open the rooms and boxes*/
@@ -697,6 +704,62 @@ button.btn2 {
 /*  width: 60%; !* Adjust the width as needed *!*/
 /*}*/
 
+
+
+
+.boxquest {
+  position: relative;
+  display: inline-block;
+  border: 3px solid #6EA79E;
+  border-radius: 10px;
+  margin-right: 100px;
+  overflow: hidden; 
+}
+#addbtn {
+  position: relative;
+    display: flex; 
+ 
+}
+
+.placeholder {
+  color: #627FA3;
+}
+.input {
+  padding: 10px;
+  width: 80px;
+  height: 80px;
+  background: none;
+  border: none;
+  box-sizing: border-box;
+  font-family: Comfortaa, sans-serif;
+  font-size: 22px;
+  color: #627FA3;
+  outline: none;
+  transition: .4s;
+  opacity: 0; 
+  overflow: hidden; 
+}
+.boxquest:hover input {
+  width: 350px;
+  background: #ffffff;
+  border-radius: 10px;
+  opacity: 1; 
+}
+
+.boxquest i {
+  position: absolute;
+  top: 50%; 
+  right: 30%; 
+  transform: translateY(-50%);
+  font-size: 26px;
+  color: #6EA79E;
+  transition: .2s;
+}
+
+.boxquest:hover i {
+  opacity: 0;
+}
+
 /* Modal windows styles*/
 .modal {
   display: none; /* Change from 'flex' to 'none' to initially hide the modal */
@@ -831,7 +894,7 @@ button.btn2 {
 }
 
 .box-footer, .item .title {
-  background-color: rgba(255, 255, 255, 0.5); /* transparent .title */
+  background-color: rgba(247, 247, 247, 0.5); /* transparent .title */
 }
 
 .edit-box-icon, .delete-box-icon {
@@ -861,8 +924,6 @@ button.btn2 {
   font-size: 20px;
 }
 
-/* Положение окна с картинкой */
-/* Стили для контейнера */
 .dropdown-container {
   position: fixed;
   bottom: 0;
@@ -871,14 +932,14 @@ button.btn2 {
   margin: 20px;
 }
 
-/* Стили для выпадающего меню */
+
 .dropdown-menu {
   position: absolute;
   left: 0;
   bottom: 10%;
 }
 
-/* Стили для кнопки */
+/* button*/
 .dropdown-toggle {
   display: flex;
   align-items: center;
@@ -896,7 +957,7 @@ button.btn2 {
   margin-bottom: 140%;
   margin-left: 40%;
   object-fit: fill !important;
-  border-radius: 40%; /* Это создаст круглое изображение */
+  border-radius: 40%; 
 }
 
 .fixed-dropdown-container {
