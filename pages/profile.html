@@ -37,156 +37,49 @@
     <main>
       <div id="roomsHierarchy" class="left-container" id="left-container">
           <h2>My rooms</h2>
-        <button id="new-room-btn" type="button" class="btn2"> Add new room</button>
-          <button id="toggle-delete-mode-btn" type="button" class="btn5">Delete Room</button>
-
-          <div class="button-container"></div>
-                                <!-- Elements "Kitchen", "Bedroom","Balcony" -->
-<!--                                <div class="button-container">-->
-<!--                                  <button class="btn btn-toggle btn-room d-inline-flex align-items-center rounded border-0 collapsed"-->
-<!--                                      data-bs-toggle="collapse" data-bs-target="#kitchen-collapse1" aria-expanded="false">-->
-<!--                                      Kitchen-->
-<!--                                  </button>-->
-<!--                                  <div class="collapse" id="kitchen-collapse1">-->
-<!--                                      <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">-->
-<!--                                          <li>-->
-<!--                                            <button class="btn btn-toggle btn-furniture d-inline-flex align-items-center rounded border-0 collapsed"-->
-<!--                                                  data-bs-toggle="collapse" data-bs-target="#black-cupboard-collapse"-->
-<!--                                                  aria-expanded="false">Black cupboard-->
-<!--                                              </button>-->
-<!--                                          <div class="collapse" id="black-cupboard-collapse">-->
-<!--                                              <ul class="list-unstyled">-->
-<!--                                                  <li><a href="#" class="link-item">Scissors</a></li>-->
-<!--                                                  <li><a href="#" class="link-item">Candle</a></li> -->
-<!--                                              </ul>-->
-<!--                                          </div>-->
-<!--                                        </li>-->
-<!--                                      </ul>-->
-<!--                                  </div>-->
-<!--                              </div>-->
-<!--                              <div class="button-container">-->
-<!--                                  <button class="btn btn-toggle btn-room  d-inline-flex align-items-center rounded border-0 collapsed"-->
-<!--                                      data-bs-toggle="collapse" data-bs-target="#bedroom-collapse2" aria-expanded="false">-->
-<!--                                      Bedroom-->
-<!--                                  </button>-->
-<!--                                  <div class="collapse" id="bedroom-collapse2">-->
-<!--                                      <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">-->
-<!--                                          <li>-->
-<!--                                              <button class="btn btn-toggle btn-furniture d-inline-flex align-items-center rounded border-0 collapsed"-->
-<!--                                                  data-bs-toggle="collapse" data-bs-target="#bedside-table-collapse"-->
-<!--                                                  aria-expanded="false">-->
-<!--                                                  Bedside table-->
-<!--                                              </button>-->
-<!--                                              <div class="collapse" id="bedside-table-collapse">-->
-<!--                                                  <ul class="list-unstyled">-->
-<!--                                                      <li><a href="#" class="link-item">Item 1</a></li>-->
-<!--                                                      <li><a href="#" class="link-item">Item 2</a></li>-->
-<!--                                                  </ul>-->
-<!--                                              </div>-->
-<!--                                          </li>-->
-<!--                                          <li>-->
-<!--                                              <button class="btn btn-toggle btn-furniture d-inline-flex align-items-center rounded border-0 collapsed"-->
-<!--                                                  data-bs-toggle="collapse" data-bs-target="#wooden-wardrobe-collapse"-->
-<!--                                                  aria-expanded="false">Wooden wardrobe-->
-<!--                                              </button>-->
-<!--                                              <div class="collapse" id="wooden-wardrobe-collapse">-->
-<!--                                                  <ul class="list-unstyled">-->
-<!--                                                      <li><a href="#" class="link-item">Item 1</a></li>-->
-<!--                                                      <li><a href="#" class="link-item">Item 2</a></li>-->
-<!--                                                  </ul>-->
-<!--                                              </div>-->
-<!--                                          </li>-->
-<!--                                      </ul>-->
-<!--                                  </div>-->
-<!--                              </div>-->
-<!--                              <div class="button-container">-->
-<!--                                  <button class="btn btn-toggle btn-room  d-inline-flex align-items-center rounded border-0 collapsed"-->
-<!--                                      data-bs-toggle="collapse" data-bs-target="#balcony-collapse3" aria-expanded="false">-->
-<!--                                      Balcony-->
-<!--                                  </button>-->
-<!--                                  <div class="collapse" id="balcony-collapse3">-->
-<!--                                      <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">-->
-<!--                                          <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Plastic box</a></li>-->
-<!--                                          <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Tool box</a></li>-->
-<!--                                      </ul>-->
-<!--                                  </div>-->
-<!--                                </div>-->
-                              </div>
-                     <div class="right-container">
-                      <h2>My items</h2>  
-          <div><input type="text" placeholder="Missing something valuable?" > 
-              <!--Button "Add new room" -->
-              <button class="btn3" data-bs-toggle="dropdown" aria-expanded="false">Add new item</button>
-              <div id="new-item-menu" class="dropdown-menu" aria-labelledby="new-item-btn">
-                  <a id="new-item-btn" class="dropdown-item" href="#">Add new item</a>
-                  <a id="new-place-btn" class="dropdown-item" href="#">Add new place</a>
-              </div>
-         <!-- Nav in rooms -->
-         <div id="location-info">
-<!--          <span id="room-name">Kitchen</span> >-->
-<!--          <span id="item-category">Box</span> >-->
-<!--          <span id="selected-item">Item</span>-->
-
-       <!-- js tip
-
-As if kitchen has been chosen
-document.getElementById('location-info').textContent = 'Kitchen> ';
-// 
-document.getElementById('item-category').textContent = 'Black cupboard';
-// 
-document.getElementById('selected-item').textContent = ' > Knife';
-    -->
+         <button id="new-room-btn" type="button" class="btn2"> Add new room</button>
+         <button id="toggle-delete-mode-btn" type="button" class="btn5">Delete Room</button>
       </div>
+     <div class="right-container">
+             <div id="right-container-header">
+                 <h2>My items</h2>
+                 <input type="text" placeholder="Missing something valuable?" >
+                 <!--Button "Add new room" -->
+                 <button class="btn3" data-bs-toggle="dropdown" aria-expanded="false">Add new item</button>
+                 <div id="new-item-menu" class="dropdown-menu" aria-labelledby="new-item-btn">
+                     <a id="new-item-btn" class="dropdown-item" href="#">Add new item</a>
+                     <a id="new-place-btn" class="dropdown-item" href="#">Add new place</a>
+                 </div>
+             </div>
+         <div id="assets-navigation-block">
+             <!-- Nav in rooms -->
+             <div id="location-info"></div>
+             <!-- Places and items -->
+             <div class="space-container"></div>
+         </div>
 
- <!--Modal window for boxes" -->
- <div id="modal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2 id="modal-title">My Item</h2>
-        <img id="modal-image" src="" alt="myItemPicture"> 
-        <p id="modal-description">My item description</p> 
-    </div>
-</div>
+              <!--Modal window for items -->
+         <div id="modal" class="modal">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <div class="dropdown">
+                         <i data-bs-toggle="dropdown" aria-expanded="false" id="more-btn" class="bi bi-three-dots"></i>
+                         <div id="item-menu" class="dropdown-menu text-small shadow" aria-labelledby="more-btn">
+                             <a class="dropdown-item" id="edit-item-name" href="#">Edit Name</a>
+                             <a class="dropdown-item" id="edit-item-description" href="#">Edit Description</a>
+                             <a class="dropdown-item" id="edit-item-photo" href="#">Change Photo</a>
+                             <a class="dropdown-item" id="delete-item" href="#">Delete</a>
+                         </div>
+                     </div>
+                     <span id="close-item">&times;</span>
+                 </div>
+                 <h2 id="modal-title"></h2>
+                 <img id="modal-image" src="" alt="myItemPicture">
+                 <p id="modal-description"></p>
+             </div>
+         </div>
 
-      <!--Box blocks" -->
-        <div class="space-container">
-<!--        <div class="box" data-description="This is item desciption">-->
-<!--          <span class="title">Green box</span>-->
-<!--        </div>-->
-<!--        <div class="box">-->
-<!--          <span class="title">White plastic bag</span>-->
-<!--        </div>-->
-<!--        <div class="box">-->
-<!--          <span class="title">Golden lockbox</span>-->
-<!--        </div>-->
-<!--        <div class="box">-->
-<!--          <span class="title">Pink purse</span>-->
-<!--        </div>-->
-<!--        <div class="item2" data-description="This is item desciption">-->
-<!--          <img src="../image/profile/perfume_example_pic.png" alt="itemPic">-->
-<!--          <span class="title">Perfume</span>-->
-<!--        </div>-->
-<!--        <div class="box"><span class="title"></span></div>-->
-<!--        <div class="box"><span class="title"></span></div>-->
-
-<!--        &lt;!&ndash;Items" &ndash;&gt;-->
-<!--        <div class="item2">-->
-<!--          <img src="../image/profile/item_example_pic.png" alt="itemPic">-->
-<!--          <span class="title">Picture</span>-->
-<!--      </div>-->
-<!--      <div class="item2" data-description="This is item desciption">-->
-<!--        <img src="../image/profile/scissorx_example_pic.png" alt="itemPic">-->
-<!--        <span>Pink scissors</span>-->
-<!--    </div>-->
-<!--    <div class="box"><span class="title"></span></div>-->
-<!--    <div class="box"><span class="title">Test text</span></div>-->
-<!--    <div class="box"><span class="title"></span></div>-->
-<!--    <div class="box"><span class="title"></span></div>-->
-<!--    <div class="box"><span class="title"></span></div>-->
-<!--    <div class="box"><span class="title"></span></div>-->
-
-    </div> <!-- img + snan for name -->
-  </div>
+     </div>
 </div>
 </main>
    <!--SMALL MENU" -->

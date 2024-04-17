@@ -18,6 +18,14 @@ document.addEventListener("DOMContentLoaded", function () {
   // Add event listener for each element
   elements.forEach(function (element) {
     element.addEventListener("click", function () {
+
+      document.getElementById('more-btn').addEventListener('click', function(event) {
+        const dropdown = document.getElementById('item-menu');
+        const isExpanded = dropdown.getAttribute('aria-expanded') === 'true';
+        dropdown.style.display = isExpanded ? 'none' : 'grid';
+        dropdown.setAttribute('aria-expanded', !isExpanded);
+      });
+
       // Display the modal window
       modal.style.display = "block";
 
@@ -51,6 +59,14 @@ document.addEventListener("DOMContentLoaded", function () {
     };
   }
 
+  let closeItemWindow = document.getElementById("close-item")
+  if (closeItemWindow) {
+    closeItemWindow.onclick = function () {
+      modal.style.display = "none";
+    };
+  }
+
+
   // Close the modal window if the user clicks outside of it
   window.onclick = function (event) {
     if (event.target == modal) {
@@ -61,3 +77,6 @@ document.addEventListener("DOMContentLoaded", function () {
   // Hide the modal initially
   modal.style.display = "none";
 });
+
+
+
