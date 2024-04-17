@@ -118,6 +118,29 @@ class InventoryService {
         }
     }
 
+    editItemName = async (id, name) => {
+        const url = `${this.#backendUrl}/items/${id}`
+        const body = JSON.stringify({ name: name })
+        const response = await fetch(url, {
+            method: 'PUT',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: body
+        })
+        const json = await response.json()
+        return this.#editItemNameInMap(json.id, json.name, json.container_id)
+    }
+
+    #editItemNameInMap = (id, name, container_id) => {
+        this.#assets.get(container_id).forEach(asset => {
+            if (asset instanceof Item && asset.getId() === id) {
+                asset.setName(name)
+            }
+        })
+    }
+
     #editContainerNameInMap = (id, name, parent_id) => {
         this.#assets.get(parent_id).forEach(asset => {
             if (asset instanceof Container && asset.getId() === id) {
