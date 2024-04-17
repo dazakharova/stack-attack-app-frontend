@@ -76,11 +76,27 @@ const renderContainer = (parentNode, container, data) => {
         input.select();
 
         okButton.addEventListener('click', async function() {
+            // Get parent name from the location path
+            const parentName = document.getElementById('location-info').lastElementChild.innerText
+
+            // Get parent node in the left collapse menu in order to update container name there
+            const parentNode = document.querySelector(`#${parentName.replace(/\s/g, '')}${containerParentId}-collapse`)
+
             try {
                 containerSpan.textContent = input.value;
                 containerFooter.replaceChild(containerSpan, input);
 
                 const response = await assets.editContainerName(containerId, input.value)
+
+                // Rerender left container with updated container name
+                parentNode.innerHTML = ''
+                data.get(parseInt(containerParentId)).forEach(c => {
+                    if (c instanceof Container) {
+                        leftContainer.renderContainer(parentNode, c, data)
+                    } else if (c instanceof Item) {
+                        leftContainer.renderItem(parentNode, c, data)
+                    }
+                })
 
                 containerFooter.replaceChild(editIcon, okButton);
             } catch (error) {
