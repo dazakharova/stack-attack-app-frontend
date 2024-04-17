@@ -1443,15 +1443,12 @@ footer {
 .modal-header {
   display: flex;
   flex-direction: row;
-  justify-content: right;
-  align-items: center;
-  padding: 10px;
-}
-
-.modal-header {
-  display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+#item-window-content {
+  padding: 0px;
 }
 
 .dropdown {
