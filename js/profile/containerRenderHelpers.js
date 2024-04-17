@@ -150,6 +150,9 @@ const renderContainer = (parentNode, container, data) => {
 
 
 const renderItem = (parentNode, item, data) => {
+    const itemId = item.getId()
+    const itemName = item.getName()
+    const itemParentId = item.getContainerId()
     // Create div for item
     const itemDiv = document.createElement('div')
     itemDiv.className = 'item'
@@ -157,12 +160,14 @@ const renderItem = (parentNode, item, data) => {
     // Add event listener to item div, once it's clicked - popup window with detailed info about the item shows up
     itemDiv.addEventListener('click', () => {
         // Get the modal window
-        let itemModal = document.getElementById("item-modal")
+        const itemModal = document.getElementById("item-modal")
+
+        const modalContent = document.getElementById('item-window-content')
 
         // Get the elements of the modal window after opening it
-        let modalImage = document.getElementById("modal-image");
-        let modalTitle = document.getElementById("modal-title");
-        let modalDescription = document.getElementById("modal-description");
+        const modalImage = document.getElementById("modal-image");
+        const modalTitle = document.getElementById("modal-title");
+        const modalDescription = document.getElementById("modal-description");
 
         // Set the data in the modal window
         modalTitle.textContent = item.getName();
@@ -172,11 +177,67 @@ const renderItem = (parentNode, item, data) => {
         // Display the modal window
         itemModal.style.display = "block";
 
+        const editNameBtn = document.getElementById('edit-item-name')
+
+        //
+        // Create new name div
+        const newNameDiv = document.createElement('div')
+        newNameDiv.className = 'new-item-name-div'
+
+        // Create input field instead of item title to edit it
+        const input = document.createElement('input')
+        input.type = 'text';
+        input.classList.add('item-title-input');
+        input.value = modalTitle.textContent
+
+        // Create ok button for submitting new name
+        const okButton = document.createElement('button');
+        okButton.textContent = 'OK';
+        okButton.classList.add('ok-button');
+
+        // Append input and ok button to new div
+        newNameDiv.appendChild(input)
+        newNameDiv.appendChild(okButton)
+
+        //
+
+        editNameBtn.addEventListener('click', () => {
+
+            // Replace item title with new div for editing
+            modalContent.replaceChild(newNameDiv, modalTitle)
+
+            // Focus on the input and select its content
+            input.focus();
+            input.select();
+
+            okButton.addEventListener('click', async () => {
+                try {
+                    modalTitle.textContent = input.value;
+                    modalContent.replaceChild(modalTitle, newNameDiv);
+
+                    const response = await assets.editItemName(itemId, modalTitle.textContent)
+
+                } catch (error) {
+                    console.error(error)
+                }
+            })
+        })
+
         // Close the modal window when the close button is clicked
         let closeButton = document.querySelector("#close-item");
         if (closeButton) {
             closeButton.onclick = function () {
                 itemModal.style.display = "none";
+
+                // Re-render all the contents of the current container
+                parentNode.innerHTML = ''
+                data.get(parseInt(itemParentId)).forEach(c => {
+                    if (c instanceof Container) {
+                        renderContainer(parentNode, c, data)
+                    } else if (c instanceof Item) {
+                        renderItem(parentNode, c, data)
+                    }
+                })
             };
         }
     })

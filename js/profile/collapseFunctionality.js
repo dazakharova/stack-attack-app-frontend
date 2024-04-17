@@ -237,7 +237,9 @@ const renderItem = (parentNode, item, data) => {
 
     a.addEventListener("click", () => {
         // Get the modal window
-        let modal = document.getElementById("modal")
+        let itemModal = document.getElementById("item-modal")
+
+        const modalContent = document.getElementById('item-window-content')
 
         // Get the elements of the modal window after opening it
         let modalImage = document.getElementById("modal-image");
@@ -250,13 +252,29 @@ const renderItem = (parentNode, item, data) => {
         modalDescription.textContent = item.getDescription();
 
         // Display the modal window
-        modal.style.display = "block";
+        itemModal.style.display = "block";
+
+        const editNameBtn = document.getElementById('edit-item-name')
+        editNameBtn.addEventListener('click', () => {
+            const input = document.createElement('input')
+            input.type = 'text';
+            input.classList.add('item-title-input');
+            input.value = modalTitle.textContent
+            modalContent.replaceChild(input, modalTitle)
+
+            const okButton = document.createElement('button');
+            okButton.textContent = 'OK';
+            okButton.classList.add('ok-button');
+            modalContent.insertBefore(okButton, modalImage)
+        })
 
         // Close the modal window when the close button is clicked
-        let closeButton = document.querySelector(".close");
+        let closeButton = document.querySelector("#close-item");
         if (closeButton) {
             closeButton.onclick = function () {
-                modal.style.display = "none";
+                itemModal.style.display = "none";
+
+                containerFooter.replaceChild(input, containerSpan)
             };
         }
     })

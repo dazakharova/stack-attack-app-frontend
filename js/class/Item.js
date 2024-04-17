@@ -32,6 +32,10 @@ class Item {
     getUserId() {
         return this.#userId
     }
+
+    setName(newName) {
+        this.#name = newName
+    }
 }
 
 export { Item }

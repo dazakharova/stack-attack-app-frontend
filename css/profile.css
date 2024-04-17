@@ -1012,22 +1012,22 @@ footer {
 }
 
 
-/* Style for the 'OK' button */
-.ok-button {
-  font-size: 16px;
-  color: #627fa3; /* Your project's specific color */
-  background-color: transparent;
-  border: 2px solid #627fa3; /* Use a color from your project */
-  border-radius: 5px;
-  padding: 5px 10px;
-  cursor: pointer;
-  margin-left: 10px; /* Space from the input or the title span */
-  padding: 4px 8px;
-}
+/*!* Style for the 'OK' button *!*/
+/*.ok-button {*/
+/*  font-size: 16px;*/
+/*  color: #627fa3; !* Your project's specific color *!*/
+/*  background-color: transparent;*/
+/*  border: 2px solid #627fa3; !* Use a color from your project *!*/
+/*  border-radius: 5px;*/
+/*  padding: 5px 10px;*/
+/*  cursor: pointer;*/
+/*  margin-left: 10px; !* Space from the input or the title span *!*/
+/*  padding: 4px 8px;*/
+/*}*/
 
-.ok-button:hover {
-  background-color: rgba(98, 127, 163, 0.1); /* Slightly visible on hover */
-}
+/*.ok-button:hover {*/
+/*  background-color: rgba(98, 127, 163, 0.1); !* Slightly visible on hover *!*/
+/*}*/
 
 /* Style for the input field when editing */
 .title-input {
@@ -1445,6 +1445,7 @@ footer {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 10px;
 }
 
 #item-window-content {
@@ -1484,4 +1485,16 @@ footer {
   color: #627fa3;
   text-decoration: none;
   cursor: pointer;
+}
+
+/*Item dropdown menu options handling*/
+
+.item-title-input {
+  margin-top: 20px;
+  width: 30%;
+  margin: 0 auto;
+}
+
+.item-title-input .ok-button {
+  width: 5%;
 }
