@@ -50,11 +50,14 @@
                 </div>
 
                  <!--Button "Add new room" -->
-                 <div id="addbtn"><button class="btn3" data-bs-toggle="dropdown" aria-expanded="false">Add new item</button></div>
-                 <div id="new-item-menu" class="dropdown-menu" aria-labelledby="new-item-btn">
-                     <a id="new-item-btn" class="dropdown-item" href="#">Add new item</a>
-                     <a id="new-place-btn" class="dropdown-item" href="#">Add new place</a>
+                 <div id="addbtn">
+                     <button class="btn3" data-bs-toggle="dropdown" aria-expanded="false">Add new item</button>
+                     <div id="new-item-menu" class="dropdown-menu" aria-labelledby="new-item-btn">
+                         <a id="new-item-btn" class="dropdown-item" href="#">Add new item</a>
+                         <a id="new-place-btn" class="dropdown-item" href="#">Add new place</a>
+                     </div>
                  </div>
+
              </div>
          <div id="assets-navigation-block">
              <!-- Nav in rooms -->
@@ -141,7 +144,7 @@
 
 <!--    Window for creating a new item-->
     <div id="new-item-modal" class="modal">
-        <div class="modal-content">
+        <div class="modal-content new-item-modal-content">
             <span class="close">&times;</span>
             <h2>Add New Item</h2>
             <form id="new-item-form">
@@ -154,7 +157,7 @@
 
 <!--    Window for creating a new place -->
     <div id="new-place-modal" class="modal">
-        <div class="modal-content">
+        <div class="modal-content new-item-modal-content">
             <span class="close">&times;</span>
             <h2>Add New Place</h2>
             <form id="new-place-form">

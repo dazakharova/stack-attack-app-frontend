@@ -1159,18 +1159,6 @@ footer {
   backdrop-filter: blur(8px);
 }
 
-.modal-content {
-  background-color: #ffffff;
-  margin: 10% auto;
-  padding: 20px;
-  border: 1px solid #ffffff;
-  width: 60%;
-  height: auto;
-  text-align: center;
-  position: relative;
-}
-
-
 #modal-title {
   margin-bottom: 30px;
   
@@ -1614,4 +1602,16 @@ footer {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
+}
+
+/*New item and new place windows styles */
+.new-item-modal-content {
+  background-color: #ffffff;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #ffffff;
+  width: 60%;
+  height: auto;
+  text-align: center;
+  position: relative;
 }
