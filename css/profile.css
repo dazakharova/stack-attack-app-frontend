@@ -793,3 +793,8 @@ footer {
   text-align: center;
   position: relative;
 }
+
+
+.new-item-description-div {
+  display: none;
+}

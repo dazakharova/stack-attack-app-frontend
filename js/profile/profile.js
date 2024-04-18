@@ -141,16 +141,17 @@ const attachEventListenersToDynamicContent = () => {
 
             const parentContainersNode = document.querySelector(`#${containerName.replace(/\s+/g, '')}${containerId}-collapse > .containers-list`)
             const parentItemsNode = document.querySelector(`#${containerName.replace(/\s+/g, '')}${containerId}-collapse > .list-unstyled`)
-            console.log("new item parent", parentNode)
 
             // Update contents of the current container, the user is in
             assetsBlocksDiv.innerHTML = ''
             parentItemsNode.innerHTML = ''
             parentContainersNode.innerHTML = ''
-            assets.getAssets.get(containerId).forEach(c => {
+
+            console.log('parent of item is: ', assets.getAssets().get(containerId))
+            assets.getAssets().get(containerId).forEach(c => {
                 if (c instanceof Container) {
-                    rightContainer.renderItem(assetsBlocksDiv, c, assets.getAssets())
-                    leftContainer.renderItem(parentContainersNode, c, assets.getAssets())
+                    rightContainer.renderContainer(assetsBlocksDiv, c, assets.getAssets())
+                    leftContainer.renderContainer(parentContainersNode, c, assets.getAssets())
                 } else if (c instanceof Item) {
                     rightContainer.renderItem(assetsBlocksDiv, c, assets.getAssets())
                     leftContainer.renderItem(parentItemsNode, c, assets.getAssets())

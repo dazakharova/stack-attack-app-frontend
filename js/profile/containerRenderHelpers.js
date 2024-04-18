@@ -183,9 +183,6 @@ const renderItem = (parentNode, item, data) => {
         const input = document.querySelector('.new-item-name-div .item-title-input')
 
         editNameBtn.onclick = () => {
-
-            // Focus on the input and select its content
-
             // Replace item title with new div for editing
             newNameDiv.style.display = 'block'
 
@@ -193,10 +190,9 @@ const renderItem = (parentNode, item, data) => {
 
             modalTitle.style.display = 'none'
 
+            // Focus on the input and select its content
             input.focus();
             input.select();
-
-
         }
 
         okButton.onclick = async () => {
@@ -213,6 +209,36 @@ const renderItem = (parentNode, item, data) => {
             }
         }
 
+        const editDescriptionBtn = document.getElementById('edit-item-description')
+
+        const newDescriptionDiv = document.querySelector('.new-item-description-div')
+        const descriptionInput = document.querySelector('.item-description-input')
+        const okDescriptionBtn = document.querySelector('.item-description-ok')
+
+        editDescriptionBtn.onclick = () => {
+            modalDescription.style.display = 'none'
+            newDescriptionDiv.style.display = 'block'
+
+            descriptionInput.value = modalDescription.textContent
+
+            // Focus on the input and select its content
+            descriptionInput.focus();
+            descriptionInput.select();
+        }
+
+        okDescriptionBtn.onclick = async () => {
+            try {
+                modalDescription.textContent = descriptionInput.value;
+                newDescriptionDiv.style.display = 'none'
+                modalDescription.style.display = 'block'
+
+                const response = await assets.editItemDescription(itemId, modalDescription.textContent)
+
+            } catch (error) {
+                console.error(error)
+            }
+        }
+
         const parentName = document.getElementById('location-info').lastElementChild.innerText
         const leftParentContainersNode =document.querySelector(`#${parentName.replace(/\s/g, '')}${itemParentId}-collapse > .containers-list`)
         const leftParentItemsNode = document.querySelector(`#${parentName.replace(/\s/g, '')}${itemParentId}-collapse > .left-items-list`)
@@ -221,6 +247,9 @@ const renderItem = (parentNode, item, data) => {
         let closeButton = document.querySelector("#close-item");
         if (closeButton) {
             closeButton.onclick = function () {
+                newNameDiv.style.display = 'none'
+                modalTitle.style.display = 'block'
+
                 itemModal.style.display = "none";
 
                 leftParentContainersNode.innerHTML = ''
