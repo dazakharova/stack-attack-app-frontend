@@ -188,9 +188,6 @@ const renderContainer = (parentNode, container, data) => {
     const itemsUl = document.createElement("ul")
     itemsUl.classList.add("list-unstyled", "left-items-list")
 
-    // Append items list to the items div
-    childrenDiv.appendChild(itemsUl)
-
     // Append the container button to the list item
     containerLi.appendChild(containerButton);
 
@@ -204,7 +201,11 @@ const renderContainer = (parentNode, container, data) => {
     const containersUl = document.createElement("ul")
     containersUl.classList.add("containers-list", "btn-toggle-nav", "list-unstyled", "fw-normal", "pb-1", "small")
     containersUl.setAttribute('data-bs-target', collapseTarget)
+
     childrenDiv.appendChild(containersUl)
+
+    // Append items list to the items div
+    childrenDiv.appendChild(itemsUl)
 
     // If current container has any assets inside it, then render them
     if (containerContents) {
