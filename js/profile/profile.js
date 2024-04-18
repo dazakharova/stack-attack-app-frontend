@@ -1,6 +1,9 @@
 import { InventoryService } from "../class/InventoryService.js"
 import rightContainer from './containerRenderHelpers.js';
 import leftContainer from "./collapseFunctionality.js";
+import {Container} from "../class/Container.js";
+import {Item} from "../class/Item.js";
+
 
 const backend_url = 'http://localhost:3001'
 
@@ -53,7 +56,7 @@ const attachEventListenersToDynamicContent = () => {
     })
 
     const newRoomButton = document.getElementById("new-room-btn")
-    newRoomButton.addEventListener("click", () => {
+    newRoomButton.onclick = () => {
         console.log(newRoomButton.classList)
         newRoomButton.style.display = "none" // Hide the button
 
@@ -110,29 +113,16 @@ const attachEventListenersToDynamicContent = () => {
         };
 
         document.addEventListener('click', clickHandler);
-
-        // document.addEventListener('click', function(e) {
-        //     console.log(e.target)
-        //     if (!newRoomDiv.contains(e.target) && e.target !== newRoomButton) {
-        //         newRoomDiv.remove();
-        //         newRoomButton.style.display = "block"
-        //     }
-        // }, { once: true })
-    })
+    }
 
     // Get the modal
     const newItemModal = document.getElementById('new-item-modal');
 
     // Add event listener for add-new-item button
-    document.getElementById("new-item-btn").addEventListener("click", () => {
-        newItemModal.style.display = 'block';
+    document.getElementById("new-item-btn").onclick = () => {
+        newItemModal.style.display = 'block'
 
-        // Close the modal
-        document.getElementsByClassName('close')[1].addEventListener("click", () => {
-            newItemModal.style.display = 'none';
-        })
-
-        document.getElementById("new-item-form").addEventListener("submit", async function(event) {
+        document.getElementById("new-item-form").onsubmit = async function(event) {
             event.preventDefault(); // Prevent the form from submitting to a server
 
             // Get id of container inside which a new item must be rendered
@@ -147,30 +137,35 @@ const attachEventListenersToDynamicContent = () => {
             const newItem = await assets.addNewItem(itemName, itemDescription, containerId)
 
             // Hide the modal after handling the data
-            newItemModal.style.display = 'none';
+            newItemModal.style.display = 'none'
 
-            const parentNode = document.querySelector(`#${containerName.replace(/\s+/g, '')}${containerId}-collapse > .list-unstyled`)
+            const parentContainersNode = document.querySelector(`#${containerName.replace(/\s+/g, '')}${containerId}-collapse > .containers-list`)
+            const parentItemsNode = document.querySelector(`#${containerName.replace(/\s+/g, '')}${containerId}-collapse > .list-unstyled`)
             console.log("new item parent", parentNode)
 
             // Update contents of the current container, the user is in
-            rightContainer.renderItem(assetsBlocksDiv, newItem, assets.getAssets())
-            leftContainer.renderItem(parentNode, newItem, assets.getAssets())
-
-        });
-    })
+            assetsBlocksDiv.innerHTML = ''
+            parentItemsNode.innerHTML = ''
+            parentContainersNode.innerHTML = ''
+            assets.getAssets.get(containerId).forEach(c => {
+                if (c instanceof Container) {
+                    rightContainer.renderItem(assetsBlocksDiv, c, assets.getAssets())
+                    leftContainer.renderItem(parentContainersNode, c, assets.getAssets())
+                } else if (c instanceof Item) {
+                    rightContainer.renderItem(assetsBlocksDiv, c, assets.getAssets())
+                    leftContainer.renderItem(parentItemsNode, c, assets.getAssets())
+                }
+            })
+        }
+    }
 
     // Add event listener for add-new-place button
-    document.getElementById("new-place-btn").addEventListener("click", () => {
+    document.getElementById("new-place-btn").onclick = () => {
         // Display the modal
         const newPlaceModal = document.getElementById('new-place-modal')
         newPlaceModal.style.display = 'block'
 
-        // Close button functionality
-        // document.getElementsByClassName("close")[3].addEventListener("click", () => {
-        //         newPlaceModal.style.display = 'none';
-        // })
-
-        document.getElementById("new-place-form").addEventListener("submit", async function(event) {
+        document.getElementById("new-place-form").onsubmit = async function(event) {
             event.preventDefault(); // Prevent the form from submitting to a server
             console.log("submitted")
             // Get id of parent container inside which a new place must be rendered
@@ -195,14 +190,14 @@ const attachEventListenersToDynamicContent = () => {
 
             // Hide the modal after handling the data
             newPlaceModal.style.display = 'none';
-        })
-    })
+        }
+    }
 
     // Get delete mode button
     const toggleDeleteBtn = document.getElementById('toggle-delete-mode-btn');
 
     // Event listener for deleting room
-    toggleDeleteBtn.addEventListener('click', () => {
+    toggleDeleteBtn.onclick = () => {
         roomsHierarchy.classList.toggle('delete-mode');
 
         // Check if 'delete-mode' is now active and update button text
@@ -211,8 +206,7 @@ const attachEventListenersToDynamicContent = () => {
         } else {
             toggleDeleteBtn.textContent = 'Delete Room';
         }
-    });
-
+    }
 }
 
 const currentLocationPathDiv = document.getElementById("location-info")
