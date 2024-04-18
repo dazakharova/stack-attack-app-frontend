@@ -382,6 +382,21 @@ button.btn2 {
   position: relative;
     display: flex; 
 }
+#save-picture-btn {
+  color: #ffffff;
+  background-color: #6EA79E;
+  font-size: 30px;
+  width: 30%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2%;
+  padding: 20px;
+  border-radius: 10px;
+  border: 0.2px solid #6EA79E;
+}
+#save-picture-btn:hover {
+  background-color: #627FA3; 
+}
 
 .placeholder {
   color: #627FA3;
@@ -776,8 +791,8 @@ footer {
   height: 30px; 
 }
 .image-option{
-  width: 20%;
-  height: 20%;
+  width: 15%;
+  height: 15%;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
