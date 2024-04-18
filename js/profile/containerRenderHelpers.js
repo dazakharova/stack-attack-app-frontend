@@ -36,7 +36,7 @@ const renderContainer = (parentNode, container, data) => {
     const deleteIcon = document.createElement('i')
     deleteIcon.classList.add('bi', 'bi-trash', 'delete-box-icon')
 
-    containerDiv.addEventListener('click', (event) => {
+    containerDiv.onclick = (event) => {
         if (!event.target.matches('.edit-box-icon, .delete-box-icon, .edit-box-icon *, .delete-box-icon *, .ok-button, .title-input')) {
             if (containerContents) {
                 // Clean the assets block
@@ -55,9 +55,9 @@ const renderContainer = (parentNode, container, data) => {
                 addContainerToPath(containerSpan, document.getElementById('location-info'), data)
             }
         }
-    })
+    }
 
-    editIcon.addEventListener('click', () => {
+    editIcon.onclick = () => {
         const input = document.createElement('input');
         input.type = 'text';
         input.value = containerSpan.textContent;
@@ -74,7 +74,7 @@ const renderContainer = (parentNode, container, data) => {
         input.focus();
         input.select();
 
-        okButton.addEventListener('click', async function() {
+        okButton.onclick = async function() {
             // Get parent name from the location path
             const parentName = document.getElementById('location-info').lastElementChild.innerText
 
@@ -100,7 +100,7 @@ const renderContainer = (parentNode, container, data) => {
             } catch (error) {
                 console.error(error)
             }
-        });
+        }
 
         // Add event listener for Enter key
         input.addEventListener('keypress', async function(e) {
@@ -117,9 +117,9 @@ const renderContainer = (parentNode, container, data) => {
                 }
             }
         })
-    })
+    }
 
-    deleteIcon.addEventListener('click', async (event) => {
+    deleteIcon.onclick = async (event) => {
         const isConfirmed = confirm(`Are you sure you want to delete "${containerName}"?`);
 
         if (isConfirmed) {
@@ -134,7 +134,7 @@ const renderContainer = (parentNode, container, data) => {
                 console.error(error)
             }
         }
-    })
+    }
 
     containerFooter.appendChild(containerSpan)
     containerFooter.appendChild(editIcon)
