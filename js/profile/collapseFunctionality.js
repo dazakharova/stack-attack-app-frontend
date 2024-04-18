@@ -41,7 +41,7 @@ const renderRoom = (parentNode, room, data) => {
     // Sub assets of current room (inside the data Map)
     const contents = data.get(roomId)
 
-    roomButton.addEventListener('click', (event) => {
+    roomButton.onclick = (event) => {
         // Add room to the path section
         addRoomToPath(roomButton, currentLocationPathDiv, data)
         // Clean the assets block
@@ -60,7 +60,7 @@ const renderRoom = (parentNode, room, data) => {
                 }
             })
         }
-    })
+    }
 
     // Create div element for all inner elements stored inside the room
     const containersDiv = document.createElement("div")
@@ -92,7 +92,7 @@ const renderRoom = (parentNode, room, data) => {
     parentNode.appendChild(roomDiv)
 
     // Once delete button is clicked it removes selected room from the layout
-    deleteBtn.addEventListener("click", async(event) => {
+    deleteBtn.onclick = async(event) => {
         const isConfirmed = confirm(`Are you sure you want to delete room "${roomName}"?`);
 
         if (isConfirmed) {
@@ -108,7 +108,7 @@ const renderRoom = (parentNode, room, data) => {
                 console.error(error)
             }
         }
-    })
+    }
 
     // If current room has other assets inside it, render them
     if (contents) {
@@ -159,7 +159,7 @@ const renderContainer = (parentNode, container, data) => {
     // Set the containerButton's text content
     containerButton.textContent = containerName;
 
-    containerButton.addEventListener("click", () => {
+    containerButton.onclick = () => {
         // Add container to path section
         addContainerToPath(containerButton, currentLocationPathDiv, data)
 
@@ -175,8 +175,7 @@ const renderContainer = (parentNode, container, data) => {
         } else {
             assetsBlocksDiv.innerHTML = ''
         }
-
-    })
+    }
 
     // Create block for nested elements
     const childrenDiv = document.createElement("div")
