@@ -36,6 +36,10 @@ class Item {
     setName(newName) {
         this.#name = newName
     }
+
+    setDescription(newDescription) {
+        this.#description = newDescription
+    }
 }
 
 export { Item }

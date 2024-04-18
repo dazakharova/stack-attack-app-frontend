@@ -291,10 +291,89 @@ const renderItem = (parentNode, item, data) => {
             }
         }
 
+        const editDescriptionBtn = document.getElementById('edit-item-description')
+
+        const newDescriptionDiv = document.querySelector('.new-item-description-div')
+        const descriptionInput = document.querySelector('.item-description-input')
+        const okDescriptionBtn = document.querySelector('.item-description-ok')
+
+        editDescriptionBtn.onclick = () => {
+            modalDescription.style.display = 'none'
+            newDescriptionDiv.style.display = 'block'
+
+            descriptionInput.value = modalDescription.textContent
+
+            // Focus on the input and select its content
+            descriptionInput.focus();
+            descriptionInput.select();
+        }
+
+        okDescriptionBtn.onclick = async () => {
+            try {
+                modalDescription.textContent = descriptionInput.value;
+                newDescriptionDiv.style.display = 'none'
+                modalDescription.style.display = 'block'
+
+                const response = await assets.editItemDescription(itemId, modalDescription.textContent)
+
+            } catch (error) {
+                console.error(error)
+            }
+        }
+
+        const deleteItemBtn = document.getElementById('delete-item')
+
+        deleteItemBtn.onclick = async (event) => {
+            const isConfirmed = confirm(`Are you sure you want to delete "${itemName}"?`);
+
+            if (isConfirmed) {
+                try {
+                    const response = await assets.removeItem(itemId)
+
+                    // Prevent the event from bubbling up to the room button click listener
+                    event.stopPropagation();
+
+                    itemModal.style.display = "none";
+
+                    // Re-render all the contents of the current container in the left menu
+                    parentNode.innerHTML = ''
+                    data.get(parseInt(itemParentId)).forEach(c => {
+                        if (c instanceof Container) {
+                            renderContainer(parentNode, c, data)
+                        } else if (c instanceof Item) {
+                            renderItem(parentNode, c, data)
+                        }
+                    })
+
+                    // Re-render all the contents of the current container in the right container
+                    const leftParentNode = document.querySelector('.space-container')
+                    leftParentNode.innerHTML = ''
+
+                    data.get(parseInt(itemParentId)).forEach(c => {
+                        if (c instanceof Container) {
+                            rightContainer.renderContainer(leftParentNode, c, data)
+                        } else if (c instanceof Item) {
+                            rightContainer.renderItem(leftParentNode, c, data)
+                        }
+                    })
+
+                    // parentNode.removeChild(containerDiv)
+                } catch (error) {
+                    console.error(error)
+                }
+            }
+        }
+
         // Close the modal window when the close button is clicked
         let closeButton = document.querySelector("#close-item");
         if (closeButton) {
             closeButton.onclick = function () {
+                newDescriptionDiv.style.display = 'none'
+                modalDescription.style.display = 'block'
+
+                newNameDiv.style.display = 'none'
+                modalTitle.style.display = 'block'
+
                 itemModal.style.display = "none";
 
                 // Re-render all the contents of the current container in the left menu
