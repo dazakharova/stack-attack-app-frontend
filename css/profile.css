@@ -335,13 +335,15 @@ button.btn2 {
   overflow-y: auto;
 }
 
-.dropdown-item.active,
+.dropdown-item:hover {
+  background-color: rgba(120, 167, 167, 0.3) !important ;
+}
 .dropdown-item:active {
   color: #434881;
   background-color: transparent;
+  transition: background-color 0.3s ease;
   outline: none;
 }
-
 .link-body-emphasis {
   color: #627FA3;
 }
