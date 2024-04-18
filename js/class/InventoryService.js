@@ -118,6 +118,18 @@ class InventoryService {
         }
     }
 
+    removeItem = async(id) => {
+        const url = `${this.#backendUrl}/items/${id}`
+        const response = await fetch(url, {
+            method: 'DELETE',
+            credentials: 'include'
+        })
+        console.log('response', response)
+        const json = await response.json()
+        console.log('got json', json)
+        return this.#removeItemFromMap(json.id, json.container_id)
+    }
+
     editItemName = async (id, name) => {
         const url = `${this.#backendUrl}/items/${id}`
         const body = JSON.stringify({ name: name })
@@ -146,6 +158,11 @@ class InventoryService {
     })
     const json = await response.json()
     return this.#editItemDescriptionInMap(json.id, json.description, json.container_id)
+    }
+
+    #removeItemFromMap = (id, container_id) => {
+        const updatedContainerArray = this.#assets.get(container_id).filter(asset => !(asset instanceof Item && asset.getId() === id))
+        this.#assets.set(container_id, updatedContainerArray)
     }
 
     #editItemDescriptionInMap = (id, description, container_id) => {

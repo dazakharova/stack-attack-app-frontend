@@ -321,6 +321,49 @@ const renderItem = (parentNode, item, data) => {
             }
         }
 
+        const deleteItemBtn = document.getElementById('delete-item')
+
+        deleteItemBtn.onclick = async (event) => {
+            const isConfirmed = confirm(`Are you sure you want to delete "${itemName}"?`);
+
+            if (isConfirmed) {
+                try {
+                    const response = await assets.removeItem(itemId)
+
+                    // Prevent the event from bubbling up to the room button click listener
+                    event.stopPropagation();
+
+                    itemModal.style.display = "none";
+
+                    // Re-render all the contents of the current container in the left menu
+                    parentNode.innerHTML = ''
+                    data.get(parseInt(itemParentId)).forEach(c => {
+                        if (c instanceof Container) {
+                            renderContainer(parentNode, c, data)
+                        } else if (c instanceof Item) {
+                            renderItem(parentNode, c, data)
+                        }
+                    })
+
+                    // Re-render all the contents of the current container in the right container
+                    const leftParentNode = document.querySelector('.space-container')
+                    leftParentNode.innerHTML = ''
+
+                    data.get(parseInt(itemParentId)).forEach(c => {
+                        if (c instanceof Container) {
+                            rightContainer.renderContainer(leftParentNode, c, data)
+                        } else if (c instanceof Item) {
+                            rightContainer.renderItem(leftParentNode, c, data)
+                        }
+                    })
+
+                    // parentNode.removeChild(containerDiv)
+                } catch (error) {
+                    console.error(error)
+                }
+            }
+        }
+
         // Close the modal window when the close button is clicked
         let closeButton = document.querySelector("#close-item");
         if (closeButton) {

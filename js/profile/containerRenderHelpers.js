@@ -239,6 +239,47 @@ const renderItem = (parentNode, item, data) => {
             }
         }
 
+        const deleteItemBtn = document.getElementById('delete-item')
+
+        deleteItemBtn.onclick = async (event) => {
+            const isConfirmed = confirm(`Are you sure you want to delete "${itemName}"?`);
+
+            if (isConfirmed) {
+                try {
+                    const response = await assets.removeItem(itemId)
+
+                    // Prevent the event from bubbling up to the room button click listener
+                    event.stopPropagation();
+
+                    itemModal.style.display = "none";
+
+                    leftParentContainersNode.innerHTML = ''
+                    leftParentItemsNode.innerHTML = ''
+                    data.get(itemParentId).forEach(c => {
+                        if (c instanceof Container) {
+                            leftContainer.renderContainer(leftParentContainersNode, c, data)
+                        } else if (c instanceof Item) {
+                            leftContainer.renderItem(leftParentItemsNode, c, data)
+                        }
+                    })
+
+                    // Re-render all the contents of the current container
+                    parentNode.innerHTML = ''
+                    data.get(parseInt(itemParentId)).forEach(c => {
+                        if (c instanceof Container) {
+                            renderContainer(parentNode, c, data)
+                        } else if (c instanceof Item) {
+                            renderItem(parentNode, c, data)
+                        }
+                    })
+
+                    // parentNode.removeChild(containerDiv)
+                } catch (error) {
+                    console.error(error)
+                }
+            }
+        }
+
         const parentName = document.getElementById('location-info').lastElementChild.innerText
         const leftParentContainersNode =document.querySelector(`#${parentName.replace(/\s/g, '')}${itemParentId}-collapse > .containers-list`)
         const leftParentItemsNode = document.querySelector(`#${parentName.replace(/\s/g, '')}${itemParentId}-collapse > .left-items-list`)
