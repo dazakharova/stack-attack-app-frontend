@@ -162,37 +162,45 @@ button.btn2 {
   overflow:hidden;
   height:1%;
   border: 0px solid #98AEB1;
+  text-align: start;
 }
 
 /* btns to open the rooms and boxes*/
 .collapse {
   color: #627fa3;
+  margin-left: 0px;
 }
 .button-container {
-  margin-left: 20px;
   font-family: Comfortaa, sans-serif;
   font-size: 20px;
+  margin-left: 0px;
+  padding: auto;
+ 
+  
 }
 .btn-toggle {
-  padding: .25rem .5rem;
+  padding: 0;
   font-family: Comfortaa, sans-serif;
   font-size: 20px;
   color: var(--bs-emphasis-color);
   background-color: transparent;
-  margin-top: 0px;
+  margin-top: 20px;
+  width: 100%;
+  margin-left: 0px !important;
 }
 .btn-toggle:hover,
 .btn-toggle:focus {
   color: #627FA3;
   background-color: var(--bs-tertiary-bg);
+  margin-left: 0px;
 }
 .btn-toggle::before {
-  width: 1.25em;
+  width: 100%;
   line-height: 0;
   content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='rgba%280,0,0,.5%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e");
   transition: transform .35s ease;
   transform-origin: .5em 50%;
-  margin-left: 10px;
+  margin-left: 60px;
 }
 .btn-toggle[aria-expanded="true"] {
   color: #627FA3;
@@ -233,13 +241,14 @@ button.btn2 {
   margin-bottom: 20px;
   border: 2px solid #6EA79E;
   border-radius: 5px;
+  
 }
 #room-name-input::placeholder {
   color: #999;
 }
 #room-name-input:focus {
-  border-color: #6EA79E !important; /* Красная рамка при активации */
-  color: #627FA3 !important; /* Красный текст при активации */
+  border-color: #6EA79E !important;
+  color: #627FA3 !important; 
   outline: none
 }
 #create-room {
@@ -254,19 +263,67 @@ button.btn2 {
   background-color: #627FA3;
 }
 
+/* menu nav in right container*/
+#room-name {
+  color: #434881;
+  background-color: transparent;
+  font-size: 20px;
+  font-weight: 600;
+  width: 20%;
+  margin-top: 2%;
+  padding: 20px;
+  border: none;
+  outline: none;
+}
+#room-name:hover {
+  color:  #627FA3!important ;
+  background-color:  rgba(101, 169, 124, 0.1);
+  border-radius: 10px;
+}
+
+.container-name {
+  color: #434881;
+  background-color: #ffffff;
+  font-size: 20px;
+  font-weight: 6px;
+  width: 20%;
+  border: none;
+  outline: none;
+}
+.container-name:hover {
+  color:  #627FA3!important ;
+  background-color:  rgba(101, 169, 124, 0.1);
+  border-radius: 10px;
+}
+
+
+
 .btn-room {
   /* Basic button styles */
-  padding: .25rem .5rem;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin: 10px 10px;
   font-family: Comfortaa, sans-serif;
   font-size: 30px;
   color: var(--bs-emphasis-color);
   background-color: transparent;
-  margin-top: 0px;
+  text-align: left;
 }
+.btn-room::before {
+  content: ''; 
+  display: inline-block;
+  width: 20px; 
+  height: 20px; 
+  margin-right: 30px; 
+}
+
+
+
 .btn-room:hover,
 .btn-room:focus {
   color: #627FA3;
   background-color: var(--bs-tertiary-bg);
+  text-align: left;
 }
 .btn-room::before {
   width: 1.25em;
@@ -294,14 +351,19 @@ button.btn2 {
 
 /* For furniture buttons */
 .btn-furniture {
-  /* Basic button styles */
-  padding: .25rem .5rem;
   font-family: Comfortaa, sans-serif;
   font-size: 20px;
   color: var(--bs-emphasis-color);
   background-color: transparent;
-  margin-top: 0px;
-  margin-left: 6px;
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+.btn-furniture::before {
+  content: ''; 
+  display: inline-block; 
+  width: 20px; 
+  height: 20px; 
+  margin-right: 30px !important; 
 }
 .btn-furniture:hover,
 .btn-furniture:focus {
@@ -314,10 +376,11 @@ button.btn2 {
   content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='rgba%280,0,0,.5%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e");
   transition: transform .35s ease;
   transform-origin: .5em 50%;
-  margin-left: 10px;
+  margin-left: 20px;
 }
 .btn-furniture[aria-expanded="true"] {
   color: #627FA3;
+  
 }
 .btn-furniture[aria-expanded="true"]::before {
   transform: rotate(90deg);
@@ -353,7 +416,16 @@ button.btn2 {
   text-decoration: none;
   color: #6EA79E;
   border-radius: 8px;
-  margin-left: 50px !important;
+  margin-top: 0;
+  margin-left: 20%!important; 
+  padding: auto;
+ 
+}
+.link-item:hover,
+.link-item :focus {
+  color: #627FA3;
+  width: 100%;
+  background-color: var(--bs-tertiary-bg);
 }
 
 .btn3 {
@@ -568,8 +640,7 @@ button.btn2 {
   margin-left: 10px;
   margin-top: 20px;
   margin-bottom: 10px;
-  font-family: Comfortaa, sans-serif;
-  font-size: 20px;
+  outline: none;
 }
 
 .dropdown-container {
@@ -643,7 +714,7 @@ button.btn2 {
   background-color: #6EA79E;
   font-size: 20px;
   margin: 10px auto; /* Adjusted to center the button horizontally */
-  margin-bottom: 60px;
+  margin-bottom: 30px;
   padding: 15px;
   border-radius: 10px;
   border: 0.2px solid #6EA79E;
@@ -810,7 +881,6 @@ footer {
   text-align: center;
   position: relative;
 }
-
 
 .new-item-description-div {
   display: none;
