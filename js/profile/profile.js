@@ -15,9 +15,9 @@ const roomsHierarchy = document.getElementById("roomsHierarchy")
 
 const processRooms = (data) => {
     // Exclude first 3 elements of left container (heading and 2 buttons) from removing before rendering all rooms
-    while (roomsHierarchy.children.length > 3) {
+    /*while (roomsHierarchy.children.length > 3) {
         roomsHierarchy.removeChild(roomsHierarchy.lastChild);
-    }
+    }*/
     // Extract only parent containers from the given data (which have 'null' as a parent_id):
     const roomsArray = data.get(null)
     console.log("Rooms array", roomsArray)
