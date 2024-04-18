@@ -5,6 +5,7 @@ import leftContainer from "./collapseFunctionality.js";
 import {assets} from "./profile.js";
 
 const renderContainer = (parentNode, container, data) => {
+    // Get all data about container
     const containerId = container.getId()
     const containerParentId = container.getParentId()
     const containerName = container.getName()
@@ -13,11 +14,12 @@ const renderContainer = (parentNode, container, data) => {
     const containerDiv = document.createElement('div')
     containerDiv.className = 'box'
 
+    // Get container content (nested elements)
     const containerContents = data.get(container.getId())
 
     // Create container footer
-    const containerFooter = document.createElement('div')
-    containerFooter.className = 'box-footer'
+    const containerDivFooter = document.createElement('div')
+    containerDivFooter.className = 'box-footer'
 
     // Create span for container with its title inside
     const containerSpan = document.createElement('span')
@@ -28,6 +30,9 @@ const renderContainer = (parentNode, container, data) => {
     containerSpan.setAttribute('data-parentId', containerParentId)
     containerSpan.innerText = containerName
 
+    // Create new container name form which is invisible by default
+    buildNewContainerNameInput(containerDivFooter)
+
     // Create edit icon
     const editIcon = document.createElement('i')
     editIcon.classList.add('bi', 'bi-pencil-square', 'edit-box-icon')
@@ -36,112 +41,35 @@ const renderContainer = (parentNode, container, data) => {
     const deleteIcon = document.createElement('i')
     deleteIcon.classList.add('bi', 'bi-trash', 'delete-box-icon')
 
+    // Render container contents while clicking on container div
     containerDiv.onclick = (event) => {
-        if (!event.target.matches('.edit-box-icon, .delete-box-icon, .edit-box-icon *, .delete-box-icon *, .ok-button, .title-input')) {
-            if (containerContents) {
-                // Clean the assets block
-                parentNode.innerHTML = ''
-                addContainerToPath(containerSpan, document.getElementById('location-info'), data)
-
-                containerContents.forEach(c => {
-                    if (c instanceof Container) {
-                        renderContainer(parentNode, c, data)
-                    } else if (c instanceof Item) {
-                        renderItem(parentNode, c, data)
-                    }
-                })
-            } else {
-                parentNode.innerHTML = ''
-                addContainerToPath(containerSpan, document.getElementById('location-info'), data)
-            }
-        }
+        renderContainerContents(event, parentNode, containerContents, containerSpan, data)
     }
 
+    // Initializes the editing process: replaces the displayed text with an input field and a confirm ("OK") button.
     editIcon.onclick = () => {
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.value = containerSpan.textContent;
-        input.classList.add('title-input');
-        containerFooter.replaceChild(input, containerSpan)
+        // Initiate container rename
+        replaceTitleWithEditableInput(containerDivFooter, containerSpan, editIcon)
 
-        // Replace edit icon with 'OK' button
-        const okButton = document.createElement('button');
-        okButton.textContent = 'OK';
-        okButton.classList.add('ok-button'); // For styling, if needed
-        containerFooter.replaceChild(okButton, editIcon);
+        // Get ok button for submitting container name changes
+        const okButton = document.querySelector('.ok-button');
 
-        // Focus on the input and select its content
-        input.focus();
-        input.select();
-
-        okButton.onclick = async function() {
-            // Get parent name from the location path
-            const parentName = document.getElementById('location-info').lastElementChild.innerText
-
-            // Get parent node in the left collapse menu in order to update container name there
-            const parentNode = document.querySelector(`#${parentName.replace(/\s/g, '')}${containerParentId}-collapse`)
-            try {
-                containerSpan.textContent = input.value;
-                containerFooter.replaceChild(containerSpan, input);
-
-                const response = await assets.editContainerName(containerId, input.value)
-
-                // Rerender left container with updated container name
-                parentNode.innerHTML = ''
-                data.get(parseInt(containerParentId)).forEach(c => {
-                    if (c instanceof Container) {
-                        leftContainer.renderContainer(parentNode, c, data)
-                    } else if (c instanceof Item) {
-                        leftContainer.renderItem(parentNode, c, data)
-                    }
-                })
-
-                containerFooter.replaceChild(editIcon, okButton);
-            } catch (error) {
-                console.error(error)
-            }
-        }
-
-        // Add event listener for Enter key
-        input.addEventListener('keypress', async function(e) {
-            if (e.key === 'Enter') {const newSpan = document.createElement('span');
-                try {
-                    containerSpan.textContent = input.value;
-                    containerFooter.replaceChild(containerSpan, input)
-
-                    const response = await assets.editContainerName(containerId, input.value)
-
-                    containerFooter.replaceChild(editIcon, okButton);
-                } catch (error) {
-                    console.error(error)
-                }
-            }
-        })
-    }
-
-    deleteIcon.onclick = async (event) => {
-        const isConfirmed = confirm(`Are you sure you want to delete "${containerName}"?`);
-
-        if (isConfirmed) {
-            try {
-                const response = await assets.removeContainer(containerId)
-
-                // Prevent the event from bubbling up to the room button click listener
-                event.stopPropagation();
-
-                parentNode.removeChild(containerDiv)
-            } catch (error) {
-                console.error(error)
-            }
+        okButton.onclick = () => {
+            return updateContainerNameAndRefreshUI(editIcon, containerSpan, containerId, containerParentId, data)
         }
     }
 
-    containerFooter.appendChild(containerSpan)
-    containerFooter.appendChild(editIcon)
-    containerFooter.appendChild(deleteIcon)
+    deleteIcon.onclick = (event) => {
+       return handleContainerDeletion(event, containerName, containerId, containerDiv, parentNode, containerParentId, data)
+    }
 
-    // Append span to div
-    containerDiv.appendChild(containerFooter)
+    // Append elements to container div footer
+    containerDivFooter.appendChild(containerSpan)
+    containerDivFooter.appendChild(editIcon)
+    containerDivFooter.appendChild(deleteIcon)
+
+    // Append footer to div
+    containerDiv.appendChild(containerDivFooter)
 
     // Append div to parent node given as an argument
     parentNode.appendChild(containerDiv)
@@ -157,11 +85,9 @@ const renderItem = (parentNode, item, data) => {
     itemDiv.className = 'item'
 
     // Add event listener to item div, once it's clicked - popup window with detailed info about the item shows up
-    itemDiv.addEventListener('click', () => {
+    itemDiv.onclick = () => {
         // Get the modal window
         const itemModal = document.getElementById("item-modal")
-
-        const modalContent = document.getElementById('item-window-content')
 
         // Get the elements of the modal window after opening it
         const modalImage = document.getElementById("modal-image");
@@ -176,145 +102,56 @@ const renderItem = (parentNode, item, data) => {
         // Display the modal window
         itemModal.style.display = "block";
 
-        const editNameBtn = document.getElementById('edit-item-name')
-        const newNameDiv = document.querySelector('.new-item-name-div')
+        const editItemNameBtn = document.getElementById('edit-item-name')
 
+        // Get newItemNameDiv with input and submit button
+        const newItemNameDiv = document.querySelector('.new-item-name-div')
+        const newItemNameInput = document.querySelector('.new-item-name-div .item-title-input')
         const okButton = document.querySelector('.new-item-name-div .ok-button')
-        const input = document.querySelector('.new-item-name-div .item-title-input')
 
-        editNameBtn.onclick = () => {
-            // Replace item title with new div for editing
-            newNameDiv.style.display = 'block'
-
-            input.value = modalTitle.innerText
-
-            modalTitle.style.display = 'none'
-
-            // Focus on the input and select its content
-            input.focus();
-            input.select();
+        // When edit button is clicked, inout for new item name show up
+        editItemNameBtn.onclick = () => {
+            replaceItemNameWithEditableInput(newItemNameDiv, newItemNameInput, modalTitle)
         }
 
-        okButton.onclick = async () => {
-            try {
-                modalTitle.textContent = input.value;
-                newNameDiv.style.display = 'none'
-                modalTitle.style.display = 'block'
-
-
-                const response = await assets.editItemName(itemId, modalTitle.textContent)
-
-            } catch (error) {
-                console.error(error)
-            }
+        // When submit button is clicked, name gets updated and left menu and right container on the page update their contents
+        okButton.onclick = () => {
+            return updateItemNameAndRefreshUI(modalTitle, newItemNameInput, newItemNameDiv, itemId)
         }
 
         const editDescriptionBtn = document.getElementById('edit-item-description')
 
+        // Get new item description div with input and submit button
         const newDescriptionDiv = document.querySelector('.new-item-description-div')
         const descriptionInput = document.querySelector('.item-description-input')
         const okDescriptionBtn = document.querySelector('.item-description-ok')
 
+        // When edit button is clicked, inout for new item name show up
         editDescriptionBtn.onclick = () => {
-            modalDescription.style.display = 'none'
-            newDescriptionDiv.style.display = 'block'
-
-            descriptionInput.value = modalDescription.textContent
-
-            // Focus on the input and select its content
-            descriptionInput.focus();
-            descriptionInput.select();
+            replaceItemDescriptionWithEditableInput(modalDescription, newDescriptionDiv, descriptionInput)
         }
 
-        okDescriptionBtn.onclick = async () => {
-            try {
-                modalDescription.textContent = descriptionInput.value;
-                newDescriptionDiv.style.display = 'none'
-                modalDescription.style.display = 'block'
-
-                const response = await assets.editItemDescription(itemId, modalDescription.textContent)
-
-            } catch (error) {
-                console.error(error)
-            }
+        // When submit button is clicked, description gets updated and left menu and right container on the page update their contents
+        okDescriptionBtn.onclick = () => {
+            return updateItemDescriptionAndRefreshUI(modalDescription, newDescriptionDiv, descriptionInput, itemId)
         }
 
         const deleteItemBtn = document.getElementById('delete-item')
 
-        deleteItemBtn.onclick = async (event) => {
-            const isConfirmed = confirm(`Are you sure you want to delete "${itemName}"?`);
-
-            if (isConfirmed) {
-                try {
-                    const response = await assets.removeItem(itemId)
-
-                    // Prevent the event from bubbling up to the room button click listener
-                    event.stopPropagation();
-
-                    itemModal.style.display = "none";
-
-                    leftParentContainersNode.innerHTML = ''
-                    leftParentItemsNode.innerHTML = ''
-                    data.get(itemParentId).forEach(c => {
-                        if (c instanceof Container) {
-                            leftContainer.renderContainer(leftParentContainersNode, c, data)
-                        } else if (c instanceof Item) {
-                            leftContainer.renderItem(leftParentItemsNode, c, data)
-                        }
-                    })
-
-                    // Re-render all the contents of the current container
-                    parentNode.innerHTML = ''
-                    data.get(parseInt(itemParentId)).forEach(c => {
-                        if (c instanceof Container) {
-                            renderContainer(parentNode, c, data)
-                        } else if (c instanceof Item) {
-                            renderItem(parentNode, c, data)
-                        }
-                    })
-
-                    // parentNode.removeChild(containerDiv)
-                } catch (error) {
-                    console.error(error)
-                }
-            }
+        // When delete item button is clicked, the user gets confirmation window, if confirmed
+        // item window gets closed and left menu and right container on the page update their contents
+        deleteItemBtn.onclick = (event) => {
+            return handleItemDeletion(event, itemName, itemId, itemParentId, itemModal, parentNode, data)
         }
-
-        const parentName = document.getElementById('location-info').lastElementChild.innerText
-        const leftParentContainersNode =document.querySelector(`#${parentName.replace(/\s/g, '')}${itemParentId}-collapse > .containers-list`)
-        const leftParentItemsNode = document.querySelector(`#${parentName.replace(/\s/g, '')}${itemParentId}-collapse > .left-items-list`)
 
         // Close the modal window when the close button is clicked
         let closeButton = document.querySelector("#close-item");
         if (closeButton) {
             closeButton.onclick = function () {
-                newNameDiv.style.display = 'none'
-                modalTitle.style.display = 'block'
-
-                itemModal.style.display = "none";
-
-                leftParentContainersNode.innerHTML = ''
-                leftParentItemsNode.innerHTML = ''
-                data.get(itemParentId).forEach(c => {
-                    if (c instanceof Container) {
-                        leftContainer.renderContainer(leftParentContainersNode, c, data)
-                    } else if (c instanceof Item) {
-                        leftContainer.renderItem(leftParentItemsNode, c, data)
-                    }
-                })
-
-                // Re-render all the contents of the current container
-                parentNode.innerHTML = ''
-                data.get(parseInt(itemParentId)).forEach(c => {
-                    if (c instanceof Container) {
-                        renderContainer(parentNode, c, data)
-                    } else if (c instanceof Item) {
-                        renderItem(parentNode, c, data)
-                    }
-                })
-            };
+                handleClosingItemModalWindow(newItemNameDiv, modalTitle, itemModal, parentNode, data, itemParentId)
+            }
         }
-    })
+    }
 
 
 
@@ -346,3 +183,225 @@ const rightContainer = {
 
 
 export default rightContainer
+
+const updateContentsInLeftMenu = (entityParentId, data) => {
+    // Get name of parent name (which is used in its children tags id)
+    const parentName = document.getElementById('location-info').lastElementChild.innerText
+
+    // Get parent node for items and containers in left menu
+    const parentContainersNode= document.querySelector(`#${parentName.replace(/\s/g, '')}${entityParentId}-collapse > .containers-list`)
+    const parentItemsNode = document.querySelector(`#${parentName.replace(/\s/g, '')}${entityParentId}-collapse > .left-items-list`)
+
+    // Clean areas in parent containers and items node to draw it with updated data
+    parentContainersNode.innerHTML = ''
+    parentItemsNode.innerHTML = ''
+
+    // Rerender each entity inside the parent container of the current item
+    if (data.get(parseInt(entityParentId))) {
+        data.get(parseInt(entityParentId)).forEach(entity => {
+            if (entity instanceof Container) {
+                leftContainer.renderContainer(parentContainersNode, entity, data)
+            } else if (entity instanceof Item) {
+                leftContainer.renderItem(parentItemsNode, entity, data)
+            }
+        })
+    }
+}
+
+const updateContentsInRightContainer = (parentNode, itemParentId, data) => {
+    parentNode.innerHTML = ''
+    data.get(parseInt(itemParentId)).forEach(c => {
+        if (c instanceof Container) {
+            renderContainer(parentNode, c, data)
+        } else if (c instanceof Item) {
+            renderItem(parentNode, c, data)
+        }
+    })
+}
+
+const renderContainerContents = (event, parentNode, containerContents, containerSpan, data) => {
+        if (!event.target.matches('.edit-box-icon, .delete-box-icon, .edit-box-icon *, .delete-box-icon *, .ok-button, .title-input')) {
+            if (containerContents) {
+                // Clean the assets block
+                parentNode.innerHTML = ''
+                addContainerToPath(containerSpan, document.getElementById('location-info'), data)
+
+                containerContents.forEach(c => {
+                    if (c instanceof Container) {
+                        renderContainer(parentNode, c, data)
+                    } else if (c instanceof Item) {
+                        renderItem(parentNode, c, data)
+                    }
+                })
+            } else {
+                parentNode.innerHTML = ''
+                addContainerToPath(containerSpan, document.getElementById('location-info'), data)
+            }
+        }
+}
+
+const buildNewContainerNameInput = (containerDivFooter, containerSpan) => {
+    const newContainerNameDiv = document.createElement('div')
+    newContainerNameDiv.className = 'new-container-name-div'
+
+    const newContainerNameInput = document.createElement('input')
+    newContainerNameInput.type = 'text'
+    newContainerNameInput.classList.add('title-input')
+
+    const okButton = document.createElement('button')
+    okButton.textContent = 'OK'
+    okButton.classList.add('ok-button')
+
+    newContainerNameDiv.appendChild(newContainerNameInput)
+    newContainerNameDiv.appendChild(okButton)
+
+    containerDivFooter.appendChild(newContainerNameDiv)
+}
+
+const replaceTitleWithEditableInput = (containerDivFooter, containerSpan, editIcon) => {
+    containerSpan.style.display = 'none'
+    editIcon.style.display = 'none'
+
+    // Show input new container name
+    const newContainerNameDiv = document.querySelector('.new-container-name-div')
+    newContainerNameDiv.style.display = 'block'
+
+    // Put the value of the container name into the input field
+    const newContainerNameInput = document.querySelector('.title-input')
+    newContainerNameInput.value = containerSpan.textContent
+
+    // Focus on the input and select its content
+    newContainerNameInput.focus()
+    newContainerNameInput.select()
+}
+
+const updateContainerNameAndRefreshUI = async (editIcon, containerSpan, containerId, containerParentId, data) => {
+    // Get parent name from the location path
+    const parentName = document.getElementById('location-info').lastElementChild.innerText
+
+    const newContainerNameDiv = document.querySelector('.new-container-name-div')
+
+    const newContainerNameInput = document.querySelector('.title-input')
+
+    try {
+        // Update container name in UI
+        containerSpan.textContent = newContainerNameInput.value
+        newContainerNameDiv.style.display = 'none'
+
+        containerSpan.style.display = 'block'
+        editIcon.style.display = 'block'
+
+
+        // Apply container name changes in local Map and send them to the server
+        const response = await assets.editContainerName(containerId, newContainerNameInput.value)
+
+        updateContentsInLeftMenu(containerParentId, data)
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+const handleContainerDeletion = async (event, containerName, containerId, containerDiv, parentNode, containerParentId, data) => {
+    const isConfirmed = confirm(`Are you sure you want to delete "${containerName}"?`);
+
+    if (isConfirmed) {
+        try {
+            const response = await assets.removeContainer(containerId)
+
+            // Prevent the event from bubbling up to the room button click listener
+            event.stopPropagation();
+
+            parentNode.removeChild(containerDiv)
+
+            updateContentsInLeftMenu(containerParentId, data)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+}
+
+const replaceItemNameWithEditableInput = (newItemNameDiv, newItemNameInput, modalTitle) => {
+    // Replace item title with new div for editing
+    newItemNameDiv.style.display = 'block'
+
+    newItemNameInput.value = modalTitle.innerText
+
+    modalTitle.style.display = 'none'
+
+    // Focus on the input and select its content
+    newItemNameInput.focus();
+    newItemNameInput.select();
+}
+
+const updateItemNameAndRefreshUI = async (modalTitle, newItemNameInput, newItemNameDiv, itemId) => {
+    try {
+        modalTitle.textContent = newItemNameInput.value;
+        newItemNameDiv.style.display = 'none'
+        modalTitle.style.display = 'block'
+
+
+        const response = await assets.editItemName(itemId, modalTitle.textContent)
+
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+const replaceItemDescriptionWithEditableInput = (modalDescription, newDescriptionDiv, descriptionInput) => {
+    modalDescription.style.display = 'none'
+    newDescriptionDiv.style.display = 'block'
+
+    descriptionInput.value = modalDescription.textContent
+
+    // Focus on the input and select its content
+    descriptionInput.focus();
+    descriptionInput.select();
+}
+
+const updateItemDescriptionAndRefreshUI = async (modalDescription, newDescriptionDiv, descriptionInput, itemId) => {
+    try {
+        modalDescription.textContent = descriptionInput.value;
+        newDescriptionDiv.style.display = 'none'
+        modalDescription.style.display = 'block'
+
+        const response = await assets.editItemDescription(itemId, modalDescription.textContent)
+
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+const handleItemDeletion = async (event, itemName, itemId, itemParentId, itemModal, parentNode, data) => {
+    const isConfirmed = confirm(`Are you sure you want to delete "${itemName}"?`);
+
+    if (isConfirmed) {
+        try {
+            const response = await assets.removeItem(itemId)
+
+            // Prevent the event from bubbling up to the room button click listener
+            event.stopPropagation();
+
+            // Remove item modal window
+            itemModal.style.display = "none";
+
+            // Rerender left menu container with updated contents
+            updateContentsInLeftMenu(itemParentId, data)
+
+            // Re-render all the contents of the current container
+            updateContentsInRightContainer(parentNode, itemParentId, data)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+}
+
+const handleClosingItemModalWindow = (newItemNameDiv, modalTitle, itemModal, parentNode, data, itemParentId) => {
+        newItemNameDiv.style.display = 'none'
+        modalTitle.style.display = 'block'
+
+        itemModal.style.display = "none";
+
+        // Re-render all the contents of the current container
+        updateContentsInLeftMenu(itemParentId, data)
+        updateContentsInRightContainer(parentNode, itemParentId, data)
+}
