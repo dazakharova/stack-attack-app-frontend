@@ -142,6 +142,9 @@ button.btn2 {
   margin-bottom: 10px;
   display: block; 
 }
+#btn2:hover {
+  background-color: #627FA3;
+}
 
 /* left container*/
 .left-container {
@@ -208,6 +211,49 @@ button.btn2 {
 }
 
 /* For room buttons */
+
+#new-room-btn {
+  color: #ffffff;
+  background-color: #6EA79E;
+  font-size: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  border: 0.2px solid #6EA79E;
+}
+#new-room-btn:hover {
+  background-color: #627FA3;
+}
+#new-room-form {
+  width: 100%;
+  margin-bottom: 20px;
+}
+#room-name-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 2px solid #6EA79E;
+  border-radius: 5px;
+}
+#room-name-input::placeholder {
+  color: #999;
+}
+#room-name-input:focus {
+  border-color: #6EA79E !important; /* Красная рамка при активации */
+  color: #627FA3 !important; /* Красный текст при активации */
+  outline: none
+}
+#create-room {
+  background-color: #6EA79E;
+  color: #ffff;
+  border: none; 
+  border-radius: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+#create-room:hover {
+  background-color: #627FA3;
+}
+
 .btn-room {
   /* Basic button styles */
   padding: .25rem .5rem;
@@ -320,6 +366,9 @@ button.btn2 {
   top: 140px; /* Adjust top position as needed */
   right: 20px;
 }
+.btn3:hover {
+  background-color: #627FA3; 
+}
 /* searching box*/
 .boxquest {
   position: relative;
@@ -346,7 +395,7 @@ button.btn2 {
   box-sizing: border-box;
   font-family: Comfortaa, sans-serif;
   font-size: 22px;
-  color: #627FA3;
+  color: #627FA3 !important;
   outline: none;
   transition: .4s;
   opacity: 0; 
@@ -583,6 +632,9 @@ button.btn2 {
   border: 0.2px solid #6EA79E;
   display: block; /* Ensure the button is treated as a block-level element */
   width: fit-content; 
+}
+.btn5:hover {
+  background-color: #627FA3; 
 }
 
 /* Style for the input field when editing */
