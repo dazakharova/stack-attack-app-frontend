@@ -1,6 +1,6 @@
 import { InventoryService } from "../class/InventoryService.js"
 import leftContainer from "./collapseFunctionality.js";
-import { updateContentsInLeftMenu, updateContentsInRightContainer } from './uiDynamicUpdate.js'
+import { updateContentsInLeftMenu, updateContentsInRightContainer, handleImageUploading } from './uiDynamicUpdate.js'
 
 
 const backend_url = 'http://localhost:3001'
@@ -115,6 +115,31 @@ const attachEventListenersToDynamicContent = () => {
     document.getElementById("new-item-btn").onclick = () => {
         newItemModal.style.display = 'block'
 
+        // Initially disable the submit button
+        const submitBtn = document.getElementById("submit-item-btn")
+        submitBtn.disabled = false
+
+        // Handle image upload, if any
+        const itemImageInput = document.getElementById("item-image-input");
+        itemImageInput.onchange = async () => {
+            if (itemImageInput.files.length > 0) {
+                submitBtn.disabled = true; // Disable submit button only when a file is selected
+                await getBase64FromImageInput(itemImageInput);
+                submitBtn.disabled = false; // Enable submit button after processing the file
+            }
+        }
+        // itemImageInput.onchange = async () => {
+        //     // Attempt to get the base64 string of the selected image
+        //     const base64Image = await getBase64FromImageInput(itemImageInput);
+        //
+        //     // If an image was selected and successfully loaded, enable the submit button
+        //     if (base64Image) {
+        //         submitBtn.disabled = false;
+        //     } else {
+        //         submitBtn.disabled = true;
+        //     }
+        // };
+
         document.getElementById("new-item-form").onsubmit = async function(event) {
             event.preventDefault(); // Prevent the form from submitting to a server
 
@@ -125,18 +150,59 @@ const attachEventListenersToDynamicContent = () => {
             const itemName = document.getElementById("item-name-input").value;
             const itemDescription = document.getElementById("item-description-input").value;
 
-            // Returns just added new item id
-            const newItem = await assets.addNewItem(itemName, itemDescription, containerId)
+            // const base64Image = await getBase64FromImageInput(itemImageInput);
 
-            // Hide the modal after handling the data
-            newItemModal.style.display = 'none'
+            const base64Image = await getBase64FromImageInput(itemImageInput).finally(() => {
+                submitBtn.disabled = false; // Re-enable submit button after loading the image, regardless of the outcome
+            })
+
+            // Returns just added new item id
+            const newItem = await assets.addNewItem(itemName, itemDescription, containerId, base64Image)
+
+            this.reset(); // Resets the form fields
+            newItemModal.style.display = 'none'; // Hide the modal after handling the data
+            submitBtn.disabled = false
+
 
             // Get current parent container contents and rerender them in both section
             const parentCurrentContainerContents = assets.getAssets().get(containerId)
             updateContentsInLeftMenu(containerId, assets.getAssets())
             updateContentsInRightContainer(assetsBlocksDiv, parentCurrentContainerContents, assets.getAssets())
-        }
-    }
+
+        };
+    };
+
+    // document.getElementById("new-item-btn").onclick = () => {
+    //     newItemModal.style.display = 'block'
+    //
+    //     const itemImage = document.getElementById("item-image-input")
+
+    //     document.getElementById("new-item-form").onsubmit = async function(event) {
+    //         event.preventDefault(); // Prevent the form from submitting to a server
+    //
+    //         // Get id of container inside which a new item must be rendered
+    //         const containerId = parseInt(currentLocationPathDiv.lastElementChild.getAttribute("data-id"))
+    //
+    //         // Get given name and description for a new item
+    //         const itemName = document.getElementById("item-name-input").value;
+    //         const itemDescription = document.getElementById("item-description-input").value;
+    //
+    //         // Handle image upload, if any
+    //         const itemImageInput = document.getElementById("item-image-input");
+    //         const base64Image = await getBase64FromImageInput(itemImageInput);
+    //
+    //         // Returns just added new item id
+    //         const newItem = await assets.addNewItem(itemName, itemDescription, containerId, base64Image)
+    //
+    //         // Hide the modal after handling the data
+    //         newItemModal.style.display = 'none'
+    //
+    //         // Get current parent container contents and rerender them in both section
+    //         const parentCurrentContainerContents = assets.getAssets().get(containerId)
+    //         updateContentsInLeftMenu(containerId, assets.getAssets())
+    //         updateContentsInRightContainer(assetsBlocksDiv, parentCurrentContainerContents, assets.getAssets())
+    //     }
+    // }
 
     // Get new place form modal window
     const newPlaceModal = document.getElementById('new-place-modal')
@@ -186,3 +252,42 @@ const attachEventListenersToDynamicContent = () => {
 
 
 
+// function getBase64FromImageInput(inputElement) {
+//     return new Promise((resolve, reject) => {
+//         if (inputElement.files.length === 0) {
+//             resolve(''); // No file was selected
+//         } else {
+//             const file = inputElement.files[0];
+//             const reader = new FileReader();
+//             reader.onload = function(event) {
+//                 const base64String = event.target.result.replace("data:", "").replace(/^.+,/, "");
+//                 console.log('base64String', base64String)
+//                 resolve(base64String); // Resolve the promise with the base64 string
+//             };
+//             reader.onerror = function(error) {
+//                 reject(error);
+//             };
+//             reader.readAsDataURL(file);
+//         }
+//     });
+// }
+
+function getBase64FromImageInput(inputElement) {
+    return new Promise((resolve, reject) => {
+        if (inputElement.files.length === 0) {
+            resolve(''); // No file was selected
+        } else {
+            const file = inputElement.files[0];
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const base64String = event.target.result.replace("data:", "").replace(/^.+,/, "");
+                console.log('base64String', base64String)
+                resolve(base64String); // Resolve the promise with the base64 string
+            };
+            reader.onerror = function(error) {
+                reject(error);
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+}

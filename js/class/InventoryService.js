@@ -69,10 +69,10 @@ class InventoryService {
         return this.#assets
     }
 
-    addNewItem = async(name, description, container_id) => {
+    addNewItem = async(name, description, container_id, image) => {
         try {
             const url = `${this.#backendUrl}/items`
-            const body = JSON.stringify({ name, description, container_id })
+            const body = JSON.stringify({ name, description, container_id, image })
             const response = await fetch(url, {
                 method: 'POST',
                 credentials: 'include',
@@ -82,7 +82,7 @@ class InventoryService {
                 body: body
             })
             const json = await response.json()
-            return this.#addItemToMap(json[0].id, json[0].name, json[0].description, json[0].container_id, json[0].user_id)
+            return this.#addItemToMap(json[0].id, json[0].name, json[0].description, json[0].container_id, json[0].user_id, json[0].image)
         } catch (error) {
             return error
         }
@@ -197,8 +197,8 @@ class InventoryService {
         console.log(`deleted id: ${id}, new assets map`)
     }
 
-    #addItemToMap = (id, name, description, container_id, user_id) => {
-        const newItem = new Item(id, name, description, container_id, user_id)
+    #addItemToMap = (id, name, description, container_id, user_id, image) => {
+        const newItem = new Item(id, name, description, container_id, user_id, image)
         if (!this.#assets.get(newItem.getContainerId())) {
             this.#assets.set(newItem.getContainerId(), [])
         }
@@ -232,7 +232,7 @@ class InventoryService {
     #readJsonItems = (itemsAsJson) => {
         console.log('Items as JSON', itemsAsJson)
         itemsAsJson.forEach(i => {
-            const item = new Item(i.id, i.name, i.description, i.container_id, i.user_id)
+            const item = new Item(i.id, i.name, i.description, i.container_id, i.user_id, i.image)
             if (!this.#assets.get(i.container_id)) {
                 this.#assets.set(i.container_id, []);
             }
