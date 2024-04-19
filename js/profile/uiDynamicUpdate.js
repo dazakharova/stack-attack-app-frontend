@@ -171,7 +171,8 @@ const updateItemNameAndRefreshUI = async (modalTitle, newItemNameInput, newItemN
 
 const replaceItemDescriptionWithEditableInput = (modalDescription, newDescriptionDiv, descriptionInput) => {
     modalDescription.style.display = 'none'
-    newDescriptionDiv.style.display = 'block'
+    newDescriptionDiv.classList.remove('hidden')
+    newDescriptionDiv.classList.add('new-item-description-div')
 
     descriptionInput.value = modalDescription.textContent
 
@@ -183,7 +184,8 @@ const replaceItemDescriptionWithEditableInput = (modalDescription, newDescriptio
 const updateItemDescriptionAndRefreshUI = async (modalDescription, newDescriptionDiv, descriptionInput, itemId) => {
     try {
         modalDescription.textContent = descriptionInput.value;
-        newDescriptionDiv.style.display = 'none'
+        newDescriptionDiv.classList.remove('new-item-description-div')
+        newDescriptionDiv.classList.add('hidden')
         modalDescription.style.display = 'block'
 
         const response = await assets.editItemDescription(itemId, modalDescription.textContent)

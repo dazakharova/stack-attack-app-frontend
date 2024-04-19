@@ -123,7 +123,7 @@ const renderItem = (parentNode, item, data) => {
         const editDescriptionBtn = document.getElementById('edit-item-description')
 
         // Get new item description div with input and submit button
-        const newDescriptionDiv = document.querySelector('.new-item-description-div')
+        const newDescriptionDiv = document.getElementById('new-description-div')
         const descriptionInput = document.querySelector('.item-description-input')
         const okDescriptionBtn = document.querySelector('.item-description-ok')
 
@@ -343,7 +343,8 @@ const updateItemNameAndRefreshUI = async (modalTitle, newItemNameInput, newItemN
 
 const replaceItemDescriptionWithEditableInput = (modalDescription, newDescriptionDiv, descriptionInput) => {
     modalDescription.style.display = 'none'
-    newDescriptionDiv.style.display = 'block'
+    newDescriptionDiv.classList.add('new-item-description-div')
+    newDescriptionDiv.classList.remove('hidden')
 
     descriptionInput.value = modalDescription.textContent
 
@@ -355,7 +356,8 @@ const replaceItemDescriptionWithEditableInput = (modalDescription, newDescriptio
 const updateItemDescriptionAndRefreshUI = async (modalDescription, newDescriptionDiv, descriptionInput, itemId) => {
     try {
         modalDescription.textContent = descriptionInput.value;
-        newDescriptionDiv.style.display = 'none'
+        newDescriptionDiv.classList.remove('new-item-description-div')
+        newDescriptionDiv.classList.add('hidden')
         modalDescription.style.display = 'block'
 
         const response = await assets.editItemDescription(itemId, modalDescription.textContent)
