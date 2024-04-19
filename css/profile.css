@@ -273,16 +273,17 @@ button.btn2 {
   font-weight: 600;
   width: 20%;
   margin-top: 2%;
-  padding: 20px;
+  margin-right: 1%;
+  padding: 10px;
   border: none;
   outline: none;
 }
-#room-name,.container-name:hover {
+#room-name:hover,.container-name:hover {
   color:  #627FA3!important ;
   background-color:  rgba(101, 169, 124, 0.1);
   border-radius: 10px;
-  padding: 10px;
-  margin: 4px;
+  /*padding: 10px;*/
+  /*margin: 4px;*/
 }
 
 
