@@ -1,9 +1,41 @@
 import { InventoryService } from "../class/InventoryService.js"
 import leftContainer from "./collapseFunctionality.js";
 import { updateContentsInLeftMenu, updateContentsInRightContainer, handleImageUploading } from './uiDynamicUpdate.js'
-
-
 const backend_url = 'http://localhost:3001'
+import { isAuthenticated } from './redirectToHomePage.js'
+
+// function checkAuthenticationStatus() {
+//     fetch(`${backend_url}/auth/status`)
+//         .then(response => {
+//             if (!response.ok) {
+//                 throw new Error('Failed to check authentication status');
+//             }
+//             return response.json();
+//         })
+//         .then(data => {
+//             if (!data.isAuthenticated) {
+//                 // User is not authenticated
+//                 displayLoginMessage();
+//             }
+//         })
+//         .catch(error => {
+//             console.error('Error:', error);
+//         });
+// }
+
+// Check if the user is logged in before rendering the page
+// If not, display the message and redirect to the homepage
+isAuthenticated().then(isAuthenticated => {
+    if (isAuthenticated) {
+        console.log('isAuthenticated!!!', isAuthenticated)
+        document.body.style.display = 'block'; // Show content if authenticated
+    } else {
+        // console.log('Not valid pass')
+        // window.location.href = '/'; // Redirect if not authenticated
+        displayLoginMessage()
+    }
+})
+
 
 // Create new storage container (Map) for all data of the user which will be received from the server
 export const assets = new InventoryService(backend_url)
@@ -206,6 +238,8 @@ const attachEventListenersToDynamicContent = () => {
     }
 }
 
+// Encode image for storing it on the client and in the database
+
 function getBase64FromImageInput(inputElement) {
     return new Promise((resolve, reject) => {
         if (inputElement.files.length === 0) {
@@ -223,4 +257,11 @@ function getBase64FromImageInput(inputElement) {
             reader.readAsDataURL(file)
         }
     });
+}
+
+// Display message if the user is not logged in
+function displayLoginMessage() {
+    window.location.href = '/'; // Redirect to the login page
+    alert('You must be logged in to access this page. Redirecting to login page.');
+
 }

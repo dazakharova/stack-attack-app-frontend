@@ -12,33 +12,41 @@ document.addEventListener('DOMContentLoaded', (event) => {
     //     video.parentNode.replaceChild(img, video); // Replace the video with the image
     // };
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const authStatus = urlParams.get('auth');
-    let loggedHeader = document.getElementById('loggedHeader');
-    let unloggedHeader = document.getElementById('unloggedHeader');
+    const urlParams = new URLSearchParams(window.location.search)
 
-    if (authStatus === 'logged') {
-        loggedHeader.classList.remove('header-hidden')
-        loggedHeader.classList.add('header-active')
-
-        unloggedHeader.classList.add('header-hidden')
-        unloggedHeader.classList.remove('header-active')
+    if (!urlParams) {
+        checkAuthenticationStatus().then(isAuthenticated => {
+            displayRelevantHeader(isAuthenticated);
+        })
     } else {
-        unloggedHeader.classList.remove('header-hidden')
-        unloggedHeader.classList.add('header-active')
+        const authStatus = urlParams.get('auth');
+        let loggedHeader = document.getElementById('loggedHeader');
+        let unloggedHeader = document.getElementById('unloggedHeader');
 
-        loggedHeader.classList.add('header-hidden')
-        loggedHeader.classList.remove('header-active')
-    }
+        if (authStatus === 'logged') {
+            loggedHeader.classList.remove('header-hidden')
+            loggedHeader.classList.add('header-active')
 
-    // Optional: Smooth scroll to the hash fragment if it exists
-    if (window.location.hash) {
-        const id = window.location.hash.slice(1);
-        const element = document.getElementById(id);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
+            unloggedHeader.classList.add('header-hidden')
+            unloggedHeader.classList.remove('header-active')
+        } else {
+            unloggedHeader.classList.remove('header-hidden')
+            unloggedHeader.classList.add('header-active')
+
+            loggedHeader.classList.add('header-hidden')
+            loggedHeader.classList.remove('header-active')
+        }
+
+        // Optional: Smooth scroll to the hash fragment if it exists
+        if (window.location.hash) {
+            const id = window.location.hash.slice(1);
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
         }
     }
+
 
     // Find profile link in the header
     const profileLink = document.getElementById("profilePageLink")
@@ -81,3 +89,32 @@ function isAuthenticated() {
 }
 
 
+function checkAuthenticationStatus() {
+    // This function makes a fetch request to the server-side endpoint that checks authentication
+    // Replace '/api/auth/status' with the actual endpoint that returns the authentication status
+    return fetch(`${backend_url}/auth/status`)
+        .then(response => response.json())
+        .then(data => data.isAuthenticated)
+        .catch(error => {
+            console.error('Error checking authentication status:', error);
+            return false; // Assume not authenticated on error
+        });
+}
+
+function displayRelevantHeader(isAuthenticated) {
+    const loggedHeader = document.getElementById('loggedHeader');
+    const unloggedHeader = document.getElementById('unloggedHeader');
+    if (isAuthenticated) {
+        loggedHeader.classList.remove('header-hidden')
+        loggedHeader.classList.add('header-active')
+
+        unloggedHeader.classList.add('header-hidden')
+        unloggedHeader.classList.remove('header-active')
+    } else {
+        unloggedHeader.classList.remove('header-hidden')
+        unloggedHeader.classList.add('header-active')
+
+        loggedHeader.classList.add('header-hidden')
+        loggedHeader.classList.remove('header-active')
+    }
+}

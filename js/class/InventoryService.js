@@ -1,5 +1,6 @@
 import { Item } from './Item.js';
 import { Container } from './Container.js';
+import { handleHttpResponseError, processNetworkError } from '../profile/httpUtils.js'
 
 class InventoryService {
     #assets = new Map();
@@ -20,11 +21,15 @@ class InventoryService {
                     'Content-Type': 'application/json'
                 }
             })
-            const json = await response.json()
-            this.#readJsonContainers(json)
-            return this.#assets
+            if (response.ok) {
+                const json = await response.json()
+                this.#readJsonContainers(json)
+                return this.#assets
+            } else {
+                return handleHttpResponseError(response)
+            }
         } catch (error) {
-            return error
+            processNetworkError(error)
         }
     }
 
@@ -38,11 +43,15 @@ class InventoryService {
                     'Content-Type': 'application/json'
                 }
             })
-            const json = await response.json()
-            this.#readJsonItems(json)
-            return this.#assets
+            if (response.ok) {
+                const json = await response.json()
+                this.#readJsonItems(json)
+                return this.#assets
+            } else {
+                return handleHttpResponseError(response)
+            }
         } catch (error) {
-            return error
+            processNetworkError(error)
         }
     }
 
@@ -58,10 +67,14 @@ class InventoryService {
                 },
                 body: body
             })
-            const json = await response.json()
-            return this.#addToContainersMap(json[0].id, json[0].name, json[0].parent_id, json[0].user_id)
+            if (response.ok) {
+                const json = await response.json()
+                return this.#addToContainersMap(json[0].id, json[0].name, json[0].parent_id, json[0].user_id)
+            } else {
+                return handleHttpResponseError(response)
+            }
         } catch (error) {
-            return error
+            processNetworkError(error)
         }
     }
 
@@ -81,26 +94,38 @@ class InventoryService {
                 },
                 body: body
             })
-            const json = await response.json()
-            return this.#addItemToMap(json[0].id, json[0].name, json[0].description, json[0].container_id, json[0].user_id, json[0].image)
+            if (response.ok) {
+                const json = await response.json()
+                return this.#addItemToMap(json[0].id, json[0].name, json[0].description, json[0].container_id, json[0].user_id, json[0].image)
+            } else {
+                return handleHttpResponseError(response)
+            }
         } catch (error) {
-            return error
+            processNetworkError(error)
         }
     }
 
     editContainerName = async (id, name) => {
-        const url = `${this.#backendUrl}/containers/${id}`
-        const body = JSON.stringify({ name: name })
-        const response = await fetch(url, {
-            method: 'PUT',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: body
-        })
-        const json = await response.json()
-        return this.#editContainerNameInMap(json.id, json.name, json.parent_id)
+        try {
+            const url = `${this.#backendUrl}/containers/${id}`
+            const body = JSON.stringify({ name: name })
+            const response = await fetch(url, {
+                method: 'PUT',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: body
+            })
+            if (response.ok) {
+                const json = await response.json()
+                return this.#editContainerNameInMap(json.id, json.name, json.parent_id)
+            } else {
+                return handleHttpResponseError(response)
+            }
+        } catch (error) {
+            processNetworkError(error)
+        }
     }
 
     removeContainer = async(id) => {
@@ -110,54 +135,79 @@ class InventoryService {
                 method: 'DELETE',
                 credentials: 'include'
             })
-            const json = await response.json()
-            this.#removeContainerFromMap(json.id, json.parent_id)
-            // return this.#assets
+            if (response.ok) {
+                const json = await response.json()
+                this.#removeContainerFromMap(json.id, json.parent_id)
+            } else {
+                return handleHttpResponseError(response)
+            }
         } catch (error) {
-            return error
+            processNetworkError(error)
         }
     }
 
     removeItem = async(id) => {
-        const url = `${this.#backendUrl}/items/${id}`
-        const response = await fetch(url, {
-            method: 'DELETE',
-            credentials: 'include'
-        })
-        console.log('response', response)
-        const json = await response.json()
-        console.log('got json', json)
-        return this.#removeItemFromMap(json.id, json.container_id)
+        try {
+            const url = `${this.#backendUrl}/items/${id}`
+            const response = await fetch(url, {
+                method: 'DELETE',
+                credentials: 'include'
+            })
+            if (response.ok) {
+                const json = await response.json()
+                return this.#removeItemFromMap(json.id, json.container_id)
+            } else {
+                return handleHttpResponseError(response)
+            }
+        } catch (error) {
+            processNetworkError(error)
+        }
     }
 
     editItemName = async (id, name) => {
-        const url = `${this.#backendUrl}/items/${id}`
-        const body = JSON.stringify({ name: name })
-        const response = await fetch(url, {
-            method: 'PUT',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: body
-        })
-        const json = await response.json()
-        return this.#editItemNameInMap(json.id, json.name, json.container_id)
+        try {
+            const url = `${this.#backendUrl}/items/${id}`
+            const body = JSON.stringify({ name: name })
+            const response = await fetch(url, {
+                method: 'PUT',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: body
+            })
+            if (response.ok) {
+                const json = await response.json()
+                return this.#editItemNameInMap(json.id, json.name, json.container_id)
+            } else {
+                return handleHttpResponseError(response)
+            }
+        } catch (error) {
+            processNetworkError(error)
+        }
     }
 
     editItemDescription = async (id, description) => {
-    const url = `${this.#backendUrl}/items/${id}`
-    const body = JSON.stringify({ description: description })
-    const response = await fetch(url, {
-        method: 'PUT',
-        credentials: 'include',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: body
-    })
-    const json = await response.json()
-    return this.#editItemDescriptionInMap(json.id, json.description, json.container_id)
+        try {
+            const url = `${this.#backendUrl}/items/${id}`
+            const body = JSON.stringify({ description: description })
+            const response = await fetch(url, {
+                method: 'PUT',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: body
+            })
+            if (response.ok) {
+                const json = await response.json()
+                return this.#editItemDescriptionInMap(json.id, json.description, json.container_id)
+            } else {
+                return handleHttpResponseError(response)
+            }
+        } catch (error) {
+            processNetworkError(error)
+        }
     }
 
     #removeItemFromMap = (id, container_id) => {
@@ -236,10 +286,10 @@ class InventoryService {
             if (!this.#assets.get(i.container_id)) {
                 this.#assets.set(i.container_id, []);
             }
-
             this.#assets.get(i.container_id).push(item);
         })
     }
 }
 
 export { InventoryService }
+
