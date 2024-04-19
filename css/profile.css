@@ -42,7 +42,7 @@ nav a:hover {
 
 /* Navbar */
 .navbar {
-  position: fixe;
+  position: fixed;
   margin: 0;
   padding: 0;
   width: calc(100%);
