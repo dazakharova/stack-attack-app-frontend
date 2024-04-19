@@ -450,12 +450,12 @@ button.btn2 {
   color: #ffffff;
   background-color: #6EA79E;
   font-size: 30px;
-  width: 30%;
+  width: 20%;
   margin-left: auto;
   margin-right: auto;
   margin-top: 2%;
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 20px;
   border: 0.2px solid #6EA79E;
 }
 #save-picture-btn:hover {
@@ -853,13 +853,25 @@ footer {
   width: 30px;
   height: 30px; 
 }
+#current-picture {
+  display: block; 
+  margin: 0 auto; 
+  width: 250px;
+  height: 250px;
+}
+
 .image-option{
   width: 15%;
   height: 15%;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
+  transition: width 0.3s ease;
 }
+.image-option:hover {
+  width: 20%; 
+}
+
 /*New item and new place windows styles */
 .modal-window {
   background-color: #ffffff;
