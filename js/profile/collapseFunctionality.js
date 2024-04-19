@@ -1,7 +1,7 @@
 import {Container} from "../class/Container.js";
 import {Item} from "../class/Item.js";
-import rightContainer from "./containerRenderHelpers.js";
 import {addContainerToPath, addRoomToPath} from "./locationPath.js";
+import { updateContentsInRightContainer } from './uiDynamicUpdate.js'
 
 import { assets } from './profile.js'
 
@@ -39,27 +39,15 @@ const renderRoom = (parentNode, room, data) => {
     roomButton.textContent = roomName;
 
     // Sub assets of current room (inside the data Map)
-    const contents = data.get(roomId)
+    let roomContents = data.get(roomId)
 
-    roomButton.onclick = (event) => {
+    roomButton.onclick = () => {
         // Add room to the path section
         addRoomToPath(roomButton, currentLocationPathDiv, data)
-        // Clean the assets block
-        assetsBlocksDiv.innerHTML = ''
 
-        // Get room content if exist
-        const roomContent = data.get(roomId)
-
-        // If there is content inside room, display it in the assets block
-        if (contents) {
-            contents.forEach(c => {
-                if (c instanceof Container) {
-                    rightContainer.renderContainer(assetsBlocksDiv, c, data)
-                } else if (c instanceof Item) {
-                    rightContainer.renderItem(assetsBlocksDiv, c, data)
-                }
-            })
-        }
+        roomContents = assets.getAssets().get(roomId)
+        // Draw room content in the right container
+        updateContentsInRightContainer(assetsBlocksDiv, roomContents, data)
     }
 
     // Create div element for all inner elements stored inside the room
@@ -92,35 +80,13 @@ const renderRoom = (parentNode, room, data) => {
     parentNode.appendChild(roomDiv)
 
     // Once delete button is clicked it removes selected room from the layout
-    deleteBtn.onclick = async(event) => {
-        const isConfirmed = confirm(`Are you sure you want to delete room "${roomName}"?`);
-
-        if (isConfirmed) {
-            try {
-                const response = await assets.removeContainer(roomId)
-
-                // Prevent the event from bubbling up to the room button click listener
-                event.stopPropagation();
-
-                // Remove the roomDiv from the parentNode
-                parentNode.removeChild(roomDiv)
-            } catch (error) {
-                console.error(error)
-            }
-        }
+    deleteBtn.onclick = (event) => {
+        return handleRoomDeletion(event, parentNode, roomId, roomName,  roomDiv)
     }
 
     // If current room has other assets inside it, render them
-    if (contents) {
-        console.log("There is something inside:", contents)
-
-        contents.forEach(b => {
-            if (b instanceof Container) {
-                renderContainer(containersUl, b, data)
-            } else if (b instanceof Item) {
-                renderItem(itemsUl, b, data)
-            }
-        })
+    if (roomContents) {
+        renderContents(roomContents, containersUl, itemsUl, data)
     }
 }
 
@@ -163,18 +129,9 @@ const renderContainer = (parentNode, container, data) => {
         // Add container to path section
         addContainerToPath(containerButton, currentLocationPathDiv, data)
 
-        if (containerContents) {
-            assetsBlocksDiv.innerHTML = ''
-            containerContents.forEach(c => {
-                if (c instanceof Container) {
-                    rightContainer.renderContainer(assetsBlocksDiv, c, data)
-                } else if (c instanceof Item) {
-                    rightContainer.renderItem(assetsBlocksDiv, c, data)
-                }
-            })
-        } else {
-            assetsBlocksDiv.innerHTML = ''
-        }
+        const containerContents = assets.getAssets().get(containerId)
+        // Load container contents in the right section
+        updateContentsInRightContainer(assetsBlocksDiv, containerContents, assets.getAssets())
     }
 
     // Create block for nested elements
@@ -209,15 +166,7 @@ const renderContainer = (parentNode, container, data) => {
 
     // If current container has any assets inside it, then render them
     if (containerContents) {
-        console.log("There is boxes inside:", containerContents)
-
-        containerContents.forEach(b => {
-            if (b instanceof Container) {
-                renderContainer(containersUl, b, data)
-            } else if (b instanceof Item) {
-                renderItem(itemsUl, b, data)
-            }
-        })
+        renderContents(containerContents, containersUl, itemsUl, data)
     }
 }
 
@@ -239,169 +188,6 @@ const renderItem = (parentNode, item, data) => {
     // Set unique attributes to item link in order to be able to access it later
     a. setAttribute("data-id", itemId)
     a.setAttribute("data-containerId", itemParentId)
-
-    a.addEventListener("click", () => {
-        // Get the modal window
-        let itemModal = document.getElementById("item-modal")
-
-        const modalContent = document.getElementById('item-window-content')
-
-        // Get the elements of the modal window after opening it
-        let modalImage = document.getElementById("modal-image");
-        let modalTitle = document.getElementById("modal-title");
-        let modalDescription = document.getElementById("modal-description");
-
-        // Set the data in the modal window
-        modalTitle.textContent = item.getName();
-        // modalImage.src = image;
-        modalDescription.textContent = item.getDescription();
-
-        // Display the modal window
-        itemModal.style.display = "block";
-
-        const newNameDiv = document.querySelector('.new-item-name-div')
-        const okButton = document.querySelector('.new-item-name-div .ok-button')
-
-        const input = document.querySelector('.new-item-name-div .item-title-input')
-        // Focus on the input and select its content
-
-
-        const editNameBtn = document.getElementById('edit-item-name')
-        editNameBtn.onclick =() => {
-            // Replace item title with new div for editing
-            newNameDiv.style.display = 'block'
-
-            input.value = modalTitle.innerText
-
-            modalTitle.style.display = 'none'
-
-            input.focus();
-            input.select();
-        }
-
-        okButton.onclick = async () => {
-            try {
-                modalTitle.textContent = input.value;
-                newNameDiv.style.display = 'none'
-                modalTitle.style.display = 'block'
-
-                const response = await assets.editItemName(itemId, modalTitle.textContent)
-
-            } catch (error) {
-                console.error(error)
-            }
-        }
-
-        const editDescriptionBtn = document.getElementById('edit-item-description')
-
-        const newDescriptionDiv = document.querySelector('.new-item-description-div')
-        const descriptionInput = document.querySelector('.item-description-input')
-        const okDescriptionBtn = document.querySelector('.item-description-ok')
-
-        editDescriptionBtn.onclick = () => {
-            modalDescription.style.display = 'none'
-            newDescriptionDiv.style.display = 'block'
-
-            descriptionInput.value = modalDescription.textContent
-
-            // Focus on the input and select its content
-            descriptionInput.focus();
-            descriptionInput.select();
-        }
-
-        okDescriptionBtn.onclick = async () => {
-            try {
-                modalDescription.textContent = descriptionInput.value;
-                newDescriptionDiv.style.display = 'none'
-                modalDescription.style.display = 'block'
-
-                const response = await assets.editItemDescription(itemId, modalDescription.textContent)
-
-            } catch (error) {
-                console.error(error)
-            }
-        }
-
-        const deleteItemBtn = document.getElementById('delete-item')
-
-        deleteItemBtn.onclick = async (event) => {
-            const isConfirmed = confirm(`Are you sure you want to delete "${itemName}"?`);
-
-            if (isConfirmed) {
-                try {
-                    const response = await assets.removeItem(itemId)
-
-                    // Prevent the event from bubbling up to the room button click listener
-                    event.stopPropagation();
-
-                    itemModal.style.display = "none";
-
-                    // Re-render all the contents of the current container in the left menu
-                    parentNode.innerHTML = ''
-                    data.get(parseInt(itemParentId)).forEach(c => {
-                        if (c instanceof Container) {
-                            renderContainer(parentNode, c, data)
-                        } else if (c instanceof Item) {
-                            renderItem(parentNode, c, data)
-                        }
-                    })
-
-                    // Re-render all the contents of the current container in the right container
-                    const leftParentNode = document.querySelector('.space-container')
-                    leftParentNode.innerHTML = ''
-
-                    data.get(parseInt(itemParentId)).forEach(c => {
-                        if (c instanceof Container) {
-                            rightContainer.renderContainer(leftParentNode, c, data)
-                        } else if (c instanceof Item) {
-                            rightContainer.renderItem(leftParentNode, c, data)
-                        }
-                    })
-
-                    // parentNode.removeChild(containerDiv)
-                } catch (error) {
-                    console.error(error)
-                }
-            }
-        }
-
-        // Close the modal window when the close button is clicked
-        let closeButton = document.querySelector("#close-item");
-        if (closeButton) {
-            closeButton.onclick = function () {
-                newDescriptionDiv.style.display = 'none'
-                modalDescription.style.display = 'block'
-
-                newNameDiv.style.display = 'none'
-                modalTitle.style.display = 'block'
-
-                itemModal.style.display = "none";
-
-                // Re-render all the contents of the current container in the left menu
-                parentNode.innerHTML = ''
-                data.get(parseInt(itemParentId)).forEach(c => {
-                    if (c instanceof Container) {
-                        renderContainer(parentNode, c, data)
-                    } else if (c instanceof Item) {
-                        renderItem(parentNode, c, data)
-                    }
-                })
-
-                // Re-render all the contents of the current container in the right container
-                const leftParentNode = document.querySelector('.space-container')
-                leftParentNode.innerHTML = ''
-
-                data.get(parseInt(itemParentId)).forEach(c => {
-                    if (c instanceof Container) {
-                        rightContainer.renderContainer(leftParentNode, c, data)
-                    } else if (c instanceof Item) {
-                        rightContainer.renderItem(leftParentNode, c, data)
-                    }
-                })
-
-            };
-        }
-    })
 
     // Append item link to item list element
     itemElement.appendChild(a)
@@ -428,8 +214,37 @@ const controlRoomButton = (collapses, index) => {
     }
 }
 
+const renderContents = (contents, containersNode, itemsNode, data) => {
+    contents.forEach(entity => {
+        if (entity instanceof Container) {
+            renderContainer(containersNode, entity, data)
+        } else if (entity instanceof Item) {
+            renderItem(itemsNode, entity, data)
+        }
+    })
+}
+
+const handleRoomDeletion = async (event, parentNode, roomId, roomName,  roomDiv) => {
+    const isConfirmed = confirm(`Are you sure you want to delete room "${roomName}"?`);
+
+    if (isConfirmed) {
+        try {
+            const response = await assets.removeContainer(roomId)
+
+            // Prevent the event from bubbling up to the room button click listener
+            event.stopPropagation();
+
+            // Remove the roomDiv from the parentNode
+            parentNode.removeChild(roomDiv)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+}
+
 const leftContainer = {
-    renderRoom, controlRoomButton, renderContainer, renderItem
+    renderRoom, controlRoomButton, renderContainer, renderItem, renderContents
 }
 
 export default leftContainer
+
