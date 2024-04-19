@@ -235,4 +235,16 @@ const handleClosingItemModalWindow = (newItemNameDiv, modalTitle, itemModal, par
     updateContentsInRightContainer(parentNode, itemParentContainerContents, data)
 }
 
-export { updateContentsInLeftMenu, updateContentsInRightContainer, renderContainerContents, buildNewContainerNameInput, replaceTitleWithEditableInput, replaceItemNameWithEditableInput, updateItemNameAndRefreshUI, replaceItemDescriptionWithEditableInput, updateItemDescriptionAndRefreshUI, handleItemDeletion, handleClosingItemModalWindow }
+const handleImageUploading = () => {
+    const reader = new FileReader();
+    reader.onload = convertImageToBase64;
+    reader.readAsDataURL(this.files[0]);
+
+}
+
+function convertImageToBase64(event) {
+    const base64String = event.target.result.replace("data:", "").replace(/^.+,/, "");
+    // Save the base64String to your local Map or state here
+}
+
+export { updateContentsInLeftMenu, updateContentsInRightContainer, renderContainerContents, buildNewContainerNameInput, replaceTitleWithEditableInput, replaceItemNameWithEditableInput, updateItemNameAndRefreshUI, replaceItemDescriptionWithEditableInput, updateItemDescriptionAndRefreshUI, handleItemDeletion, handleClosingItemModalWindow, handleImageUploading }

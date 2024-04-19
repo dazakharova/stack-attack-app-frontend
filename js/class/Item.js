@@ -4,13 +4,15 @@ class Item {
     #description
     #containerId
     #userId
+    #image
 
-    constructor(id, name, description, containerId, userId) {
+    constructor(id, name, description, containerId, userId, image) {
         this.#id = id
         this.#name = name
         this.#description = description
         this.#containerId = containerId
         this.#userId = userId
+        this.#image = image
     }
 
     getId() {
@@ -23,6 +25,10 @@ class Item {
 
     getDescription() {
         return this.#description
+    }
+
+    getImage() {
+        return this.#image
     }
 
     getContainerId() {
@@ -39,6 +45,10 @@ class Item {
 
     setDescription(newDescription) {
         this.#description = newDescription
+    }
+
+    setImage(newImage) {
+        this.#image = newImage
     }
 }
 

@@ -1,6 +1,6 @@
 import { InventoryService } from "../class/InventoryService.js"
 import leftContainer from "./collapseFunctionality.js";
-import { updateContentsInLeftMenu, updateContentsInRightContainer } from './uiDynamicUpdate.js'
+import { updateContentsInLeftMenu, updateContentsInRightContainer, handleImageUploading } from './uiDynamicUpdate.js'
 
 
 const backend_url = 'http://localhost:3001'
@@ -115,6 +115,8 @@ const attachEventListenersToDynamicContent = () => {
     document.getElementById("new-item-btn").onclick = () => {
         newItemModal.style.display = 'block'
 
+        const itemImage = document.getElementById("item-image-input")
+
         document.getElementById("new-item-form").onsubmit = async function(event) {
             event.preventDefault(); // Prevent the form from submitting to a server
 
@@ -125,8 +127,12 @@ const attachEventListenersToDynamicContent = () => {
             const itemName = document.getElementById("item-name-input").value;
             const itemDescription = document.getElementById("item-description-input").value;
 
+            // Handle image upload, if any
+            const itemImageInput = document.getElementById("item-image-input");
+            const base64Image = await getBase64FromImageInput(itemImageInput);
+
             // Returns just added new item id
-            const newItem = await assets.addNewItem(itemName, itemDescription, containerId)
+            const newItem = await assets.addNewItem(itemName, itemDescription, containerId, base64Image)
 
             // Hide the modal after handling the data
             newItemModal.style.display = 'none'
@@ -186,3 +192,21 @@ const attachEventListenersToDynamicContent = () => {
 
 
 
+function getBase64FromImageInput(inputElement) {
+    return new Promise((resolve, reject) => {
+        if (inputElement.files.length === 0) {
+            resolve(''); // No file was selected
+        } else {
+            const file = inputElement.files[0];
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const base64String = event.target.result.replace("data:", "").replace(/^.+,/, "");
+                resolve(base64String); // Resolve the promise with the base64 string
+            };
+            reader.onerror = function(error) {
+                reject(error);
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+}

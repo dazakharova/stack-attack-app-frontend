@@ -217,6 +217,7 @@
                         <button class="ok-button">OK</button>
                     </div>
                     <img id="modal-image" src="" alt="myItemPicture">
+                    <input type="file" id="new-item-image-input" accept="image/*">
                     <p id="modal-description"></p>
                     <div id="new-description-div" class="hidden">
                         <textarea class="item-description-input"></textarea>
@@ -289,7 +290,8 @@
             <h2>Add New Item</h2>
             <form id="new-item-form">
                 <input type="text" id="item-name-input" placeholder="Name" required>
-                <textarea id="item-description-input" placeholder="Description" required></textarea>
+                <textarea id="item-description-input" placeholder="Description"></textarea>
+                <input type="file" id="item-image-input" accept="image/*">
                 <button type="submit" class="btn btn4">Add Item</button>
             </form>
         </div>
