@@ -883,7 +883,18 @@ footer {
   position: relative;
 }
 
+/*Item new description form*/
+
 .new-item-description-div {
+  display: flex !important;
+  flex-direction: row; /* Aligns children vertically */
+  justify-content: center; /* Centers children horizontally in the container */
+  align-items: center; /* Centers children vertically in the container */
+  height: 100%;
+  margin-bottom: 20px;
+}
+
+.hidden {
   display: none;
 }
 
