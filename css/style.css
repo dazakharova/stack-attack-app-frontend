@@ -15,6 +15,14 @@ header video, header img {
   margin-top: 20px;
   margin-left: 20px;
 }
+#loggedHeader {
+  opacity: 1; 
+  transition: opacity 1s ease, top 1s ease; ; 
+}
+#loggedHeader.active {
+  top: -100px;
+  opacity: 0.1;
+}
 
 /* Navigation */
 nav ul {
