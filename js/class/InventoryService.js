@@ -112,7 +112,7 @@ class InventoryService {
             })
             const json = await response.json()
             this.#removeContainerFromMap(json.id, json.parent_id)
-
+            // return this.#assets
         } catch (error) {
             return error
         }
@@ -194,6 +194,7 @@ class InventoryService {
         const updatedParentContainerArray = this.#assets.get(parentId).filter(asset => !(asset instanceof Container && asset.getId() === id))
         this.#assets.set(parentId, updatedParentContainerArray)
         this.#assets.delete(id)
+        console.log(`deleted id: ${id}, new assets map`)
     }
 
     #addItemToMap = (id, name, description, container_id, user_id) => {

@@ -232,6 +232,7 @@ button.btn2 {
   background-color: #627FA3;
 }
 #new-room-form {
+  display: none;
   width: 100%;
   margin-bottom: 20px;
 }

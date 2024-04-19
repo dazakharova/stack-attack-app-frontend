@@ -102,6 +102,7 @@ const renderItem = (parentNode, item, data) => {
         // Display the modal window
         itemModal.style.display = "block";
 
+        // Edit item name button
         const editItemNameBtn = document.getElementById('edit-item-name')
 
         // Get newItemNameDiv with input and submit button
@@ -136,6 +137,7 @@ const renderItem = (parentNode, item, data) => {
             return updateItemDescriptionAndRefreshUI(modalDescription, newDescriptionDiv, descriptionInput, itemId)
         }
 
+        // Delete item button
         const deleteItemBtn = document.getElementById('delete-item')
 
         // When delete item button is clicked, the user gets confirmation window, if confirmed
@@ -208,35 +210,23 @@ const updateContentsInLeftMenu = (entityParentId, data) => {
     }
 }
 
-const updateContentsInRightContainer = (parentNode, itemParentId, data) => {
+const updateContentsInRightContainer = (parentNode, contents, data) => {
     parentNode.innerHTML = ''
-    data.get(parseInt(itemParentId)).forEach(c => {
-        if (c instanceof Container) {
-            renderContainer(parentNode, c, data)
-        } else if (c instanceof Item) {
-            renderItem(parentNode, c, data)
-        }
-    })
+    if (contents) {
+        contents.forEach(c => {
+            if (c instanceof Container) {
+                renderContainer(parentNode, c, data)
+            } else if (c instanceof Item) {
+                renderItem(parentNode, c, data)
+            }
+        })
+    }
 }
 
 const renderContainerContents = (event, parentNode, containerContents, containerSpan, data) => {
         if (!event.target.matches('.edit-box-icon, .delete-box-icon, .edit-box-icon *, .delete-box-icon *, .ok-button, .title-input')) {
-            if (containerContents) {
-                // Clean the assets block
-                parentNode.innerHTML = ''
-                addContainerToPath(containerSpan, document.getElementById('location-info'), data)
-
-                containerContents.forEach(c => {
-                    if (c instanceof Container) {
-                        renderContainer(parentNode, c, data)
-                    } else if (c instanceof Item) {
-                        renderItem(parentNode, c, data)
-                    }
-                })
-            } else {
-                parentNode.innerHTML = ''
-                addContainerToPath(containerSpan, document.getElementById('location-info'), data)
-            }
+            addContainerToPath(containerSpan, document.getElementById('location-info'), data)
+            updateContentsInRightContainer(parentNode, containerContents, data)
         }
 }
 
@@ -311,9 +301,13 @@ const handleContainerDeletion = async (event, containerName, containerId, contai
             // Prevent the event from bubbling up to the room button click listener
             event.stopPropagation();
 
-            parentNode.removeChild(containerDiv)
+            // parentNode.removeChild(containerDiv)
 
-            updateContentsInLeftMenu(containerParentId, data)
+            const containerParentContents = data.get(parseInt(containerParentId))
+            // Re-render all the contents of the current container
+            updateContentsInRightContainer(parentNode, containerParentContents, assets.getAssets())
+
+            updateContentsInLeftMenu(containerParentId, assets.getAssets())
         } catch (error) {
             console.error(error)
         }
@@ -387,8 +381,9 @@ const handleItemDeletion = async (event, itemName, itemId, itemParentId, itemMod
             // Rerender left menu container with updated contents
             updateContentsInLeftMenu(itemParentId, data)
 
+            const itemParentContents = data.get(parseInt(itemParentId))
             // Re-render all the contents of the current container
-            updateContentsInRightContainer(parentNode, itemParentId, data)
+            updateContentsInRightContainer(parentNode, itemParentContents, data)
         } catch (error) {
             console.error(error)
         }
@@ -401,7 +396,9 @@ const handleClosingItemModalWindow = (newItemNameDiv, modalTitle, itemModal, par
 
         itemModal.style.display = "none";
 
+        const itemParentContents = data.get(parseInt(itemParentId))
+
         // Re-render all the contents of the current container
         updateContentsInLeftMenu(itemParentId, data)
-        updateContentsInRightContainer(parentNode, itemParentId, data)
+        updateContentsInRightContainer(parentNode, itemParentContents, data)
 }
