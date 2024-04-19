@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Hide the unlogged header and show the logged header
     if (unloggedHeader && loggedHeader) {
-        unloggedHeader.style.display = 'none';
-        loggedHeader.style.display = 'block';
+        unloggedHeader.style.display = 'block';
+        loggedHeader.style.display = 'none';
     }
 
     // Add event listener to redirect to the homepage when clicking "Our Team" 
