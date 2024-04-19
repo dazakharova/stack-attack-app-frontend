@@ -1,41 +1,28 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Get the links for headers according to their id
-    let unloggedHeader = document.getElementById('unloggedHeader');
-    let loggedHeader = document.getElementById('loggedHeader');
+const backend_url = 'http://localhost:3001'
+document.addEventListener('DOMContentLoaded', () => {
+    const links = document.querySelectorAll('a');
+    links.forEach(link => {
+        link.addEventListener('click', async (event) => {
+            event.preventDefault(); // Prevent default link behavior
+            const authStatus = await isAuthenticated();
+            const destination = '../index.html';
+            const sectionToScrollTo = link.getAttribute('href')// Original destination
+            const authQuery = authStatus ? "?auth=logged" : "?auth=unlogged"; // Append authentication status
+            window.location.href = `${destination}${authQuery}${sectionToScrollTo}`; // Navigate with authentication status
+        });
+    });
+})
 
-    // Hide the unlogged header and show the logged header
-    if (unloggedHeader && loggedHeader) {
-        unloggedHeader.style.display = 'block';
-        loggedHeader.style.display = 'none';
-    }
-
-    // Add event listener to redirect to the homepage when clicking "Our Team" 
-    let ourTeamLink = document.getElementById('ourTeamLink');
-    if (ourTeamLink) {
-        ourTeamLink.addEventListener('click', function(event) {
-            event.preventDefault(); 
-            let homepageURL = window.location.origin + '/index.html#ourTeamSection'; // Get the homepage URL with anchor
-            window.location.href = homepageURL; // Redirect the user to the homepage with anchor
+// Function to check if the user is authenticated
+function isAuthenticated() {
+    return fetch(`${backend_url}/auth/status`, {
+        method: 'GET',
+        credentials: 'include'
+    })
+        .then(response => response.json())
+        .then(data => data.isAuthenticated)
+        .catch(error => {
+            console.error('Error:', error);
+            return false;
         });
-    }
-    
-    // Add event listener to redirect to the "How it works" section when clicking the corresponding link
-    let howItWorksLink = document.getElementById('mainpageLink');
-    if (howItWorksLink) {
-        howItWorksLink.addEventListener('click', function(event) {
-            event.preventDefault();
-            let homepageURL = window.location.origin + '/index.html#howItWorksSection';
-            window.location.href = homepageURL;
-        });
-    }
-    
-    // Add event listener to redirect to the "Feedback" section when clicking the corresponding link
-    let feedbackLink = document.getElementById('feedbackLink');
-    if (feedbackLink) {
-        feedbackLink.addEventListener('click', function(event) {
-            event.preventDefault();
-            let homepageURL = window.location.origin + '/index.html#feedbackSection';
-            window.location.href = homepageURL;
-        });
-    }
-});
+}
