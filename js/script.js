@@ -39,8 +39,45 @@ document.addEventListener('DOMContentLoaded', (event) => {
             element.scrollIntoView({ behavior: 'smooth' });
         }
     }
+
+    // Find profile link in the header
+    const profileLink = document.getElementById("profilePageLink")
+
+    if (profileLink) {
+        profileLink.addEventListener('click', (event) => {
+            // Prevent the default link behavior
+            event.preventDefault();
+
+            // Check if the user is authenticated
+            isAuthenticated().then(isAuth => {
+                if (isAuth) {
+                    // User is authenticated, redirect to the profile page
+                    window.location.href = '/pages/profile.html';
+                } else {
+                    // User is not authenticated, handle accordingly (e.g., redirect to login page)
+                    alert('Please log in to access your profile.');
+                    // Example redirection to login page
+                    // window.location.href = '/login.html';
+                }
+            });
+        });
+    }
 });
 
+const backend_url = 'http://localhost:3001'
 
+// Function to check if the user is authenticated
+function isAuthenticated() {
+    return fetch(`${backend_url}/auth/status`, {
+        method: 'GET',
+        credentials: 'include'
+    })
+        .then(response => response.json())
+        .then(data => data.isAuthenticated)
+        .catch(error => {
+            console.error('Error:', error);
+            return false;
+        });
+}
 
 
