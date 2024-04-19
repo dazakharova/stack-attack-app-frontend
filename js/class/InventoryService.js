@@ -197,8 +197,8 @@ class InventoryService {
         console.log(`deleted id: ${id}, new assets map`)
     }
 
-    #addItemToMap = (id, name, description, container_id, user_id) => {
-        const newItem = new Item(id, name, description, container_id, user_id)
+    #addItemToMap = (id, name, description, container_id, user_id, image) => {
+        const newItem = new Item(id, name, description, container_id, user_id, image)
         if (!this.#assets.get(newItem.getContainerId())) {
             this.#assets.set(newItem.getContainerId(), [])
         }

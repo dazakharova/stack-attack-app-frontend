@@ -80,6 +80,7 @@ const renderItem = (parentNode, item, data) => {
     const itemId = item.getId()
     const itemName = item.getName()
     const itemParentId = item.getContainerId()
+    const itemImageStr = item.getImage()
     // Create div for item
     const itemDiv = document.createElement('div')
     itemDiv.className = 'item'
@@ -96,8 +97,11 @@ const renderItem = (parentNode, item, data) => {
 
         // Set the data in the modal window
         modalTitle.textContent = item.getName();
-        // modalImage.src = image;
+        if (itemImageStr) {
+            modalImage.src = `data:image/jpeg;base64,${itemImageStr}`
+        }
         modalDescription.textContent = item.getDescription();
+
 
         // Display the modal window
         itemModal.style.display = "block";
@@ -159,6 +163,10 @@ const renderItem = (parentNode, item, data) => {
 
     // Create img for item
     const itemImg = document.createElement('img')
+    itemImg.className = "item-image"
+
+    itemImg.src = `data:image/jpeg;base64,${itemImageStr}`
+
 
     // Create span for item with its title
     const itemSpan = document.createElement('span')

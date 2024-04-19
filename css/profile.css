@@ -902,3 +902,7 @@ footer {
 .new-container-name-div {
   display: none;
 }
+
+#new-item-image-input {
+  display: none;
+}
