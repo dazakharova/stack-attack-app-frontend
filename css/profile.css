@@ -264,7 +264,8 @@ button.btn2 {
 }
 
 /* menu nav in right container*/
-#room-name {
+#room-name,
+.container-name{
   color: #434881;
   background-color: transparent;
   font-size: 20px;
@@ -275,26 +276,15 @@ button.btn2 {
   border: none;
   outline: none;
 }
-#room-name:hover {
+#room-name,.container-name:hover {
   color:  #627FA3!important ;
   background-color:  rgba(101, 169, 124, 0.1);
   border-radius: 10px;
+  padding: 10px;
+  margin: 4px;
 }
 
-.container-name {
-  color: #434881;
-  background-color: #ffffff;
-  font-size: 20px;
-  font-weight: 6px;
-  width: 20%;
-  border: none;
-  outline: none;
-}
-.container-name:hover {
-  color:  #627FA3!important ;
-  background-color:  rgba(101, 169, 124, 0.1);
-  border-radius: 10px;
-}
+
 
 
 
