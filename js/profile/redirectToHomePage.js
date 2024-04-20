@@ -1,7 +1,11 @@
 const backend_url = 'http://localhost:3001'
 document.addEventListener('DOMContentLoaded', () => {
-    const links = document.querySelectorAll('a');
+
+    // Get links to the specific sections of the homepage
+    const links = document.querySelectorAll('.section')
     links.forEach(link => {
+        // Sending auth query inside url while accessing navigations links
+        // And dynamically display homepage header according to the user authentication status
         link.addEventListener('click', async (event) => {
             event.preventDefault(); // Prevent default link behavior
             const authStatus = await isAuthenticated();
@@ -26,3 +30,5 @@ function isAuthenticated() {
             return false;
         });
 }
+
+export { isAuthenticated }
