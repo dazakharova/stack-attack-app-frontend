@@ -12,6 +12,7 @@ function logoutUser() {
     headers: {
       "Content-type": "application/json",
     },
+    credentials: 'include'
   };
 
 
