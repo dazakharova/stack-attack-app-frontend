@@ -2,7 +2,7 @@ import { addContainerToPath } from "./locationPath.js";
 import {Container} from "../class/Container.js";
 import {Item} from "../class/Item.js";
 import leftContainer from "./collapseFunctionality.js";
-import {assets} from "./profile.js";
+import {assets, getBase64FromImageInput} from "./profile.js";
 
 const renderContainer = (parentNode, container, data) => {
     // Get all data about container
@@ -139,6 +139,12 @@ const renderItem = (parentNode, item, data) => {
         // When submit button is clicked, description gets updated and left menu and right container on the page update their contents
         okDescriptionBtn.onclick = () => {
             return updateItemDescriptionAndRefreshUI(modalDescription, newDescriptionDiv, descriptionInput, itemId)
+        }
+
+        const editImageBtn = document.getElementById('edit-item-photo')
+
+        editImageBtn.onclick = () => {
+            displayImageUploadInput(itemId, modalImage)
         }
 
         // Delete item button
@@ -414,4 +420,25 @@ const handleClosingItemModalWindow = (newItemNameDiv, modalTitle, itemModal, par
         // Re-render all the contents of the current container
         updateContentsInLeftMenu(itemParentId, data)
         updateContentsInRightContainer(parentNode, itemParentContents, data)
+}
+
+const displayImageUploadInput = (id, modalImage) => {
+    const newItemImageInput = document.getElementById('new-item-image-input')
+    newItemImageInput.style.display = 'block'
+
+    newItemImageInput.onchange = () => handleImageInputChange(newItemImageInput, id, modalImage)
+}
+
+const handleImageInputChange = async (newItemImageInput, id, modalImage) => {
+        if (newItemImageInput.files.length > 0) {
+            const base64Image = await getBase64FromImageInput(newItemImageInput)
+            await assets.editItemImage(id, base64Image)
+            modalImage.src = `data:image/jpeg;base64,${base64Image}`
+
+            // Reset the file input after the image has been processed
+            newItemImageInput.value = '';
+
+            // Hide the file input
+            newItemImageInput.style.display = 'none';
+        }
 }

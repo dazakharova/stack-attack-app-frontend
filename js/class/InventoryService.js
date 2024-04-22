@@ -106,10 +106,10 @@ class InventoryService {
     }
 
 
-    addNewContainer = async(name, parent_id) => {
+    addNewContainer = async (name, parent_id) => {
         try {
             const url = `${this.#backendUrl}/containers`
-            const body = JSON.stringify({ name, parent_id })
+            const body = JSON.stringify({name, parent_id})
             const response = await fetch(url, {
                 method: 'POST',
                 credentials: 'include',
@@ -133,10 +133,10 @@ class InventoryService {
         return this.#assets
     }
 
-    addNewItem = async(name, description, container_id, image) => {
+    addNewItem = async (name, description, container_id, image) => {
         try {
             const url = `${this.#backendUrl}/items`
-            const body = JSON.stringify({ name, description, container_id, image })
+            const body = JSON.stringify({name, description, container_id, image})
             const response = await fetch(url, {
                 method: 'POST',
                 credentials: 'include',
@@ -159,7 +159,7 @@ class InventoryService {
     editContainerName = async (id, name) => {
         try {
             const url = `${this.#backendUrl}/containers/${id}`
-            const body = JSON.stringify({ name: name })
+            const body = JSON.stringify({name: name})
             const response = await fetch(url, {
                 method: 'PUT',
                 credentials: 'include',
@@ -179,7 +179,7 @@ class InventoryService {
         }
     }
 
-    removeContainer = async(id) => {
+    removeContainer = async (id) => {
         try {
             const url = `${this.#backendUrl}/containers/${id}`
             const response = await fetch(url, {
@@ -197,7 +197,7 @@ class InventoryService {
         }
     }
 
-    removeItem = async(id) => {
+    removeItem = async (id) => {
         try {
             const url = `${this.#backendUrl}/items/${id}`
             const response = await fetch(url, {
@@ -218,7 +218,7 @@ class InventoryService {
     editItemName = async (id, name) => {
         try {
             const url = `${this.#backendUrl}/items/${id}`
-            const body = JSON.stringify({ name: name })
+            const body = JSON.stringify({name: name})
             const response = await fetch(url, {
                 method: 'PUT',
                 credentials: 'include',
@@ -241,7 +241,7 @@ class InventoryService {
     editItemDescription = async (id, description) => {
         try {
             const url = `${this.#backendUrl}/items/${id}`
-            const body = JSON.stringify({ description: description })
+            const body = JSON.stringify({description: description})
             const response = await fetch(url, {
                 method: 'PUT',
                 credentials: 'include',
@@ -260,6 +260,39 @@ class InventoryService {
             processNetworkError(error)
         }
     }
+
+    editItemImage = async (id, imageStr) => {
+        try {
+            const url = `${this.#backendUrl}/items/${id}`
+            const body = JSON.stringify({image: imageStr})
+            const response = await fetch(url, {
+                method: 'PUT',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: body
+            })
+            if (response.ok) {
+                const json = await response.json()
+                return this.#editItemImageInMap(json.id, json.image, json.container_id)
+            } else {
+                return handleHttpResponseError(response)
+            }
+        } catch(error) {
+            processNetworkError(error)
+        }
+    }
+
+
+    #editItemImageInMap = (id, image, container_id) => {
+        this.#assets.get(container_id).forEach(asset => {
+            if (asset instanceof Item && asset.getId() === id) {
+                asset.setImage(image)
+            }
+        })
+    }
+
 
     #removeItemFromMap = (id, container_id) => {
         const updatedContainerArray = this.#assets.get(container_id).filter(asset => !(asset instanceof Item && asset.getId() === id))
