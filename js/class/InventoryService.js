@@ -55,6 +55,57 @@ class InventoryService {
         }
     }
 
+    searchItems(query) {
+        const searchResults = [];
+        for (const [key, assets] of this.#assets) {
+            for (const asset of assets) {
+                if (asset instanceof Item && asset.matchesQuery(query)) {
+                    searchResults.push(asset);
+                }
+            }
+        }
+        return searchResults;
+    }
+
+    findPathToTopLevelContainer = (id) => {
+        let currentId = id // Start with the initial container ID
+        let pathToTopLevel = [] // Initialize an array to hold the path of IDs to the top-level container
+
+        while (currentId !== null) {
+            let found = false // Flag to check if we found the current container
+
+            for (const [key, assets] of this.#assets) {
+                for (const asset of assets) {
+                    if (asset instanceof Container && asset.getId() === currentId) {
+                        // Check if the current container's parent ID is null (top-level)
+                        if (asset.getParentId() === null) {
+                            // If the loop has collected any parent IDs, add the top-level container at the end
+                            pathToTopLevel.push(currentId)
+                            return pathToTopLevel.reverse() // Return the array of parent IDs
+                        }
+
+                        // If not top-level, add the current ID to the parentIds array and update currentId to search for its parent in the next iteration
+                        pathToTopLevel.push(currentId)
+                        currentId = asset.getParentId()
+                        found = true // Mark that we've found the current container
+                        break // Exit the inner loop since we found the current container
+                    }
+                }
+                if (found) break // Exit the outer loop if we found the current container
+            }
+
+            // If the container or its parent isn't found, break the loop
+            if (!found) {
+                console.error('Container chain broken or container not found.')
+                break
+            }
+        }
+
+        // If the top-level container was not found
+        return []
+    }
+
+
     addNewContainer = async(name, parent_id) => {
         try {
             const url = `${this.#backendUrl}/containers`

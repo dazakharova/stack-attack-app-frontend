@@ -907,3 +907,47 @@ footer {
 #new-item-image-input {
   display: none;
 }
+
+/*Dropdown menu for searching results*/
+
+#searching-form {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.search-input-container {
+  position: relative;
+  display: inline-block; /* Adjust as needed */
+  width: auto; /* Adjust as needed or use specific width */
+}
+
+#search-results-dropdown {
+  display: none; /* Hide dropdown by default */
+  position: absolute;
+  left: 0; /* Align to the left edge of the search input */
+  right: 0; /* Ensure it stretches to the right edge of the search input */
+  top: 100%; /* Position it just below the search input */
+  background-color: #f9f9f9;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  width: 100%; /* This makes the width match the search input */
+}
+
+#search-results-dropdown a {
+  color: black;
+  padding: 10px 12px;
+  text-decoration: none;
+  display: block;
+}
+
+#search-results-dropdown a:hover {
+  background-color: #f1f1f1;
+}
+
+.no-results-message {
+  padding: 10px;
+  text-align: center;
+  color: #666;
+  font-style: italic;
+}

@@ -4,121 +4,128 @@ import {Item} from "../class/Item.js";
 
 const assetsBlocksDiv = document.querySelector(".space-container")
 
-const addRoomToPath = (button, currentLocationPathDiv, assetsMap) => {
-    if (currentLocationPathDiv) {
-        currentLocationPathDiv.innerHTML = ''
+const removeLastLocationIfSameParent = (lastLocation, triggeredLocationParentId) => {
+    const lastLocationParentId = lastLocation.getAttribute("data-parentId");
+    if (triggeredLocationParentId === lastLocationParentId) {
+        lastLocation.remove();
     }
-    if (document.getElementById("room-name")) {
-        return
-    }
-
-    const roomButton = document.createElement("button")
-    roomButton.setAttribute("id", "room-name")
-    const dataId = button.getAttribute("data-id")
-    roomButton.setAttribute("data-id", dataId)
-    roomButton.innerText = button.innerText
-
-    roomButton.addEventListener("click", (event) => {
-        // Clean the assets block
-        assetsBlocksDiv.innerHTML = ''
-
-        let nextSibling = roomButton.nextElementSibling;
-
-        // Loop through all next siblings and remove them
-        while (nextSibling) {
-            const toRemove = nextSibling;
-            nextSibling = nextSibling.nextElementSibling;
-            toRemove.remove();
-        }
-
-        // Select all the nested containers inside the chosen room
-        const roomId = parseInt(button.getAttribute("data-id"))
-
-        // Get room content if exist
-        const roomContent = assetsMap.get(roomId)
-
-        // If there content inside room, display it in the assets block
-        if (roomContent) {
-            roomContent.forEach(c => {
-                if (c instanceof Container) {
-                    rightContainer.renderContainer(assetsBlocksDiv, c, assetsMap)
-                } else if (c instanceof Item) {
-                    rightContainer.renderItem(assetsBlocksDiv, c, assetsMap)
-                }
-            })
-        }
-
-    })
-
-    // Append room button to location info block
-    currentLocationPathDiv.appendChild(roomButton)
 }
 
-const addContainerToPath = (button, currentLocationPathDiv, assetsMap) => {
+const removeLocationsWithHigherParentId = (containerParentId, currentLocationPathDiv) => {
+    if (currentLocationPathDiv.lastElementChild.getAttribute("id") !== 'room-name') {
+        while (containerParentId < currentLocationPathDiv.lastElementChild.getAttribute("data-parentid")) {
+            currentLocationPathDiv.lastElementChild.remove();
+        }
+    }
+}
 
-    // Select last location span added to the path
+const handleContainerButtonClick = (containerButton, assetsBlocksDiv, assetsMap) => {
+    let nextSibling = containerButton.nextElementSibling;
+    while (nextSibling) {
+        const toRemove = nextSibling;
+        nextSibling = nextSibling.nextElementSibling;
+        toRemove.remove();
+    }
+
+    const id = parseInt(containerButton.getAttribute("data-id"));
+    const containerContents = assetsMap.get(id);
+    if (containerContents) {
+        assetsBlocksDiv.innerHTML = '';
+        containerContents.forEach(c => {
+            if (c instanceof Container) {
+                rightContainer.renderContainer(assetsBlocksDiv, c, assetsMap);
+            } else if (c instanceof Item) {
+                rightContainer.renderItem(assetsBlocksDiv, c, assetsMap);
+            }
+        });
+    }
+}
+
+const createContainerButton = (containerId, containerParentId, containerName, assetsBlocksDiv, assetsMap) => {
+    const containerButton = document.createElement("button");
+    containerButton.className = "container-name";
+    const buttonId = `container-name${containerId}`;
+    containerButton.setAttribute("id", buttonId);
+    containerButton.setAttribute("data-id", containerId);
+    containerButton.setAttribute("data-parentId", containerParentId);
+    containerButton.innerText = containerName;
+
+    containerButton.addEventListener("click", () => handleContainerButtonClick(containerButton, assetsBlocksDiv, assetsMap));
+
+    return containerButton;
+}
+
+const addContainerToPath = (containerId, containerName, containerParentId, currentLocationPathDiv, assetsMap) => {
     const lastLocation = currentLocationPathDiv.lastElementChild;
-    // Check last location parent id
-    const lastLocationParentId = lastLocation.getAttribute("data-parentId")
-    // Check parent id of the clicked container button
-    const triggeredLocationParentId = button.getAttribute("data-parentId")
 
-    // If parent_id of the last location and clicked container button is the same, then replace the last added location with the just clicked
-    if (triggeredLocationParentId === lastLocationParentId) {
-        lastLocation.remove()
+    removeLastLocationIfSameParent(lastLocation, containerParentId);
+    removeLocationsWithHigherParentId(containerParentId, currentLocationPathDiv);
+
+    if (document.getElementById(`container-name${containerId}`)) {
+        return;
     }
 
-    if (lastLocation.getAttribute("id") !== 'room-name') {
-        while (button.getAttribute("data-parentid") < currentLocationPathDiv.lastElementChild.getAttribute("data-parentid")) {
-            currentLocationPathDiv.lastElementChild.remove()
+    const assetsBlocksDiv = document.querySelector('.space-container'); // Make sure this selector matches your HTML
+    const containerButton = createContainerButton(containerId, containerParentId, containerName, assetsBlocksDiv, assetsMap);
+    currentLocationPathDiv.appendChild(containerButton);
+}
+
+//add room to path:
+
+const clearElementInnerHTML = (element) => {
+    if (element) {
+        element.innerHTML = '';
+    }
+}
+
+const renderRoomContent = (assetsBlocksDiv, content, assetsMap) => {
+    content.forEach(c => {
+        if (c instanceof Container) {
+            rightContainer.renderContainer(assetsBlocksDiv, c, assetsMap);
+        } else if (c instanceof Item) {
+            rightContainer.renderItem(assetsBlocksDiv, c, assetsMap);
         }
+    });
+}
+
+const handleRoomButtonClick = (event, button, assetsBlocksDiv, assetsMap) => {
+    clearElementInnerHTML(assetsBlocksDiv);
+
+    let nextSibling = event.target.nextElementSibling;
+    while (nextSibling) {
+        const toRemove = nextSibling;
+        nextSibling = nextSibling.nextElementSibling;
+        toRemove.remove();
     }
 
-    // If this container button is already added to path, then ignore
-    if (document.getElementById(`container-name${button.getAttribute("data-id")}`)) {
-        return
+    const roomId = parseInt(button.getAttribute("data-id"));
+    const roomContent = assetsMap.get(roomId);
+
+    if (roomContent) {
+        renderRoomContent(assetsBlocksDiv, roomContent, assetsMap);
+    }
+}
+
+const createRoomButton = (roomName, roomId, assetsBlocksDiv, assetsMap) => {
+    const roomButton = document.createElement("button");
+    roomButton.setAttribute("id", "room-name");
+    roomButton.setAttribute("data-id", roomId);
+    roomButton.innerText = roomName;
+
+    roomButton.addEventListener("click", (event) => handleRoomButtonClick(event, roomButton, assetsBlocksDiv, assetsMap));
+
+    return roomButton;
+}
+
+const addRoomToPath = (roomId, roomName, currentLocationPathDiv, assetsMap) => {
+    clearElementInnerHTML(currentLocationPathDiv);
+    if (document.getElementById("room-name")) {
+        return;
     }
 
-    // const containerSpan = document.createElement("span")
-    const containerButton = document.createElement("button")
-    containerButton.className = "container-name"
-    const buttonId = `container-name${button.getAttribute("data-id")}`
-    containerButton.setAttribute("id", buttonId)
-    containerButton.setAttribute("data-id", button.getAttribute("data-id"))
-    containerButton.setAttribute("data-parentId", button.getAttribute("data-parentId"))
-    containerButton.innerText = button.innerText
-
-    containerButton.addEventListener("click", () => {
-        // Get the next sibling of the clicked button
-        let nextSibling = containerButton.nextElementSibling;
-
-        // Loop through all next siblings and remove them
-        while (nextSibling) {
-            const toRemove = nextSibling;
-            nextSibling = nextSibling.nextElementSibling;
-            toRemove.remove();
-        }
-
-        // (parentNode, container, data)
-        const id = parseInt(containerButton.getAttribute("data-id"))
-        const containerContents = assetsMap.get(id)
-
-        if (containerContents) {
-            assetsBlocksDiv.innerHTML = ''
-            containerContents.forEach(c => {
-                if (c instanceof Container) {
-                    rightContainer.renderContainer(assetsBlocksDiv, c, assetsMap)
-                } else if (c instanceof Item) {
-                    rightContainer.renderItem(assetsBlocksDiv, c, assetsMap)
-                }
-            })
-        }
-
-        // rightContainer.renderContainer(assetsBlocksDiv, container, assetsMap)
-    })
-
-    // Append container button to location info block
-    currentLocationPathDiv.appendChild(containerButton)
+    const assetsBlocksDiv = document.querySelector('.space-container'); // Ensure this selector matches your HTML
+    const roomButton = createRoomButton(roomName, roomId, assetsBlocksDiv, assetsMap);
+    currentLocationPathDiv.appendChild(roomButton);
 }
 
 export { addRoomToPath, addContainerToPath }
