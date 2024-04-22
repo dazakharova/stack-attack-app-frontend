@@ -43,7 +43,7 @@ const renderContainer = (parentNode, container, data) => {
 
     // Render container contents while clicking on container div
     containerDiv.onclick = (event) => {
-        renderContainerContents(event, parentNode, containerContents, containerSpan, data)
+        renderContainerContents(event, parentNode, containerContents, containerId, containerName, containerParentId, data)
     }
 
     // Initializes the editing process: replaces the displayed text with an input field and a confirm ("OK") button.
@@ -234,9 +234,9 @@ const updateContentsInRightContainer = (parentNode, contents, data) => {
     }
 }
 
-const renderContainerContents = (event, parentNode, containerContents, containerSpan, data) => {
+const renderContainerContents = (event, parentNode, containerContents, containerId, containerName, containerParentId, data) => {
         if (!event.target.matches('.edit-box-icon, .delete-box-icon, .edit-box-icon *, .delete-box-icon *, .ok-button, .title-input')) {
-            addContainerToPath(containerSpan, document.getElementById('location-info'), data)
+            addContainerToPath(containerId, containerName, containerParentId, document.getElementById('location-info'), data)
             updateContentsInRightContainer(parentNode, containerContents, data)
         }
 }

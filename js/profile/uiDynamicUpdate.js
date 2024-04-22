@@ -41,12 +41,12 @@ const updateContentsInRightContainer = (parentNode, contents, data) => {
     }
 }
 
-const renderContainerContents = (event, parentNode, containerContents, containerSpan, data) => {
+const renderContainerContents = (event, parentNode, containerContents, containerId, containerName, containerParentId, data) => {
     if (!event.target.matches('.edit-box-icon, .delete-box-icon, .edit-box-icon *, .delete-box-icon *, .ok-button, .title-input')) {
         if (containerContents) {
             // Clean the assets block
             parentNode.innerHTML = ''
-            addContainerToPath(containerSpan, document.getElementById('location-info'), data)
+            addContainerToPath(containerId, containerName, containerParentId, document.getElementById('location-info'), data)
 
             containerContents.forEach(c => {
                 if (c instanceof Container) {
@@ -57,7 +57,7 @@ const renderContainerContents = (event, parentNode, containerContents, container
             })
         } else {
             parentNode.innerHTML = ''
-            addContainerToPath(containerSpan, document.getElementById('location-info'), data)
+            addContainerToPath(containerId, containerName, containerParentId, document.getElementById('location-info'), data)
         }
     }
 }

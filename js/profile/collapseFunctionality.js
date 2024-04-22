@@ -43,7 +43,7 @@ const renderRoom = (parentNode, room, data) => {
 
     roomButton.onclick = () => {
         // Add room to the path section
-        addRoomToPath(roomButton, currentLocationPathDiv, data)
+        addRoomToPath(roomId, roomName, currentLocationPathDiv, data)
 
         roomContents = assets.getAssets().get(roomId)
         // Draw room content in the right container
@@ -127,7 +127,7 @@ const renderContainer = (parentNode, container, data) => {
 
     containerButton.onclick = () => {
         // Add container to path section
-        addContainerToPath(containerButton, currentLocationPathDiv, data)
+        addContainerToPath(containerId, containerName, containerParentId, currentLocationPathDiv, data)
 
         const containerContents = assets.getAssets().get(containerId)
         // Load container contents in the right section
