@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="../css/profile.css">
     <script type="module" src="../js/profile/profile.js"></script>
+    <script type="module" src="../js/profile/search.js"></script>
 
 </head>
 
@@ -172,11 +173,17 @@
         <div class="right-container">
             <div id="right-container-header">
                 <h2>My items</h2>
-                <div class="boxquest">
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Missing something valuable?" class="input" name="txt"
-                        onmouseout="this.value = ''; this.blur();">
-                </div>
+<!--                <div class="boxquest">-->
+<!--                    <i class="fas fa-search"></i>-->
+<!--                    <input id="searching-input" type="text" placeholder="Missing something valuable?" class="input" name="txt"-->
+<!--                        onmouseout="this.value = ''; this.blur();">-->
+<!--                </div>-->
+
+                <form id="searching-form">
+                    <input id="searching-input" type="text" placeholder="Missing something valuable?" >
+                    <div id="search-results-dropdown" class="dropdown-content"></div>
+                    <button type="submit" id="search-button">Search</button>
+                </form>
 
                 <!--Button "Add new room" -->
                 <div id="addbtn">

@@ -55,6 +55,18 @@ class InventoryService {
         }
     }
 
+    searchItems(query) {
+        const searchResults = [];
+        for (const [key, assets] of this.#assets) {
+            for (const asset of assets) {
+                if (asset instanceof Item && asset.matchesQuery(query)) {
+                    searchResults.push(asset);
+                }
+            }
+        }
+        return searchResults;
+    }
+
     addNewContainer = async(name, parent_id) => {
         try {
             const url = `${this.#backendUrl}/containers`

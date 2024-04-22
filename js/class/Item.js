@@ -50,6 +50,10 @@ class Item {
     setImage(newImage) {
         this.#image = newImage
     }
+
+    matchesQuery(query) {
+        return this.#name.toLowerCase() === query.toLowerCase()
+    }
 }
 
 export { Item }
