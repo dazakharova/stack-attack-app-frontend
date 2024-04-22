@@ -165,7 +165,10 @@ const renderItem = (parentNode, item, data) => {
     const itemImg = document.createElement('img')
     itemImg.className = "item-image"
 
-    itemImg.src = `data:image/jpeg;base64,${itemImageStr}`
+    if (itemImageStr) {
+        itemImg.src = `data:image/jpeg;base64,${itemImageStr}`
+    }
+
 
 
     // Create span for item with its title
