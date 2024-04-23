@@ -406,8 +406,6 @@ const handleClosingItemModalWindow = (newItemNameDiv, modalTitle, itemModal, par
         updateContentsInLeftMenu(itemParentId, data)
         updateContentsInRightContainer(parentNode, itemParentContents, data)
 }
-<<<<<<< Updated upstream
-=======
 
 const displayImageUploadInput = (id, modalImage) => {
     const newItemImageInput = document.getElementById('new-item-image-input')
@@ -477,5 +475,3 @@ function buildContainerDropdown(containerDiv) {
     };
 }
 
-
->>>>>>> Stashed changes
