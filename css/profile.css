@@ -427,8 +427,6 @@ button.btn2 {
   padding: 20px;
   border-radius: 10px;
   border: 0.2px solid #6EA79E;
-  /*position: absolute; !* Change to absolute positioning *!*/
-  top: 140px; /* Adjust top position as needed */
   right: 20px;
 }
 .btn3:hover {
@@ -443,10 +441,7 @@ button.btn2 {
   margin-right: 100px;
   overflow: hidden; 
 }
-#addbtn {
-  position: relative;
-    display: flex; 
-}
+
 #save-picture-btn {
   color: #ffffff;
   background-color: #6EA79E;
@@ -953,6 +948,72 @@ footer {
   color: #666;
   font-style: italic;
 }
+
+#right-container-header {
+  display: flex;
+}
+
+/*Right container header with searching form and 'Add new item' button*/
+
+#right-container-header {
+  display: flex;
+  justify-content: space-between; /* Positions children at start and end */
+  align-items: center; /* Vertically centers children */
+  padding: 0 20px; /* Add some padding on sides for spacing */
+}
+
+#searching-form {
+  display: flex;
+  align-items: center; /* Align form elements vertically center */
+}
+
+#search-button {
+  margin-left: 10px; /* Add space between input and button */
+}
+
+/*#addbtn {*/
+/*  !* Assuming this is the container for the 'Add new item' button *!*/
+/*  margin-left: auto; !* This pushes the button to the right *!*/
+/*}*/
+
+/* Styling for the search input and button to ensure they are aligned properly */
+#searching-input {
+  padding: 8px 12px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+}
+
+#search-button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #6EA79E;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+#search-button:hover {
+  background-color: #627FA3;
+}
+
+
+#addbtn > button,
+#addbtn > a {
+  padding: 10px 25px;
+  min-width: 160px;
+  text-align: center;
+  font-size: 20px;
+  background-color: #6EA79E;
+  color: white;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+#addbtn > button:hover,
+#addbtn > a:hover {
+  background-color: #627FA3;
 
 /*Box dropdown menu*/
 
