@@ -901,6 +901,8 @@ footer {
 
 #new-item-image-input {
   display: none;
+  margin: 0 auto;
+  padding: 10px;
 }
 
 /*Dropdown menu for searching results*/
@@ -1012,4 +1014,24 @@ footer {
 #addbtn > button:hover,
 #addbtn > a:hover {
   background-color: #627FA3;
+
+/*Box dropdown menu*/
+
+ /*Positioning the 'More' button */
+#box-dropdown {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(10px, 10px); /* Adjust as needed */
+}
+
+.box-more-btn {
+  color: #627fa3; /* Adjust the color to match your design */
+  background-color: transparent;
+  border: none;
+  padding: 0; /* Removes padding for a more compact look */
+}
+
+.box-more-btn::after {
+  display: none; /* Hides the caret icon added by Bootstrap */
 }
