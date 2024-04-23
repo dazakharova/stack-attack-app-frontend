@@ -21,6 +21,9 @@ const renderContainer = (parentNode, container, data) => {
     const containerDivFooter = document.createElement('div')
     containerDivFooter.className = 'box-footer'
 
+    // Create container dropdown menu and retrieve edit name and delete buttons
+   const { editContainerNameBtn, deleteContainerBtn } = buildContainerDropdown(containerDiv)
+
     // Create span for container with its title inside
     const containerSpan = document.createElement('span')
     containerSpan.className = 'title'
@@ -33,40 +36,29 @@ const renderContainer = (parentNode, container, data) => {
     // Create new container name form which is invisible by default
     buildNewContainerNameInput(containerDivFooter)
 
-    // Create edit icon
-    const editIcon = document.createElement('i')
-    editIcon.classList.add('bi', 'bi-pencil-square', 'edit-box-icon')
-
-    // Create delete icon
-    const deleteIcon = document.createElement('i')
-    deleteIcon.classList.add('bi', 'bi-trash', 'delete-box-icon')
-
     // Render container contents while clicking on container div
     containerDiv.onclick = (event) => {
         renderContainerContents(event, parentNode, containerContents, containerId, containerName, containerParentId, data)
     }
 
-    // Initializes the editing process: replaces the displayed text with an input field and a confirm ("OK") button.
-    editIcon.onclick = () => {
+    editContainerNameBtn.onclick = () => {
         // Initiate container rename
-        replaceTitleWithEditableInput(containerDivFooter, containerSpan, editIcon)
+        replaceTitleWithEditableInput(containerDivFooter, containerSpan)
 
         // Get ok button for submitting container name changes
         const okButton = document.querySelector('.ok-button');
 
         okButton.onclick = () => {
-            return updateContainerNameAndRefreshUI(editIcon, containerSpan, containerId, containerParentId, data)
+            return updateContainerNameAndRefreshUI(containerSpan, containerId, containerParentId, data)
         }
     }
 
-    deleteIcon.onclick = (event) => {
+    deleteContainerBtn.onclick = (event) => {
        return handleContainerDeletion(event, containerName, containerId, containerDiv, parentNode, containerParentId, data)
     }
 
     // Append elements to container div footer
     containerDivFooter.appendChild(containerSpan)
-    containerDivFooter.appendChild(editIcon)
-    containerDivFooter.appendChild(deleteIcon)
 
     // Append footer to div
     containerDiv.appendChild(containerDivFooter)
@@ -235,7 +227,8 @@ const updateContentsInRightContainer = (parentNode, contents, data) => {
 }
 
 const renderContainerContents = (event, parentNode, containerContents, containerId, containerName, containerParentId, data) => {
-        if (!event.target.matches('.edit-box-icon, .delete-box-icon, .edit-box-icon *, .delete-box-icon *, .ok-button, .title-input')) {
+        if (!event.target.matches('#box-dropdown *, .ok-button, .title-input')) {
+            console.log('clicked', event.target)
             addContainerToPath(containerId, containerName, containerParentId, document.getElementById('location-info'), data)
             updateContentsInRightContainer(parentNode, containerContents, data)
         }
@@ -259,9 +252,8 @@ const buildNewContainerNameInput = (containerDivFooter, containerSpan) => {
     containerDivFooter.appendChild(newContainerNameDiv)
 }
 
-const replaceTitleWithEditableInput = (containerDivFooter, containerSpan, editIcon) => {
+const replaceTitleWithEditableInput = (containerDivFooter, containerSpan) => {
     containerSpan.style.display = 'none'
-    editIcon.style.display = 'none'
 
     // Show input new container name
     const newContainerNameDiv = document.querySelector('.new-container-name-div')
@@ -276,7 +268,8 @@ const replaceTitleWithEditableInput = (containerDivFooter, containerSpan, editIc
     newContainerNameInput.select()
 }
 
-const updateContainerNameAndRefreshUI = async (editIcon, containerSpan, containerId, containerParentId, data) => {
+// updateContainerNameAndRefreshUI(containerSpan, containerId, containerParentId, data)
+const updateContainerNameAndRefreshUI = async (containerSpan, containerId, containerParentId, data) => {
     // Get parent name from the location path
     const parentName = document.getElementById('location-info').lastElementChild.innerText
 
@@ -290,8 +283,6 @@ const updateContainerNameAndRefreshUI = async (editIcon, containerSpan, containe
         newContainerNameDiv.style.display = 'none'
 
         containerSpan.style.display = 'block'
-        editIcon.style.display = 'block'
-
 
         // Apply container name changes in local Map and send them to the server
         const response = await assets.editContainerName(containerId, newContainerNameInput.value)
@@ -415,3 +406,76 @@ const handleClosingItemModalWindow = (newItemNameDiv, modalTitle, itemModal, par
         updateContentsInLeftMenu(itemParentId, data)
         updateContentsInRightContainer(parentNode, itemParentContents, data)
 }
+<<<<<<< Updated upstream
+=======
+
+const displayImageUploadInput = (id, modalImage) => {
+    const newItemImageInput = document.getElementById('new-item-image-input')
+    newItemImageInput.style.display = 'block'
+
+    newItemImageInput.onchange = () => handleImageInputChange(newItemImageInput, id, modalImage)
+}
+
+const handleImageInputChange = async (newItemImageInput, id, modalImage) => {
+        if (newItemImageInput.files.length > 0) {
+            const base64Image = await getBase64FromImageInput(newItemImageInput)
+            await assets.editItemImage(id, base64Image)
+            modalImage.src = `data:image/jpeg;base64,${base64Image}`
+
+            // Reset the file input after the image has been processed
+            newItemImageInput.value = '';
+
+            // Hide the file input
+            newItemImageInput.style.display = 'none';
+        }
+}
+
+function buildContainerDropdown(containerDiv) {
+    // Create the dropdown container div
+    const dropdownDiv = document.createElement('div');
+    dropdownDiv.setAttribute('id', 'box-dropdown')
+    dropdownDiv.className = 'dropdown';
+
+    // Create the icon that toggles the dropdown
+    const icon = document.createElement('i');
+    icon.setAttribute('data-bs-toggle', 'dropdown');
+    icon.setAttribute('aria-expanded', 'false');
+    icon.id = 'box-more-btn';
+    icon.className = 'bi bi-three-dots';
+    icon.style.cursor = 'pointer';
+    dropdownDiv.appendChild(icon);
+
+    // Create the dropdown menu
+    const dropdownMenu = document.createElement('div');
+    dropdownMenu.id = 'box-menu';
+    dropdownMenu.className = 'dropdown-menu text-small shadow';
+    dropdownMenu.setAttribute('aria-labelledby', 'box-more-btn');
+    dropdownDiv.appendChild(dropdownMenu);
+
+    // Create "Change Name" link
+    const changeNameLink = document.createElement('a');
+    changeNameLink.className = 'dropdown-item';
+    changeNameLink.href = '#';
+    changeNameLink.id = 'change-name';
+    changeNameLink.textContent = 'Change Name';
+    dropdownMenu.appendChild(changeNameLink);
+
+    // Create "Delete Place" link
+    const deletePlaceLink = document.createElement('a');
+    deletePlaceLink.className = 'dropdown-item';
+    deletePlaceLink.href = '#';
+    deletePlaceLink.id = 'delete-place';
+    deletePlaceLink.textContent = 'Delete Place';
+    dropdownMenu.appendChild(deletePlaceLink);
+
+    containerDiv.appendChild(dropdownDiv)
+
+    // Return the anchor tags
+    return {
+        editContainerNameBtn: changeNameLink,
+        deleteContainerBtn: deletePlaceLink,
+    };
+}
+
+
+>>>>>>> Stashed changes
