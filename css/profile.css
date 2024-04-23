@@ -906,6 +906,8 @@ footer {
 
 #new-item-image-input {
   display: none;
+  margin: 0 auto;
+  padding: 10px;
 }
 
 /*Dropdown menu for searching results*/

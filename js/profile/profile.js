@@ -239,8 +239,7 @@ const attachEventListenersToDynamicContent = () => {
 }
 
 // Encode image for storing it on the client and in the database
-
-function getBase64FromImageInput(inputElement) {
+export function getBase64FromImageInput(inputElement) {
     return new Promise((resolve, reject) => {
         if (inputElement.files.length === 0) {
             resolve(''); // No file was selected

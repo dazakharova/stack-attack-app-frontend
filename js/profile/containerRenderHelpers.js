@@ -2,7 +2,7 @@ import { addContainerToPath } from "./locationPath.js";
 import {Container} from "../class/Container.js";
 import {Item} from "../class/Item.js";
 import leftContainer from "./collapseFunctionality.js";
-import {assets} from "./profile.js";
+import {assets, getBase64FromImageInput} from "./profile.js";
 
 const renderContainer = (parentNode, container, data) => {
     // Get all data about container
@@ -131,6 +131,12 @@ const renderItem = (parentNode, item, data) => {
         // When submit button is clicked, description gets updated and left menu and right container on the page update their contents
         okDescriptionBtn.onclick = () => {
             return updateItemDescriptionAndRefreshUI(modalDescription, newDescriptionDiv, descriptionInput, itemId)
+        }
+
+        const editImageBtn = document.getElementById('edit-item-photo')
+
+        editImageBtn.onclick = () => {
+            displayImageUploadInput(itemId, modalImage)
         }
 
         // Delete item button
@@ -474,4 +480,3 @@ function buildContainerDropdown(containerDiv) {
         deleteContainerBtn: deletePlaceLink,
     };
 }
-
