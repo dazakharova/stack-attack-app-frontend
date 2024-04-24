@@ -9,20 +9,18 @@ const updateContentsInLeftMenu = (entityParentId, data) => {
     // Get name of parent name (which is used in its children tags id)
     const parentName = document.getElementById('location-info').lastElementChild.innerText
 
-    // Get parent node for items and containers in left menu
-    const parentContainersNode= document.querySelector(`#${parentName.replace(/\s/g, '')}${entityParentId}-collapse > .containers-list`)
-    const parentItemsNode = document.querySelector(`#${parentName.replace(/\s/g, '')}${entityParentId}-collapse > .left-items-list`)
+    // Get parent node for containers in left menu
+    const parentNode= document.querySelector(`#${parentName.replace(/\s/g, '')}${entityParentId}-collapse > .containers-list`)
 
-    console.log('parentContainersNode', parentContainersNode)
+    console.log('parentContainersNode', parentNode)
     // Clean areas in parent containers and items node to draw it with updated data
-    parentContainersNode.innerHTML = ''
-    parentItemsNode.innerHTML = ''
+    parentNode.innerHTML = ''
 
     const parentContainerContents = data.get(parseInt(entityParentId))
 
     // Rerender each entity inside the parent container of the current item
     if (parentContainerContents) {
-        leftContainer.renderContents(parentContainerContents, parentContainersNode, parentItemsNode, data)
+        leftContainer.renderContents(parentContainerContents, parentNode, data)
     }
 }
 

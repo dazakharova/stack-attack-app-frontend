@@ -59,13 +59,8 @@ const renderRoom = (parentNode, room, data) => {
     const containersUl = document.createElement("ul")
     containersUl.classList.add("containers-list", "btn-toggle-nav", "list-unstyled", "fw-normal", "pb-1", "small")
 
-    // Create a nested list of items block for holding each item
-    const itemsUl = document.createElement("ul")
-    itemsUl.classList.add("list-unstyled", "left-items-list")
-
     // Append ul to the containers div
     containersDiv.appendChild(containersUl)
-    containersDiv.appendChild(itemsUl)
 
     // Append roomButton to the room div
     roomDiv.appendChild(roomButton)
@@ -86,7 +81,7 @@ const renderRoom = (parentNode, room, data) => {
 
     // If current room has other assets inside it, render them
     if (roomContents) {
-        renderContents(roomContents, containersUl, itemsUl, data)
+        renderContents(roomContents, containersUl, data)
     }
 }
 
@@ -141,10 +136,6 @@ const renderContainer = (parentNode, container, data) => {
     // Assigning collapse target from the container as an items block id
     childrenDiv.setAttribute("id", collapseTarget.substring(1))
 
-    // Create a nested list of items block for holding each item
-    const itemsUl = document.createElement("ul")
-    itemsUl.classList.add("list-unstyled", "left-items-list")
-
     // Append the container button to the list item
     containerLi.appendChild(containerButton);
 
@@ -161,39 +152,10 @@ const renderContainer = (parentNode, container, data) => {
 
     childrenDiv.appendChild(containersUl)
 
-    // Append items list to the items div
-    childrenDiv.appendChild(itemsUl)
-
     // If current container has any assets inside it, then render them
     if (containerContents) {
-        renderContents(containerContents, containersUl, itemsUl, data)
+        renderContents(containerContents, containersUl, data)
     }
-}
-
-const renderItem = (parentNode, item, data) => {
-    // Get data of the item
-    const itemId = item.getId()
-    const itemName = item.getName()
-    const itemParentId = item.getContainerId()
-
-    // Create item list element for holding item link
-    const itemElement = document.createElement("li")
-
-    // Create item link
-    const a = document.createElement("a")
-    a.className = "link-item"
-    a.setAttribute("href", "#")
-    a.innerText = itemName
-
-    // Set unique attributes to item link in order to be able to access it later
-    a. setAttribute("data-id", itemId)
-    a.setAttribute("data-containerId", itemParentId)
-
-    // Append item link to item list element
-    itemElement.appendChild(a)
-
-    // Append item list element to the given ul element as an argument
-    parentNode.appendChild(itemElement)
 }
 
 const controlRoomButton = (collapses, index) => {
@@ -214,12 +176,10 @@ const controlRoomButton = (collapses, index) => {
     }
 }
 
-const renderContents = (contents, containersNode, itemsNode, data) => {
+const renderContents = (contents, containersNode, data) => {
     contents.forEach(entity => {
         if (entity instanceof Container) {
             renderContainer(containersNode, entity, data)
-        } else if (entity instanceof Item) {
-            renderItem(itemsNode, entity, data)
         }
     })
 }
@@ -243,7 +203,7 @@ const handleRoomDeletion = async (event, parentNode, roomId, roomName,  roomDiv)
 }
 
 const leftContainer = {
-    renderRoom, controlRoomButton, renderContainer, renderItem, renderContents
+    renderRoom, controlRoomButton, renderContainer, renderContents
 }
 
 export default leftContainer
