@@ -159,7 +159,6 @@ button.btn2 {
   margin-right: 20px;
   border-radius: 10px;
   font-family: Comfortaa, sans-serif;
-  font-size: 20px;
   overflow:hidden;
   height:1%;
   border: 0px solid #98AEB1;
@@ -173,14 +172,14 @@ button.btn2 {
 }
 .button-container {
   font-family: Comfortaa, sans-serif;
-  font-size: 20px;
+  /*font-size: 20px;*/
   margin-left: 0px;
   padding: auto;
 }
 .btn-toggle {
   padding: 5px;
   font-family: Comfortaa, sans-serif;
-  font-size: 20px;
+  /*font-size: 20px;*/
   color: var(--bs-emphasis-color);
   background-color: transparent;
   margin-top: 20px;
@@ -210,7 +209,6 @@ button.btn2 {
 .btn-toggle-nav a {
   padding: .1875rem .5rem;
   margin-top: .125rem;
-  margin-left: 1.25rem;
 }
 .btn-toggle-nav a:hover,
 .btn-toggle-nav a:focus {
@@ -284,10 +282,6 @@ button.btn2 {
   border-radius: 10px;
 }
 
-
-
-
-
 .btn-room {
   /* Basic button styles */
   padding-top: 4px;
@@ -307,19 +301,6 @@ button.btn2 {
   margin-right: 30px; 
 }
 
-/*.button-container:hover {*/
-/*  color: #627FA3;*/
-/*  background-color: var(--bs-tertiary-bg);*/
-/*  text-align: left;*/
-/*}*/
-
-/*.btn-room:hover,*/
-/*.btn-room:focus {*/
-/*  width: 100%;*/
-/*  color: #627FA3;*/
-/*  background-color: var(--bs-tertiary-bg);*/
-/*  text-align: left;*/
-/*}*/
 .btn-room::before {
   width: 1.25em;
   line-height: 0;
@@ -347,7 +328,7 @@ button.btn2 {
 /* For furniture buttons */
 .btn-furniture {
   font-family: Comfortaa, sans-serif;
-  font-size: 20px;
+  /*font-size: 20px;*/
   color: var(--bs-emphasis-color);
   background-color: transparent;
   margin-top: 5px;
@@ -406,21 +387,60 @@ button.btn2 {
   color: #627FA3;
 }
 
+.left-items-list {
+  text-align: center;
+  margin-right: 15%;
+}
+
 .link-item {
   display: inline-flex;
   text-decoration: none;
   color: #6EA79E;
   border-radius: 8px;
   margin-top: 0;
-  margin-left: 20%!important; 
   padding: 5px;
- 
 }
 .link-item:hover,
 .link-item :focus {
   color: #627FA3;
   background-color: var(--bs-tertiary-bg);
-  margin-left: 0px;
+}
+
+/*Left menu buttons*/
+
+/* Set the font size for the top-level 'Hall' button inside '.button-container' */
+.button-container .btn-room {
+  font-size: 30px;
+}
+
+/* Decrease font size for the first level of nesting: 'Big box' and 'Small box' buttons */
+.button-container .containers-list .btn-furniture, .button-container .left-items-list li {
+  font-size: 26px;
+}
+
+/* Further decrease for items under 'Big box' and 'Small box' */
+.button-container .containers-list .left-items-list li, .button-container .containers-list .containers-list .btn-furniture {
+  font-size: 22px;
+}
+
+/* If there are more nested containers inside 'Big box' or 'Small box', decrease font size more */
+.button-container .containers-list .containers-list .containers-list .btn-furniture, .button-container .containers-list .containers-list .left-items-list li {
+  font-size: 18px;
+}
+
+/* And decrease for items under these further nested containers */
+.button-container .containers-list .containers-list .containers-list .containers-list .btn-furniture, .button-container .containers-list .containers-list .containers-list .left-items-list li {
+  font-size: 14px;
+}
+
+/* Adjust the font size for any further nesting if needed */
+.button-container .containers-list .containers-list .containers-list .containers-list .containers-list .btn-furniture, .button-container .containers-list .containers-list .containers-list .containers-list .left-items-list li {
+  font-size: 10px;
+}
+
+/* Items under these triple nested containers */
+.button-container .containers-list .containers-list .containers-list .containers-list .containers-list .containers-list .btn-furniture, .button-container .containers-list .containers-list .containers-list .containers-list .containers-list .left-items-list li {
+  font-size: 6px;
 }
 
 .btn3 {
@@ -563,20 +583,20 @@ button.btn2 {
 }
 .box {
   display: flex;
-  flex-direction: row; /* Stack children vertically */
+  flex-direction: row;
   align-items: flex-end;
   justify-content: space-between;
 }
 .box-footer {
-  display: flex; /* Use flexbox for layout */
-  justify-content: stretch; /* Separate title and icons */
-  align-items: center; /* Center align items vertically */
-  width: 100%; /* Take full width of the parent */
+  display: flex;
+  justify-content: stretch;
+  align-items: center;
+  width: 100%;
   padding: 10px;
 }
 .box title {
-  flex-grow: 1; /* Allow the title to take up available space */
-  text-align: left; /* Align text to the left */
+  flex-grow: 1;
+  text-align: left;
   background-color: rgba(255, 255, 255, 0.3);
   padding: 5px;
   margin-right: 30px;
@@ -609,12 +629,11 @@ button.btn2 {
   height: 50px;
 }
 .box-footer, .item .title {
-  background-color: rgba(247, 247, 247, 0.5); /* transparent .title */
+  background-color: rgba(247, 247, 247, 0.5);
 }
 .edit-box-icon, .delete-box-icon {
   cursor: pointer;
-  color: #627fa3; /* Adjust the color to match your design */
-  /* Space between icons */
+  color: #627fa3;
 }
 .edit-box-icon {
   margin-left: 20px;
@@ -689,26 +708,26 @@ button.btn2 {
 .delete-icon {
   display: none;
   cursor: pointer;
-  color: #6EA79E; /* Bootstrap's danger color */
-  margin-left: 10px; /* Spacing from the room name */
+  color: #6EA79E;
+  margin-left: 10px;
 }
 .delete-icon:hover {
-  color: #5d948f; /* A slightly darker red for hover effect */
+  color: #5d948f;
 }
-/* When delete mode is active, show the icons */
+
 .delete-mode .delete-icon {
-  display: inline-block; /* Show icon in delete mode */
+  display: inline-block;
 }
 .btn5 {
   color: #ffffff;
   background-color: #6EA79E;
   font-size: 20px;
-  margin: 10px auto; /* Adjusted to center the button horizontally */
+  margin: 10px auto;
   margin-bottom: 30px;
   padding: 15px;
   border-radius: 10px;
   border: 0.2px solid #6EA79E;
-  display: block; /* Ensure the button is treated as a block-level element */
+  display: block;
   width: fit-content; 
 }
 .btn5:hover {
@@ -719,15 +738,15 @@ button.btn2 {
 .title-input {
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid #627fa3; /* Just a subtle bottom border */
-  color: #000; /* Text color, adjust as necessary */
+  border-bottom: 1px solid #627fa3;
+  color: #000;
   padding: 2px 5px;
   box-sizing: border-box;
   width: calc(100% - 10px);
 }
 .title-input:focus {
   outline: none;
-  border-bottom: 2px solid #627fa3; /* Highlight on focus */
+  border-bottom: 2px solid #627fa3;
 }
 #assets-navigation-block {
   margin-top: 20px;
@@ -771,22 +790,22 @@ footer {
   width: 100%;
 }
 .btn4:hover {
-  background-color: #5d948f; /* Slightly darker shade of the base color for hover effect */
+  background-color: #5d948f;
 }
 /* Style for the 'OK' button */
 .ok-button {
   font-size: 16px;
-  color: #627fa3; /* Your project's specific color */
+  color: #627fa3;
   background-color: transparent;
-  border: 2px solid #627fa3; /* Use a color from your project */
+  border: 2px solid #627fa3;
   border-radius: 5px;
   padding: 5px 10px;
   cursor: pointer;
-  margin-left: 10px; /* Space from the input or the title span */
+  margin-left: 10px;
   padding: 4px 8px;
 }
 .ok-button:hover {
-  background-color: rgba(98, 127, 163, 0.1); /* Slightly visible on hover */
+  background-color: rgba(98, 127, 163, 0.1);
 }
 
 /*Item window */
@@ -888,9 +907,9 @@ footer {
 
 .new-item-description-div {
   display: flex !important;
-  flex-direction: row; /* Aligns children vertically */
-  justify-content: center; /* Centers children horizontally in the container */
-  align-items: center; /* Centers children vertically in the container */
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   height: 100%;
   margin-bottom: 20px;
 }
@@ -919,20 +938,20 @@ footer {
 
 .search-input-container {
   position: relative;
-  display: inline-block; /* Adjust as needed */
-  width: auto; /* Adjust as needed or use specific width */
+  display: inline-block;
+  width: auto;
 }
 
 #search-results-dropdown {
-  display: none; /* Hide dropdown by default */
+  display: none;
   position: absolute;
-  left: 0; /* Align to the left edge of the search input */
-  right: 0; /* Ensure it stretches to the right edge of the search input */
-  top: 100%; /* Position it just below the search input */
+  left: 0;
+  right: 0;
+  top: 100%;
   background-color: #f9f9f9;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
-  width: 100%; /* This makes the width match the search input */
+  width: 100%;
 }
 
 #search-results-dropdown a {
@@ -961,18 +980,18 @@ footer {
 
 #right-container-header {
   display: flex;
-  justify-content: space-between; /* Positions children at start and end */
-  align-items: center; /* Vertically centers children */
-  padding: 0 20px; /* Add some padding on sides for spacing */
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
 }
 
 #searching-form {
   display: flex;
-  align-items: center; /* Align form elements vertically center */
+  align-items: center;
 }
 
 #search-button {
-  margin-left: 10px; /* Add space between input and button */
+  margin-left: 10px;
 }
 
 /* Styling for the search input and button to ensure they are aligned properly */
@@ -1019,14 +1038,14 @@ footer {
   position: absolute;
   top: 0;
   left: 0;
-  transform: translate(10px, 10px); /* Adjust as needed */
+  transform: translate(10px, 10px);
 }
 
 .box-more-btn {
-  color: #627fa3; /* Adjust the color to match your design */
+  color: #627fa3;
   background-color: transparent;
   border: none;
-  padding: 0; /* Removes padding for a more compact look */
+  padding: 0;
 }
 
 .box-more-btn::after {
