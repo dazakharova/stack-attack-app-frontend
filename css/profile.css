@@ -409,7 +409,7 @@ button.btn2 {
 
 /*Left menu buttons*/
 
-.button-container .containers-list .btn-furniture
+.button-container .containers-list .btn-furniture {
   padding-left: 10px;
 }
 
@@ -1086,7 +1086,7 @@ footer {
 /*Confirmation modal*/
 
 #confirmation-modal {
-  dipsplay: none;
+  display: none;
 }
 
 .confirmation-window-content {
