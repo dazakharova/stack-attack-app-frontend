@@ -389,6 +389,7 @@ button.btn2 {
 
 .left-items-list {
   text-align: center;
+  margin-right: 10%;
 }
 
 .link-item {
@@ -398,7 +399,7 @@ button.btn2 {
   border-radius: 8px;
   margin-top: 0;
   padding: 5px;
-  margin-right: 9.5%;
+  margin-right: 15%;
 }
 .link-item:hover,
 .link-item :focus {
@@ -406,14 +407,42 @@ button.btn2 {
   background-color: var(--bs-tertiary-bg);
 }
 
+/*Left menu collapse buttons */
+
+
+
 /*Left menu buttons*/
+
+.button-container .containers-list .btn-furniture {
+  padding-left: 10px;
+}
+
+.button-container .containers-list .containers-list .btn-furniture {
+  padding-left: 15px;
+}
+
+.button-container .containers-list .containers-list .containers-list .btn-furniture {
+  padding-left: 20px;
+}
+
+.button-container .containers-list .containers-list .containers-list .containers-list .btn-furniture {
+  padding-left: 25px;
+}
+
+.button-container .containers-list .containers-list .containers-list .containers-list .containers-list .btn-furniture {
+  padding-left: 30px;
+}
+
+.button-container .containers-list .containers-list .containers-list .containers-list .containers-list .containers-list .btn-furniture {
+  padding-left: 35px;
+}
 
 /* Set the font size for the top-level 'Hall' button inside '.button-container' */
 .button-container .btn-room {
   font-size: 30px;
 }
 
-/* Decrease font size for the first level of nesting: 'Big box' and 'Small box' buttons */
+  /* Decrease font size for the first level of nesting: 'Big box' and 'Small box' buttons */
 .button-container .containers-list .btn-furniture, .button-container .left-items-list li {
   font-size: 26px;
 }
