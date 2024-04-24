@@ -409,7 +409,7 @@ button.btn2 {
 
 /*Left menu buttons*/
 
-.button-container .containers-list .btn-furniture {
+.button-container .containers-list .btn-furniture
   padding-left: 10px;
 }
 
@@ -964,7 +964,6 @@ footer {
 .search-input-container {
   position: relative;
   display: inline-block;
-  width: auto;
 }
 
 #search-results-dropdown {
@@ -1021,6 +1020,7 @@ footer {
 
 /* Styling for the search input and button to ensure they are aligned properly */
 #searching-input {
+  min-width: 350px;
   padding: 8px 12px;
   border: 2px solid #ccc;
   border-radius: 4px;
