@@ -1042,3 +1042,15 @@ footer {
   dipsplay: none;
 }
 
+.confirmation-window-content {
+  width: 30%;
+}
+
+#confirmBtn, #cancelBtn {
+  width: 40%;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-evenly;
+}
