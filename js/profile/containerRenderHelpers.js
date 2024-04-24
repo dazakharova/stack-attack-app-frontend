@@ -300,26 +300,26 @@ const updateContainerNameAndRefreshUI = async (containerSpan, containerId, conta
 }
 
 const handleContainerDeletion = async (event, containerName, containerId, containerDiv, parentNode, containerParentId, data) => {
-    const isConfirmed = confirm(`Are you sure you want to delete "${containerName}"?`);
-
-    if (isConfirmed) {
+    // Setup the confirmation modal and pass the confirm logic as a callback function
+    const confirmBtn = setupConfirmationModal(containerName, async () => {
         try {
+            // Close the modal
+            document.getElementById('confirmation-modal').style.display = 'none'
+
+            // API call to remove the container
             const response = await assets.removeContainer(containerId)
 
-            // Prevent the event from bubbling up to the room button click listener
-            event.stopPropagation();
+            // Prevent the event from bubbling
+            event.stopPropagation()
 
-            // parentNode.removeChild(containerDiv)
-
+            // Update the UI
             const containerParentContents = data.get(parseInt(containerParentId))
-            // Re-render all the contents of the current container
             updateContentsInRightContainer(parentNode, containerParentContents, assets.getAssets())
-
             updateContentsInLeftMenu(containerParentId, assets.getAssets())
         } catch (error) {
             console.error(error)
         }
-    }
+    })
 }
 
 const replaceItemNameWithEditableInput = (newItemNameDiv, newItemNameInput, modalTitle) => {
@@ -376,14 +376,17 @@ const updateItemDescriptionAndRefreshUI = async (modalDescription, newDescriptio
 }
 
 const handleItemDeletion = async (event, itemName, itemId, itemParentId, itemModal, parentNode, data) => {
-    const isConfirmed = confirm(`Are you sure you want to delete "${itemName}"?`);
-
-    if (isConfirmed) {
+    // Setup the confirmation modal and pass the confirm logic as a callback function
+    const confirmBtn = setupConfirmationModal(itemName, async () => {
         try {
+            // Close the modal
+            document.getElementById('confirmation-modal').style.display = 'none'
+
+            // API call to remove the item
             const response = await assets.removeItem(itemId)
 
-            // Prevent the event from bubbling up to the room button click listener
-            event.stopPropagation();
+            // Prevent the event from bubbling
+            event.stopPropagation()
 
             // Remove item modal window
             itemModal.style.display = "none";
@@ -393,11 +396,34 @@ const handleItemDeletion = async (event, itemName, itemId, itemParentId, itemMod
 
             const itemParentContents = data.get(parseInt(itemParentId))
             // Re-render all the contents of the current container
-            updateContentsInRightContainer(parentNode, itemParentContents, data)
+            updateContentsInRightContainer(parentNode, itemParentContents, assets.getAssets())
         } catch (error) {
             console.error(error)
         }
-    }
+    })
+
+    // const isConfirmed = confirm(`Are you sure you want to delete "${itemName}"?`);
+
+    // if (isConfirmed) {
+    //     try {
+    //         const response = await assets.removeItem(itemId)
+    //
+    //         // Prevent the event from bubbling up to the room button click listener
+    //         event.stopPropagation();
+    //
+    //         // Remove item modal window
+    //         itemModal.style.display = "none";
+    //
+    //         // Rerender left menu container with updated contents
+    //         updateContentsInLeftMenu(itemParentId, data)
+    //
+    //         const itemParentContents = data.get(parseInt(itemParentId))
+    //         // Re-render all the contents of the current container
+    //         updateContentsInRightContainer(parentNode, itemParentContents, data)
+    //     } catch (error) {
+    //         console.error(error)
+    //     }
+    // }
 }
 
 const handleClosingItemModalWindow = (newItemNameDiv, modalTitle, itemModal, parentNode, data, itemParentId) => {
@@ -479,4 +505,22 @@ function buildContainerDropdown(containerDiv) {
         editContainerNameBtn: changeNameLink,
         deleteContainerBtn: deletePlaceLink,
     };
+}
+
+// Function to set up the confirmation modal
+function setupConfirmationModal(entityName, confirmCallback) {
+    const confirmationModal = document.getElementById('confirmation-modal');
+    confirmationModal.style.display = 'block';
+
+    const deleteConfirmationText = document.querySelector('#confirmation-modal .modal-content p');
+    deleteConfirmationText.textContent = `Are you sure you want to delete "${entityName}"?`;
+
+    const cancelBtn = document.getElementById('cancelBtn');
+    cancelBtn.onclick = () => {
+        confirmationModal.style.display = 'none';
+    };
+
+    const confirmBtn = document.getElementById('confirmBtn');
+    confirmBtn.onclick = confirmCallback;
+    return confirmBtn;  // Return the confirm button if needed outside this function
 }

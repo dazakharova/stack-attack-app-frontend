@@ -1014,7 +1014,7 @@ footer {
 #addbtn > button:hover,
 #addbtn > a:hover {
   background-color: #627FA3;
-
+}
 /*Box dropdown menu*/
 
  /*Positioning the 'More' button */
@@ -1033,5 +1033,12 @@ footer {
 }
 
 .box-more-btn::after {
-  display: none; /* Hides the caret icon added by Bootstrap */
+  display: none;
 }
+
+/*Confirmation modal*/
+
+#confirmation-modal {
+  dipsplay: none;
+}
+
