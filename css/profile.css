@@ -389,7 +389,6 @@ button.btn2 {
 
 .left-items-list {
   text-align: center;
-  margin-right: 15%;
 }
 
 .link-item {
@@ -399,6 +398,7 @@ button.btn2 {
   border-radius: 8px;
   margin-top: 0;
   padding: 5px;
+  margin-right: 9.5%;
 }
 .link-item:hover,
 .link-item :focus {
