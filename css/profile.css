@@ -595,6 +595,7 @@ button.btn2 {
   display: flex;
   flex-wrap: wrap;
   font-family: Comfortaa, sans-serif;
+  color: #434881;
   font-size: 20px;
   padding: 2px;
 }
@@ -604,6 +605,9 @@ button.btn2 {
   margin: 5px;
   min-height: 210px;
   background-color: rgba(101, 224, 92, 0.5);
+  font-weight: 800;
+  -webkit-text-stroke-width: 0.3px; 
+  -webkit-text-stroke-color: rgba(228, 221, 221, 0.5);
   border-radius: 10px;
 }
 .box {
@@ -815,6 +819,8 @@ footer {
   width: 100%;
 }
 .btn4:hover {
+  background-color: #5d948f;
+  color: white;
   background-color: #5d948f;
 }
 /* Style for the 'OK' button */
