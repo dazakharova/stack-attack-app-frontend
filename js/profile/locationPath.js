@@ -67,6 +67,11 @@ const addContainerToPath = (containerId, containerName, containerParentId, curre
 
     const assetsBlocksDiv = document.querySelector('.space-container'); // Make sure this selector matches your HTML
     const containerButton = createContainerButton(containerId, containerParentId, containerName, assetsBlocksDiv, assetsMap);
+    const arrowIcon = document.createElement('i')
+    arrowIcon.classList.add('bi', 'bi-arrow-right-short')
+
+    currentLocationPathDiv.appendChild(arrowIcon)
+
     currentLocationPathDiv.appendChild(containerButton);
 }
 
