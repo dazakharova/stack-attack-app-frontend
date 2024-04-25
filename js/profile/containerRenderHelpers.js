@@ -492,10 +492,10 @@ function buildContainerDropdown(containerDiv) {
 
     // Change "Change color" link
     const changeColorLink = document.createElement('a');
-    changeNameLink.className = 'dropdown-item';
-    changeNameLink.href = '#';
-    changeNameLink.id = 'change-color';
-    changeNameLink.textContent = 'Change Color';
+    changeColorLink.className = 'dropdown-item';
+    changeColorLink.href = '#';
+    changeColorLink.id = 'change-color';
+    changeColorLink.textContent = 'Change Color';
     dropdownMenu.appendChild(changeColorLink);
 
     // Create "Delete Place" link
