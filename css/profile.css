@@ -1101,3 +1101,10 @@ footer {
   display: flex;
   justify-content: space-evenly;
 }
+
+/*User profile picture when there is no picture provided*/
+#small-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 40%;
+}

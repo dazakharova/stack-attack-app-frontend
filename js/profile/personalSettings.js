@@ -1,70 +1,98 @@
-// Function to save the path to the image in local storage
-function saveSelectedPictureToLocalStorage (imgSrc) {
-  localStorage.setItem ('selectedPictureSrc', imgSrc);
+import {UserProfileService} from "../class/UserProfileService.js";
+const backend_url = 'http://localhost:3001'
 
-  // Update the image in the menu immediately after saving
-  let smallMenuImage = document.querySelector ('.fixed-dropdown-container img');
-  smallMenuImage.src = imgSrc;
+const userSettings = new UserProfileService(backend_url)
+
+// Function to extract the image name from a URL
+function extractImageName(imgSrc) {
+  const urlParts = imgSrc.split('/');
+  return urlParts[urlParts.length - 1];  // Returns the last segment after the last '/'
 }
 
-// Event handler for clicking on the image
-function imageClickHandler (event) {
-  let imgSrc = event.target.src;
-  saveSelectedPictureToLocalStorage (imgSrc);
+// Function to save the path to the image in local storage and update the displayed image
+function saveSelectedPictureToLocalStorage(imgSrc) {
+  const imageName = extractImageName(imgSrc);
+  localStorage.setItem('selectedPictureSrc', imageName);
+  updateImagesInUI(imageName);
 }
 
-// Event handler for DOMContentLoaded event
-document.addEventListener ('DOMContentLoaded', function () {
-  // Get a reference to the "New picture..." button
-  let newPictureBtn = document.getElementById ('new-picture-btn');
+// Function to update images in the UI wherever needed
+function updateImagesInUI(imageName) {
+  console.log("Got image ", imageName)
+  const imagePath = `../image/avatars/${imageName}`;
+  let smallMenuImage = document.querySelector('.fixed-dropdown-container img');
+  let currentPicture = document.getElementById('current-picture');
+  smallMenuImage.src = imagePath;
+  currentPicture.src = imagePath;
 
-  // Add event listener for click on the "New picture..." button
-  newPictureBtn.addEventListener ('click', function () {
-    // Get a reference to the modal window
-    let pictureModal = document.getElementById ('picture-modal');
+  let saveSelectedPictureBtn = document.getElementById('save-picture-btn');
 
-    // Show the modal window
-    pictureModal.style.display = 'block';
-  });
+  // Save the selected picture to local storage and update the profile picture on server
+  saveSelectedPictureBtn.onclick = function () {
+    updateProfilePicture(extractImageName(imagePath)).then(() => {
+      saveSelectedPictureToLocalStorage(imagePath);
+    })
 
-  // Get all elements of image options
-  let imageOptions = document.querySelectorAll ('.image-option');
-
-  // Iterate over each element and add event listener for click
-  imageOptions.forEach (function (option) {
-    option.addEventListener ('click', function () {
-      let imgSrc = option.src;
-      let currentPicture = document.getElementById ('current-picture');
-      currentPicture.src = imgSrc;
-    });
-  });
-
-  // Add click event handler for each image option
-  imageOptions.forEach (function (option) {
-    option.addEventListener ('click', imageClickHandler);
-  });
-
-  // Try to load the selected image from local storage when the page loads
-  loadSelectedPictureFromLocalStorage ();
-
-  // Save button event handler
-  document.getElementById ('save-picture-btn').onclick = function () {
-    saveSelectedPictureToLocalStorage (
-      document.getElementById ('current-picture').src
-    );
   };
+}
+
+// Initialize event listeners once the DOM content has fully loaded
+document.addEventListener('DOMContentLoaded', function () {
+  loadProfilePictureFromServer().then(() => {
+    loadSelectedPictureFromLocalStorage();
+    initializeEventListeners();
+  })
+
 });
 
-////test in case when we don't have imiges
+// Initialize all relevant event listeners
+function initializeEventListeners() {
+  let newPictureBtn = document.getElementById('new-picture-btn');
+  let imageOptions = document.querySelectorAll('.image-option');
+
+  // Show modal on new picture button click
+  newPictureBtn.onclick = function () {
+    let pictureModal = document.getElementById('picture-modal');
+    pictureModal.style.display = 'block';
+  };
+
+  // Add click listeners to all image options to update the current picture preview
+  imageOptions.forEach(option => {
+    option.onclick = () => {
+      updateImagesInUI(extractImageName(option.src));
+    };
+  });
+
+}
+
+// Function to load the selected picture from local storage upon page load
 function loadSelectedPictureFromLocalStorage() {
-  var selectedPictureSrc = localStorage.getItem("selectedPictureSrc");
-  if (selectedPictureSrc) {
-    var smallMenuImage = document.querySelector(".fixed-dropdown-container img");
-    smallMenuImage.src = selectedPictureSrc;
-    document.getElementById("current-picture").src = selectedPictureSrc; // 
+  const imageName = localStorage.getItem('selectedPictureSrc');
+  if (imageName) {
+    updateImagesInUI(imageName);
   } else {
-    //
-    var smallMenuImage = document.querySelector(".fixed-dropdown-container img");
-    smallMenuImage.style.display = "none";
+    document.querySelector('.fixed-dropdown-container img').src = '../image/avatars/grey_backround.png'
+  }
+}
+
+// Function to update the profile picture on the server
+async function updateProfilePicture(imageName) {
+  try {
+    const response = await userSettings.setProfilePicture(imageName)
+    loadSelectedPictureFromLocalStorage()
+    document.getElementById('picture-modal').style.display = 'none';
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+async function loadProfilePictureFromServer() {
+  try {
+    const profilePictureName = await userSettings.fetchProfilePicture()
+    if (profilePictureName) {
+      localStorage.setItem('selectedPictureSrc', profilePictureName)
+    }
+  } catch (error) {
+    console.error(error)
   }
 }
