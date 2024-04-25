@@ -22,7 +22,7 @@ const renderContainer = (parentNode, container, data) => {
     containerDivFooter.className = 'box-footer'
 
     // Create container dropdown menu and retrieve edit name and delete buttons
-   const { editContainerNameBtn, deleteContainerBtn } = buildContainerDropdown(containerDiv)
+   const { editContainerNameBtn, editContainerColorBtn, deleteContainerBtn } = buildContainerDropdown(containerDiv)
 
     // Create span for container with its title inside
     const containerSpan = document.createElement('span')
@@ -51,6 +51,10 @@ const renderContainer = (parentNode, container, data) => {
         okButton.onclick = () => {
             return updateContainerNameAndRefreshUI(containerSpan, containerId, containerParentId, data)
         }
+    }
+
+    editContainerColorBtn.onclick = () => {
+        return
     }
 
     deleteContainerBtn.onclick = (event) => {
@@ -486,6 +490,14 @@ function buildContainerDropdown(containerDiv) {
     changeNameLink.textContent = 'Change Name';
     dropdownMenu.appendChild(changeNameLink);
 
+    // Change "Change color" link
+    const changeColorLink = document.createElement('a');
+    changeNameLink.className = 'dropdown-item';
+    changeNameLink.href = '#';
+    changeNameLink.id = 'change-color';
+    changeNameLink.textContent = 'Change Color';
+    dropdownMenu.appendChild(changeColorLink);
+
     // Create "Delete Place" link
     const deletePlaceLink = document.createElement('a');
     deletePlaceLink.className = 'dropdown-item';
@@ -499,6 +511,7 @@ function buildContainerDropdown(containerDiv) {
     // Return the anchor tags
     return {
         editContainerNameBtn: changeNameLink,
+        editContainerColorBtn: changeColorLink,
         deleteContainerBtn: deletePlaceLink,
     };
 }
