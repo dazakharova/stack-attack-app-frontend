@@ -18,7 +18,6 @@ function saveSelectedPictureToLocalStorage(imgSrc) {
 
 // Function to update images in the UI wherever needed
 function updateImagesInUI(imageName) {
-  console.log("Got image ", imageName)
   const imagePath = `../image/avatars/${imageName}`;
   let smallMenuImage = document.querySelector('.fixed-dropdown-container img');
   let currentPicture = document.getElementById('current-picture');

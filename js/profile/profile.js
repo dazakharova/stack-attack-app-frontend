@@ -3,15 +3,18 @@ import leftContainer from "./collapseFunctionality.js";
 import { updateContentsInLeftMenu, updateContentsInRightContainer, handleImageUploading } from './uiDynamicUpdate.js'
 const backend_url = 'http://localhost:3001'
 import { isAuthenticated } from './redirectToHomePage.js'
+import { displayNotificationMessageAndRedirect } from './httpUtils.js'
 
 // Check if the user is logged in before rendering the page
 // If not, display the message and redirect to the homepage
 isAuthenticated().then(isAuthenticated => {
-    if (isAuthenticated) {
-        console.log('isAuthenticated!!!', isAuthenticated)
-        document.body.style.display = 'block'; // Show content if authenticated
+    if (!isAuthenticated) {
+        displayNotificationMessageAndRedirect('Your session has expired. Please log in again to continue.')
     } else {
-        displayLoginMessage()
+        // If user is logged in, fetch all the data and render tha page
+        getAllData().then(() => {
+            attachEventListenersToDynamicContent();
+        })
     }
 })
 
@@ -54,10 +57,6 @@ const getAllData = async() => {
         console.error(error)
     }
 }
-
-getAllData().then(() => {
-    attachEventListenersToDynamicContent();
-});
 
 const attachEventListenersToDynamicContent = () => {
     const roomToggleButtons = Array.from(document.querySelectorAll('.button-container > .btn-toggle'));
@@ -250,13 +249,6 @@ export function getBase64FromImageInput(inputElement) {
             reader.readAsDataURL(file)
         }
     });
-}
-
-// Display message if the user is not logged in
-function displayLoginMessage() {
-    window.location.href = '/'; // Redirect to the login page
-    alert('You must be logged in to access this page. Redirecting to login page.');
-
 }
 
 function showNotification() {
