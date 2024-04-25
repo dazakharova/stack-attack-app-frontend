@@ -1,10 +1,10 @@
 const logoutLink = document.getElementById("logoutLink");
 const BACKEND_ROOT_URL= 'http://localhost:3001'
 
-logoutLink.addEventListener("click", function (event) {
+logoutLink.onclick = function (event) {
   event.preventDefault();
   logoutUser();
-});
+};
 
 function logoutUser() {
   const requestOptions = {

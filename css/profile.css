@@ -61,7 +61,6 @@ nav a:hover {
 
 /* MAIN*/
 body {
-  display: none;
   margin: 0;
   padding: 0;
   width: 100%;
@@ -1107,4 +1106,10 @@ footer {
   width: 150px;
   height: 150px;
   border-radius: 40%;
+}
+
+/*Redirection message modal*/
+
+#notification-message-modal {
+  display: none;
 }
