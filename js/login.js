@@ -5,12 +5,12 @@ document.addEventListener("DOMContentLoaded", function () {
   const loginLink = document.getElementById("loginLink");
   const closeButton = document.getElementsByClassName("close")[1];
   
-  loginLink.addEventListener("click", function (event) {
+  loginLink.onclick = function (event) {
     event.preventDefault();
     // When the user clicks on the button, open the modal
     modal.style.display = "block";
     document.body.style.overflow = "hidden"; // Prevent scrolling
-  });
+  };
 
   // When the user clicks on <span> (x), close the modal
   closeButton.onclick = function() {
@@ -19,14 +19,14 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // When the user clicks to switch to SignUp
-  document.getElementById("switchToSignup").addEventListener("click", function() {
+  document.getElementById("switchToSignup").onclick = function() {
     modal.style.display = "none";
     document.body.style.overflow = "auto";
     document.getElementById("signupModal").style.display = "block";
     document.body.style.overflow = "hidden";
-  })
+  }
 
-  loginForm.addEventListener("submit", function (event) {
+  loginForm.onsubmit = function (event) {
     //
     event.preventDefault(); // prevent default
 
@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .catch((error) => {
           console.error("There was an error!", error);
         });
-  });
+  };
 });
 
 

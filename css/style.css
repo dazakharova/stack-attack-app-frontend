@@ -630,3 +630,13 @@ footer {
   margin-bottom: 20px;
   font-size: 40px;
 }
+
+/*Modal window for successful registration message*/
+
+#success-login-modal {
+  display: none;
+}
+
+#success-login-modal h2, #success-login-modal p {
+  margin: 20px;
+}

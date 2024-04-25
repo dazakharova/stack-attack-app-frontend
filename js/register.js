@@ -1,31 +1,31 @@
 const BACKEND_ROOT_URL = "http://localhost:3001";
 const registrationForm = document.getElementById("registrationForm");
-const modal = document.getElementById("signupModal");
+const signupModal = document.getElementById("signupModal");
 const signupLink = document.getElementById("signupLink");
 const closeButton = document.getElementsByClassName("close")[0];
 
-signupLink.addEventListener("click", function (event) {
+signupLink.onclick = function (event) {
   event.preventDefault();
   // When the user clicks on the button, open the modal
-  modal.style.display = "block";
+  signupModal.style.display = "block";
   document.body.style.overflow = "hidden"; // Prevent scrolling
-});
+};
 
 // When the user clicks on <span> (x), close the modal
 closeButton.onclick = function() {
-  modal.style.display = "none";
+  signupModal.style.display = "none";
   document.body.style.overflow = "auto"; // Enable scrolling
 }
 
-  document.getElementById("switchToLogin").addEventListener("click", function () {
-    modal.style.display = "none";
+  document.getElementById("switchToLogin").onclick = function () {
+    signupModal.style.display = "none";
     document.body.style.overflow = "auto";
     document.getElementById("loginModal").style.display = "block";
     document.body.style.overflow = "hidden";
-  });
+  };
 
 
-registrationForm.addEventListener("submit", function (event) {
+registrationForm.onsubmit = function (event) {
   //
   event.preventDefault(); // prevent default
 
@@ -47,9 +47,10 @@ registrationForm.addEventListener("submit", function (event) {
     alert("Please create a more secure password");
     return; // interrupt the code
   }
+
   // in case of succesfull check
   sendDataToBackend(name, email, password);
-});
+};
 
 function sendDataToBackend(name, email, password) {
   const requestOptions = {
@@ -67,12 +68,24 @@ function sendDataToBackend(name, email, password) {
       }
       return response.json();
     })
-    .then((data) => {
-      console.log("Success: ", data);
-      console.log("Data successfully sent to the backend");
+    .then((json) => {
+      const successRegistrationModal = document.getElementById('success-login-modal')
+
+      // Close sign up window
+      signupModal.style.display = 'none'
+
+      const newUserNameSpan = successRegistrationModal.querySelector('#user-name')
+      newUserNameSpan.textContent = json.name
+
+      // Show success message window
+      successRegistrationModal.style.display = 'block'
+
+      // Close successful registration message modal once close button is clicked
+      document.querySelector('#success-login-modal .close').onclick = () => {
+        successRegistrationModal.style.display = 'none'
+      }
     })
     .catch((error) => {
       console.error("Error: ", error);
-      console.error("An error occurred while sending data to the backend");
     });
 }
