@@ -1114,6 +1114,78 @@ footer {
   display: none;
 }
 
+
+/* styles for modal windows to change password */
+.modal-change-password {
+  background-color: rgba(120, 117, 117, 0.2); 
+}
+#changePasswordModalLabel {
+  color:#6EA79E;
+  font-family: Comfortaa, sans-serif;
+  font-size: 30px;
+}
+.modal-change-password .modal-dialog {
+  max-width: 500px;
+}
+
+.modal-change-password .modal-content {
+  background-color: #ffff; 
+  border-radius: 10px; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
+}
+
+.modal-change-password .modal-header {
+  padding: 15px 20px; 
+  border-bottom: 1px solid #e9ecef;
+}
+
+.modal-change-password .modal-body {
+  padding: 20px; 
+}
+
+.modal-change-password .modal-title {
+  font-size: 1.25rem; 
+  color: #343a40; 
+}
+
+.modal-change-password .form-control {
+  margin-bottom: 15px; 
+}
+
+.modal-change-password .btn-primary {
+  background-color: #6EA79E; 
+  color: #fff; 
+  border: none; 
+}
+
+.modal-change-password .btn-primary:hover {
+  background-color: #166c5f; 
+}
+
+.modal-change-password .close {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  color: #434881;
+  font-size: 30px;
+  font-weight: bold;
+  outline: none;
+  border: none;
+  background-color: transparent;
+}
+.modal-change-password .close:hover,
+.close:focus {
+  color: #627fa3;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: bold;
+  outline: none;
+  border: none;
+  background-color: transparent;
+}
+
+
+
 /* Highlighted item style */
 
 .item.found {
