@@ -1113,3 +1113,23 @@ footer {
 #notification-message-modal {
   display: none;
 }
+
+/* Highlighted item style */
+
+.item.found {
+  background-color: rgba(101, 224, 92, 0.75);
+  box-shadow: 0 0 15px rgba(101, 224, 92, 0.9);
+  animation: pulse 3s ease-out;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 10px rgba(101, 224, 92, 0.9);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(101, 224, 92, 1);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(101, 224, 92, 0.9);
+  }
+}

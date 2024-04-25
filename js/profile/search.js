@@ -75,6 +75,8 @@ const renderResultLink = (item, resultsDropdown) => {
         const containerContents = assets.getAssets().get(item.getContainerId())
         updateContentsInRightContainer(document.querySelector('.space-container'), containerContents, assets.getAssets())
 
+        highlightFoundItem(item)
+
         // Construct and display the path to the selected item
         const topLevelPath = assets.findPathToTopLevelContainer(item.getContainerId())
         constructPathToItem(topLevelPath, assets.getAssets())
@@ -116,3 +118,15 @@ const constructPathToItem = (path, assetsMap) => {
 
 }
 
+const highlightFoundItem = (item) => {
+    const itemDivs = document.querySelectorAll('.space-container .item')
+    let searchedItemDiv
+
+    itemDivs.forEach(div => {
+        if (parseInt(div.querySelector('span').getAttribute('data-id')) === item.getId()) {
+            searchedItemDiv = div
+        }
+    })
+
+    searchedItemDiv.classList.add('found')
+}
