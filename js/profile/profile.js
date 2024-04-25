@@ -4,25 +4,6 @@ import { updateContentsInLeftMenu, updateContentsInRightContainer, handleImageUp
 const backend_url = 'http://localhost:3001'
 import { isAuthenticated } from './redirectToHomePage.js'
 
-// function checkAuthenticationStatus() {
-//     fetch(`${backend_url}/auth/status`)
-//         .then(response => {
-//             if (!response.ok) {
-//                 throw new Error('Failed to check authentication status');
-//             }
-//             return response.json();
-//         })
-//         .then(data => {
-//             if (!data.isAuthenticated) {
-//                 // User is not authenticated
-//                 displayLoginMessage();
-//             }
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//         });
-// }
-
 // Check if the user is logged in before rendering the page
 // If not, display the message and redirect to the homepage
 isAuthenticated().then(isAuthenticated => {
@@ -30,8 +11,6 @@ isAuthenticated().then(isAuthenticated => {
         console.log('isAuthenticated!!!', isAuthenticated)
         document.body.style.display = 'block'; // Show content if authenticated
     } else {
-        // console.log('Not valid pass')
-        // window.location.href = '/'; // Redirect if not authenticated
         displayLoginMessage()
     }
 })
@@ -51,9 +30,9 @@ const roomsHierarchy = document.getElementById("roomsHierarchy")
 
 const processRooms = (data) => {
     // Exclude first 3 elements of left container (heading and 2 buttons) from removing before rendering all rooms
-    /*while (roomsHierarchy.children.length > 3) {
+    while (roomsHierarchy.children.length > 4) {
         roomsHierarchy.removeChild(roomsHierarchy.lastChild);
-    }*/
+    }
     // Extract only parent containers from the given data (which have 'null' as a parent_id):
     const roomsArray = data.get(null)
     console.log("Rooms array", roomsArray)
@@ -145,6 +124,12 @@ const attachEventListenersToDynamicContent = () => {
 
     // Add event listener for add-new-item button
     document.getElementById("new-item-btn").onclick = () => {
+        // If no room selected, then show notification
+        if (document.getElementById('location-info').innerHTML === '') {
+            showNotification()
+            return
+        }
+
         newItemModal.style.display = 'block'
 
         // Initially disable the submit button
@@ -197,6 +182,12 @@ const attachEventListenersToDynamicContent = () => {
 
     // Add event listener for add-new-place button
     document.getElementById("new-place-btn").onclick = () => {
+        // If no room selected, then show notification
+        if (document.getElementById('location-info').innerHTML === '') {
+            showNotification()
+            return
+        }
+
         // Display the modal
         newPlaceModal.style.display = 'block'
     }
@@ -263,4 +254,15 @@ function displayLoginMessage() {
     window.location.href = '/'; // Redirect to the login page
     alert('You must be logged in to access this page. Redirecting to login page.');
 
+}
+
+function showNotification() {
+    const notification = document.createElement('p')
+    notification.textContent = 'No room selected. Please select a room to proceed.'
+
+    // Get the div where the message will be displayed
+    const  locationInfoDiv = document.getElementById('location-info');
+
+    // Append the message to the div
+    locationInfoDiv.appendChild(notification);
 }
