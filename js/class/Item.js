@@ -52,7 +52,7 @@ class Item {
     }
 
     matchesQuery(query) {
-        return this.#name.toLowerCase() === query.toLowerCase()
+        return this.#name.toLowerCase().includes(query.toLowerCase())
     }
 }
 
