@@ -9,10 +9,26 @@ header {
   background: rgba(255, 255, 255, 0);
   box-sizing: border-box;
 }
-header video, header img {
-  width: 300px;
+ header img {
+  width: 25% !important;
+  height: 10%;
   margin-top: 20px;
   margin-left: 20px;
+}
+
+#head-logo {
+  width: 25%;
+  height: 10%;
+  margin-left: -40px !important;
+  margin-top: -1%;
+}
+
+#head-redirect
+{
+  width: 25%;
+  height: 10%;
+  margin-left: -40px !important;
+  margin-top: -1%;
 }
 
 /* Navigation */
