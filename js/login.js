@@ -1,26 +1,32 @@
 document.addEventListener("DOMContentLoaded", function () {
   //search for the login form
   const loginForm = document.getElementById("loginForm");
-  const modal = document.getElementById("loginModal");
+  const loginModal = document.getElementById("loginModal");
   const loginLink = document.getElementById("loginLink");
   const closeButton = document.getElementsByClassName("close")[1];
   
   loginLink.onclick = function (event) {
     event.preventDefault();
     // When the user clicks on the button, open the modal
-    modal.style.display = "block";
+    loginModal.style.display = "block";
     document.body.style.overflow = "hidden"; // Prevent scrolling
   };
 
   // When the user clicks on <span> (x), close the modal
   closeButton.onclick = function() {
-    modal.style.display = "none";
+    loginModal.style.display = "none";
     document.body.style.overflow = "auto"; // Enable scrolling
+
+    // Reset input fields
+    resetLoginInputFields();
+
+    // Remove invalid credentials message if there is one
+    removeInvalidCredentialsMessage();
   }
 
   // When the user clicks to switch to SignUp
   document.getElementById("switchToSignup").onclick = function() {
-    modal.style.display = "none";
+    loginModal.style.display = "none";
     document.body.style.overflow = "auto";
     document.getElementById("signupModal").style.display = "block";
     document.body.style.overflow = "hidden";
@@ -35,20 +41,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const emailInput = document.getElementById("loginEmail");
     const passwordInput = document.getElementById("loginPassword");
 
+    // Remove invalid credentials message once input field are focused
+    emailInput.onfocus = removeInvalidCredentialsMessage;
+    passwordInput.onfocus = removeInvalidCredentialsMessage;
+
     // get the values and delete spaces
     const email = emailInput.value.trim();
     const password = passwordInput.value.trim();
-
-    //check if username is empty
-    if (email === "") {
-      console.log("E-mail field can not be empty");
-      return; // interrupt
-    }
-    //check if password is empty
-    if (password === "") {
-      alert("Password field can not be empty");
-      return; // interrupt
-    }
 
     // an object with the data to send to a server
     const data = {
@@ -64,18 +63,37 @@ document.addEventListener("DOMContentLoaded", function () {
       body: JSON.stringify(data),
       credentials: 'include'
     };
-    
-    emailInput.value = "";
-    passwordInput.value = "";
 
     // send to server
     fetch(BACKEND_ROOT_URL + "/auth/login", options)
         .then((response) => {
           if (!response.ok) {
-            throw new Error("Network response was not ok");
+            return response.json().then((errData) => {
+              // Handle the error message
+              if (response.status === 401) {
+                if (errData.message === 'Invalid username') {
+                  displayInvalidCredentialsMessage("Invalid Email: Please check your email address.")
+                  throw new Error("Invalid credentials");
+                } else if (errData.message === 'Invalid password') {
+                  displayInvalidCredentialsMessage("Invalid Password: Please check your password.");
+                  throw new Error("Invalid credentials");
+                }
+              } else {
+                console.error("There was a problem with the request:", errData.message);
+                throw new Error(errData.message);
+              }
+            });
           }
-          // In success case fetch containers and items from the server
-          console.log("Data sent successfully!");
+          return response.json(); // For successful responses, parse as JSON.
+        })
+        .then((data) => {
+          // Reset input fields
+          resetLoginInputFields();
+
+          // Close login form window
+          loginModal.style.display = "block";
+
+          // Redirect user to their profile page
           window.location.href = 'pages/profile.html';
         })
         .catch((error) => {
@@ -84,5 +102,22 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 });
 
+const removeInvalidCredentialsMessage = () => {
+  const invalidCredentialsMessage = document.getElementById("invalid-credentials-message");
+  if (invalidCredentialsMessage) {
+    invalidCredentialsMessage.style.display = "none";
+  }
+}
 
+const displayInvalidCredentialsMessage = (message) => {
+  const invalidCredentialsMessage = document.getElementById("invalid-credentials-message");
+  invalidCredentialsMessage.textContent = message;
 
+  // Show the message
+  invalidCredentialsMessage.style.display = "block";
+}
+
+const resetLoginInputFields = () => {
+  document.getElementById("loginEmail").value = "";
+  document.getElementById("loginPassword").value = "";
+}
