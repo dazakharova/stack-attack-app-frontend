@@ -782,7 +782,6 @@ button.btn2 {
 .title-input {
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid #627fa3;
   color: #000;
   padding: 2px 5px;
   box-sizing: border-box;
@@ -790,7 +789,6 @@ button.btn2 {
 }
 .title-input:focus {
   outline: none;
-  border-bottom: 2px solid #627fa3;
 }
 #assets-navigation-block {
   margin-top: 20px;
@@ -964,8 +962,10 @@ footer {
   display: none;
 }
 
-.new-container-name-div {
-  display: none;
+.new-container-name-div.active {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 #new-item-image-input {
