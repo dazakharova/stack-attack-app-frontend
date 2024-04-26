@@ -10,7 +10,7 @@ import { setupConfirmationModal } from './uiDynamicUpdate.js'
 // If not, display the message and redirect to the homepage
 isAuthenticated().then(isAuthenticated => {
     if (!isAuthenticated) {
-        displayNotificationMessageAndRedirect('Your session has expired. Please log in again to continue.')
+        displayNotificationMessageAndRedirect('You must be signed in to view this page. Please log in to continue.')
     } else {
         // If user is logged in, fetch all the data and render tha page
         getAllData().then(() => {
