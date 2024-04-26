@@ -4,6 +4,7 @@ import { updateContentsInLeftMenu, updateContentsInRightContainer, handleImageUp
 const backend_url = 'http://localhost:3001'
 import { isAuthenticated } from './redirectToHomePage.js'
 import { displayNotificationMessageAndRedirect } from './httpUtils.js'
+import { setupConfirmationModal } from './uiDynamicUpdate.js'
 
 // Check if the user is logged in before rendering the page
 // If not, display the message and redirect to the homepage

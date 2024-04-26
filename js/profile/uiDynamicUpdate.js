@@ -245,4 +245,22 @@ function convertImageToBase64(event) {
     // Save the base64String to your local Map or state here
 }
 
-export { updateContentsInLeftMenu, updateContentsInRightContainer, renderContainerContents, buildNewContainerNameInput, replaceTitleWithEditableInput, replaceItemNameWithEditableInput, updateItemNameAndRefreshUI, replaceItemDescriptionWithEditableInput, updateItemDescriptionAndRefreshUI, handleItemDeletion, handleClosingItemModalWindow, handleImageUploading }
+// Function to set up the confirmation modal
+function setupConfirmationModal(entityName, confirmCallback) {
+    const confirmationModal = document.getElementById('confirmation-modal');
+    confirmationModal.style.display = 'block';
+
+    const deleteConfirmationText = document.querySelector('#confirmation-modal .modal-content p');
+    deleteConfirmationText.textContent = `Are you sure you want to delete "${entityName}"?`;
+
+    const cancelBtn = document.getElementById('cancelBtn');
+    cancelBtn.onclick = () => {
+        confirmationModal.style.display = 'none';
+    };
+
+    const confirmBtn = document.getElementById('confirmBtn');
+    confirmBtn.onclick = confirmCallback;
+    return confirmBtn;  // Return the confirm button if needed outside this function
+}
+
+export { updateContentsInLeftMenu, updateContentsInRightContainer, renderContainerContents, buildNewContainerNameInput, replaceTitleWithEditableInput, replaceItemNameWithEditableInput, updateItemNameAndRefreshUI, replaceItemDescriptionWithEditableInput, updateItemDescriptionAndRefreshUI, handleItemDeletion, handleClosingItemModalWindow, handleImageUploading, setupConfirmationModal }
