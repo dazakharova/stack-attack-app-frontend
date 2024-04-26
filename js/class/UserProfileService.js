@@ -46,6 +46,28 @@ class UserProfileService {
             console.error(error)
         }
     };
+
+    changePassword = async (currentPassword, newPassword) => {
+        try {
+            const body = JSON.stringify({ currentPassword: currentPassword, newPassword: newPassword })
+            const response = await fetch(`${this.#backendUrl}/users/changePassword`, {
+                method: 'PUT',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: body
+            })
+            if (!response.ok) {
+                return { success: false, message: 'Invalid password.' }
+            }
+            return { success: true, message: 'Password changed successfully.' };
+
+        } catch (error) {
+            console.error(error)
+            return error
+        }
+    }
 }
 
 export { UserProfileService };
