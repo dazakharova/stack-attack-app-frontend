@@ -65,6 +65,15 @@ function initializeEventListeners() {
   // Retrieve change password form
   const changePasswordForm = document.getElementById("changePasswordForm")
 
+
+  const newPasswordInput = document.getElementById('newPassword')
+  // If weak password message is displayed, then hide it once new password input is focused
+  newPasswordInput.onfocus = () => {
+    if (document.getElementById('weak-password-message')) {
+      document.getElementById('weak-password-message').style.display = 'none'
+    }
+  }
+
   changePasswordForm.onsubmit = async (event) => {
     event.preventDefault()
 
@@ -79,8 +88,8 @@ function initializeEventListeners() {
     // regex to check password
     // "Password must be at least 8 characters long and include at least one letter, one number, and one special character (e.g., @, #, $, %)."
     if (!passwordRegex.test(newPassword)) {
-      alert("Please create a more secure password");
-      return; // interrupt the code
+      document.getElementById('weak-password-message').style.display = 'block'
+      return // interrupt the code
     }
 
     try {
@@ -92,7 +101,7 @@ function initializeEventListeners() {
       document.getElementById("newPassword").value = ''
 
       if (!result.success) {
-        const invalidPasswordMessageParagraph = document.querySelector('#changePasswordModal .modal-content p')
+        const invalidPasswordMessageParagraph = document.getElementById('invalid-password-message')
         invalidPasswordMessageParagraph.style.display = 'block'
         setTimeout(() => {
           invalidPasswordMessageParagraph.style.display = 'none'
