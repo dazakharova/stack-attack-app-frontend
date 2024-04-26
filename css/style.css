@@ -640,3 +640,16 @@ footer {
 #success-login-modal h2, #success-login-modal p {
   margin: 20px;
 }
+
+/*Weak password message in the signup modal window */
+
+#weak-password-message, #warning-message {
+  display: none;
+  font-size: 15px;
+  color: #c67373;
+}
+
+
+#password-restrictions {
+  font-size: 15px;
+}

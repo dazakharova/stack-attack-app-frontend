@@ -15,6 +15,12 @@ signupLink.onclick = function (event) {
 closeButton.onclick = function() {
   signupModal.style.display = "none";
   document.body.style.overflow = "auto"; // Enable scrolling
+
+  // Remove all the warning messages if there is one
+ removeWeakPasswordMessage();
+
+  // Reset form input fields
+  resetInputFields();
 }
 
   document.getElementById("switchToLogin").onclick = function () {
@@ -37,6 +43,9 @@ registrationForm.onsubmit = function (event) {
   const email = emailInput.value;
   const password = passwordInput.value;
 
+  // Remove weak password message if there is one while changing password
+  passwordInput.onfocus = removeWeakPasswordMessage;
+
   //regex for password
   const passwordRegex =
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#$%^&!])[A-Za-z\d@#$%^&!]{8,}$/;
@@ -44,11 +53,11 @@ registrationForm.onsubmit = function (event) {
   // regex to check password
   // "Password must be at least 8 characters long and include at least one letter, one number, and one special character (e.g., @, #, $, %)."
   if (!passwordRegex.test(password)) {
-    alert("Please create a more secure password");
+    document.getElementById("weak-password-message").style.display = "block";
     return; // interrupt the code
   }
 
-  // in case of succesfull check
+  // in case of successfull check
   sendDataToBackend(name, email, password);
 };
 
@@ -88,4 +97,16 @@ function sendDataToBackend(name, email, password) {
     .catch((error) => {
       console.error("Error: ", error);
     });
+}
+
+const resetInputFields = () => {
+  document.getElementById("registerName").value = '';
+  document.getElementById("registerEmail").value = '';
+  document.getElementById("registerPassword").value = '';
+}
+
+const removeWeakPasswordMessage = () => {
+  if (document.getElementById("weak-password-message").style.display === "block") {
+    document.getElementById("weak-password-message").style.display = "none";
+  }
 }
