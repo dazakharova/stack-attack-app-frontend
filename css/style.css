@@ -19,8 +19,6 @@
 {
   width: 25%;
   height: 10%;
-  margin-left: -40px !important;
-  margin-top: -1%;
 }
 .header-hidden {
   display: none;
@@ -61,9 +59,8 @@ nav a:hover {
 .navbar {
   position: fixed;
   top: 0;
-  left: 0;
+  right: 40px;
   width: calc(100%);
-  background-color: rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: right;
   justify-content: right;
