@@ -3,6 +3,7 @@ import {Container} from "../class/Container.js";
 import {Item} from "../class/Item.js";
 import leftContainer from "./collapseFunctionality.js";
 import {assets, getBase64FromImageInput} from "./profile.js";
+import { setupConfirmationModal } from './uiDynamicUpdate.js'
 
 const renderContainer = (parentNode, container, data) => {
     // Get all data about container
@@ -516,22 +517,4 @@ function buildContainerDropdown(containerDiv) {
         editContainerColorBtn: changeColorLink,
         deleteContainerBtn: deletePlaceLink,
     };
-}
-
-// Function to set up the confirmation modal
-function setupConfirmationModal(entityName, confirmCallback) {
-    const confirmationModal = document.getElementById('confirmation-modal');
-    confirmationModal.style.display = 'block';
-
-    const deleteConfirmationText = document.querySelector('#confirmation-modal .modal-content p');
-    deleteConfirmationText.textContent = `Are you sure you want to delete "${entityName}"?`;
-
-    const cancelBtn = document.getElementById('cancelBtn');
-    cancelBtn.onclick = () => {
-        confirmationModal.style.display = 'none';
-    };
-
-    const confirmBtn = document.getElementById('confirmBtn');
-    confirmBtn.onclick = confirmCallback;
-    return confirmBtn;  // Return the confirm button if needed outside this function
 }

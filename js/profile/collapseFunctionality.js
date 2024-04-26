@@ -1,9 +1,9 @@
 import {Container} from "../class/Container.js";
 import {Item} from "../class/Item.js";
 import {addContainerToPath, addRoomToPath} from "./locationPath.js";
-import { updateContentsInRightContainer } from './uiDynamicUpdate.js'
+import { updateContentsInRightContainer, setupConfirmationModal } from './uiDynamicUpdate.js'
 
-import { assets } from './profile.js'
+import { assets, toggleDeleteMode } from './profile.js'
 
 const assetsBlocksDiv = document.querySelector(".space-container")
 const currentLocationPathDiv = document.getElementById("location-info")
@@ -185,10 +185,12 @@ const renderContents = (contents, containersNode, data) => {
 }
 
 const handleRoomDeletion = async (event, parentNode, roomId, roomName,  roomDiv) => {
-    const isConfirmed = confirm(`Are you sure you want to delete room "${roomName}"?`);
-
-    if (isConfirmed) {
+    // Setup the confirmation modal and pass the confirm logic as a callback function
+    setupConfirmationModal(roomName, async () => {
         try {
+            // Close the modal
+            document.getElementById('confirmation-modal').style.display = 'none'
+
             const response = await assets.removeContainer(roomId)
 
             // Prevent the event from bubbling up to the room button click listener
@@ -196,10 +198,13 @@ const handleRoomDeletion = async (event, parentNode, roomId, roomName,  roomDiv)
 
             // Remove the roomDiv from the parentNode
             parentNode.removeChild(roomDiv)
+
+            // Exit delete mode
+            toggleDeleteMode()
         } catch (error) {
             console.error(error)
         }
-    }
+    })
 }
 
 const leftContainer = {

@@ -4,6 +4,7 @@ import { updateContentsInLeftMenu, updateContentsInRightContainer, handleImageUp
 const backend_url = 'http://localhost:3001'
 import { isAuthenticated } from './redirectToHomePage.js'
 import { displayNotificationMessageAndRedirect } from './httpUtils.js'
+import { setupConfirmationModal } from './uiDynamicUpdate.js'
 
 // Check if the user is logged in before rendering the page
 // If not, display the message and redirect to the homepage
@@ -219,16 +220,8 @@ const attachEventListenersToDynamicContent = () => {
     const toggleDeleteBtn = document.getElementById('toggle-delete-mode-btn');
 
     // Event listener for deleting room
-    toggleDeleteBtn.onclick = () => {
-        roomsHierarchy.classList.toggle('delete-mode');
+    toggleDeleteBtn.onclick = toggleDeleteMode;
 
-        // Check if 'delete-mode' is now active and update button text
-        if (roomsHierarchy.classList.contains('delete-mode')) {
-            toggleDeleteBtn.textContent = 'Cancel Delete';
-        } else {
-            toggleDeleteBtn.textContent = 'Delete Room';
-        }
-    }
 }
 
 // Encode image for storing it on the client and in the database
@@ -260,4 +253,15 @@ function showNotification() {
 
     // Append the message to the div
     locationInfoDiv.appendChild(notification);
+}
+
+export function toggleDeleteMode() {
+    document.getElementById('roomsHierarchy').classList.toggle('delete-mode');
+
+    // Check if 'delete-mode' is now active and update button text
+    if (roomsHierarchy.classList.contains('delete-mode')) {
+        document.getElementById('toggle-delete-mode-btn').textContent = 'Cancel Delete';
+    } else {
+        document.getElementById('toggle-delete-mode-btn').textContent = 'Delete Room';
+    }
 }
