@@ -1108,10 +1108,18 @@ footer {
   border-radius: 40%;
 }
 
-/*Redirection message modal*/
+/*Notification message modal*/
 
 #notification-message-modal {
   display: none;
+}
+
+#notification-message-modal .modal-content {
+  width: 40%;
+}
+
+#notification-message-modal p {
+  margin: 50px;
 }
 
 
@@ -1204,4 +1212,18 @@ footer {
   100% {
     box-shadow: 0 0 10px rgba(101, 224, 92, 0.9);
   }
+}
+
+/*Modal window for successful changing password*/
+
+#success-change-password-modal {
+  display: none;
+}
+
+/*Invalid password message*/
+
+#changePasswordModal .modal-content p {
+  display: none;
+  font-size: 15px;
+  color: #c67373;
 }

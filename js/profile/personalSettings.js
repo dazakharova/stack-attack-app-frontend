@@ -62,6 +62,52 @@ function initializeEventListeners() {
     };
   });
 
+  // Retrieve change password form
+  const changePasswordForm = document.getElementById("changePasswordForm")
+
+  changePasswordForm.onsubmit = async (event) => {
+    event.preventDefault()
+
+    // Retrieve current and new password values
+    let currentPassword = document.getElementById("currentPassword").value
+    let newPassword = document.getElementById("newPassword").value
+
+    //regex for password
+    const passwordRegex =
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#$%^&!])[A-Za-z\d@#$%^&!]{8,}$/;
+
+    // regex to check password
+    // "Password must be at least 8 characters long and include at least one letter, one number, and one special character (e.g., @, #, $, %)."
+    if (!passwordRegex.test(newPassword)) {
+      alert("Please create a more secure password");
+      return; // interrupt the code
+    }
+
+    try {
+      // Send request to the server with new data
+      const result = await userSettings.changePassword(currentPassword, newPassword)
+
+      // Clean input fields
+      document.getElementById("currentPassword").value = ''
+      document.getElementById("newPassword").value = ''
+
+      if (!result.success) {
+        const invalidPasswordMessageParagraph = document.querySelector('#changePasswordModal .modal-content p')
+        invalidPasswordMessageParagraph.style.display = 'block'
+        setTimeout(() => {
+          invalidPasswordMessageParagraph.style.display = 'none'
+        }, 3000)
+      } else {
+        document.getElementById("changePasswordModal").style.display = 'none'
+        displayNotificationMessage('Password was changed successfully!')
+      }
+    } catch (error) {
+      document.getElementById("changePasswordModal").style.display = 'none'
+      displayNotificationMessage('Something went wrong. Please try again later.')
+      console.error(error)
+    }
+  }
+
 }
 
 // Function to load the selected picture from local storage upon page load
@@ -94,4 +140,34 @@ async function loadProfilePictureFromServer() {
   } catch (error) {
     console.error(error)
   }
+}
+
+function showChangePasswordModal() {
+  const changePasswordModal = document.getElementById("changePasswordModal");
+  changePasswordModal.classList.add("show");
+  changePasswordModal.style.display = "block";
+}
+
+const changePasswordLink = document.getElementById("change-password-menu");
+if (changePasswordLink) {
+  changePasswordLink.onclick = function(e) {
+    e.preventDefault();
+    showChangePasswordModal();
+  };
+}
+
+const displayNotificationMessage = (message) => {
+  const notificationMessageModal = document.getElementById('notification-message-modal')
+  const notificationMessageParagraph = notificationMessageModal.querySelector('p')
+
+  // Set message to notify about session expiration
+  notificationMessageParagraph.textContent = message
+
+  // Show redirection message
+  notificationMessageModal.style.display = 'block'
+
+  // Set a delay before redirecting to the homepage
+  setTimeout(function() {
+    notificationMessageModal.style.display = 'none'
+  }, 3000);
 }
