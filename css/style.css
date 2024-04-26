@@ -9,13 +9,11 @@
   background: rgba(255, 255, 255, 0);
   box-sizing: border-box;
 }
-
 #head-logo {
   width: 25%;
   height: 10%;
   margin-left: -40px !important;
   margin-top: -1%;
-
 }
 #head-redirect
 {
@@ -24,13 +22,9 @@
   margin-left: -40px !important;
   margin-top: -1%;
 }
-
-
 .header-hidden {
   display: none;
 }
-
-
 #loggedHeader {
   opacity: 1; 
   transition: opacity 1s ease, top 1s ease; ; 
@@ -64,7 +58,6 @@ nav a {
 nav a:hover {
   color: #434881;
 }
-
 .navbar {
   position: fixed;
   top: 0;
@@ -78,7 +71,6 @@ nav a:hover {
   opacity: 1; 
   transition: opacity 1s ease, top 1s ease; 
 }
-
 .navbar.active {
   top: -100px;
   opacity: 0.1;
@@ -100,7 +92,6 @@ nav a:hover {
   backdrop-filter: blur(8px);
   outline: none;
 }
-
 /* Modal Content */
 .modal-content {
   background-color: #fefefe;
@@ -114,7 +105,6 @@ nav a:hover {
   border-radius: 10px;
   outline: none;
 }
-
 .modal-content h2 {
   margin-top: 20px; 
   margin-bottom: 0px;
@@ -131,7 +121,6 @@ nav a:hover {
   font-weight: bold;
   text-align: center;
 }
-
 .close:hover,
 .close:focus {
   color: black;
@@ -146,13 +135,11 @@ input[type="text"] {
   width: 330px;
   height: 40px;
   color: #394243;
-  border-width: 0.2px;
+  border: 2px solid #6EA79E;
   border-radius: 8px;
-  border-color: #98AEB1 !important;
-  outline-color: #6EA79E;
-
+  outline: none;
+  text-decoration: none;
 }
-
 input[type="email"] {
   text-align: left;
   padding-left: 10px;
@@ -160,15 +147,10 @@ input[type="email"] {
   width: 330px;
   height: 40px;
   color: #394243;
-  border-width: 0.2px;
+  border: 2px solid #6EA79E;
   border-radius: 8px;
-  border-color: #98AEB1!important;
-  outline-color: #6EA79E;
-
+   outline: none;
 }
-
-
-
 input[type="password"] {
   text-align: left;
   padding-left: 10px;
@@ -176,9 +158,9 @@ input[type="password"] {
   width: 330px;
   height: 40px;
   color: #394243;
-  border-width: 0.2px;
+  border: 2px solid #6EA79E;
   border-radius: 8px;
-  outline-color: #6EA79E;
+  outline: none;
 }
 input[type="submit"] {
   margin: 0 auto;
@@ -197,19 +179,27 @@ input[type="text"]:first-child {
   text-align: left;
   color: #394243;
   padding-left: 10px;
+  outline: none;
 }
-
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border-color: #627FA3 !important;
+  
+}
 #loginLink {
   text-decoration: none;
   font-weight: bold;
 }
 #switchToSignup {
-  color: #1da591;
-  text-shadow: 2px 2px 4px rgba(112, 109, 109, 0.3);
+  color: #6EA79E;
+  text-shadow: 6px 6px 8px rgb(255, 255, 255);
+  text-decoration: none;
 }
 #switchToLogin {
-  color: #1da591;
-  text-shadow: 2px 2px 4px rgba(112, 109, 109, 0.3);
+  color: #6EA79E;
+  text-shadow: 6px 6px 8px rgb(255, 255, 255);
+  text-decoration: none;
 }
 
 /* The Close Button */
@@ -224,7 +214,6 @@ input[type="text"]:first-child {
   font-weight: bold;
   text-align: center;
 }
-
 .closeLoginForm:hover,
 .closeLoginForm:focus {
   color: black;
@@ -235,8 +224,11 @@ input[type="text"]:first-child {
 #loginModal input[type="password"] {
   text-align: left;
   font-family: Comfortaa, sans-serif;
-  padding-left: 10px;
+  padding: 20px;
+  border-color: #6EA79E;
+  color: rgb(102, 99, 99); 
 }
+
 #forgotPasswordParagraph a {
   text-align: left;
   display: block;
@@ -245,8 +237,9 @@ input[type="text"]:first-child {
   margin-bottom: 0px;
   font-family: Comfortaa, sans-serif;
   outline: none;
-  color: #1da591;
-  text-shadow: 2px 2px 4px rgba(112, 109, 109, 0.3);
+  color: #627FA3;
+  text-shadow: 6px 6px 8px rgb(255, 255, 255);
+  text-decoration: none;
 }
 body {
   margin: 0;
