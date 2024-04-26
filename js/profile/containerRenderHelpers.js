@@ -242,7 +242,7 @@ const renderContainerContents = (event, parentNode, containerContents, container
 
 const buildNewContainerNameInput = (containerDivFooter, containerSpan) => {
     const newContainerNameDiv = document.createElement('div')
-    newContainerNameDiv.className = 'new-container-name-div'
+    newContainerNameDiv.classList.add('new-container-name-div', 'hidden')
 
     const newContainerNameInput = document.createElement('input')
     newContainerNameInput.type = 'text'
@@ -263,7 +263,10 @@ const replaceTitleWithEditableInput = (containerDivFooter, containerSpan) => {
 
     // Show input new container name
     const newContainerNameDiv = document.querySelector('.new-container-name-div')
-    newContainerNameDiv.style.display = 'block'
+    // newContainerNameDiv.style.display = 'block'
+    newContainerNameDiv.classList.remove('hidden')
+    newContainerNameDiv.classList.add('active')
+
 
     // Put the value of the container name into the input field
     const newContainerNameInput = document.querySelector('.title-input')
@@ -276,8 +279,6 @@ const replaceTitleWithEditableInput = (containerDivFooter, containerSpan) => {
 
 // updateContainerNameAndRefreshUI(containerSpan, containerId, containerParentId, data)
 const updateContainerNameAndRefreshUI = async (containerSpan, containerId, containerParentId, data) => {
-    // Get parent name from the location path
-    const parentName = document.getElementById('location-info').lastElementChild.innerText
 
     const newContainerNameDiv = document.querySelector('.new-container-name-div')
 
@@ -286,7 +287,8 @@ const updateContainerNameAndRefreshUI = async (containerSpan, containerId, conta
     try {
         // Update container name in UI
         containerSpan.textContent = newContainerNameInput.value
-        newContainerNameDiv.style.display = 'none'
+        newContainerNameDiv.classList.remove('active')
+        newContainerNameDiv.classList.add('hidden')
 
         containerSpan.style.display = 'block'
 
