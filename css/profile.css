@@ -222,7 +222,6 @@ button.btn2 {
 }
 
 /* For room buttons */
-
 #new-room-btn {
   color: #ffffff;
   background-color: #6EA79E;
@@ -246,7 +245,6 @@ button.btn2 {
   margin-bottom: 20px;
   border: 2px solid #6EA79E;
   border-radius: 5px;
-  
 }
 #room-name-input::placeholder {
   color: #999;
@@ -362,7 +360,6 @@ button.btn2 {
 }
 .btn-furniture[aria-expanded="true"] {
   color: #627FA3;
-  
 }
 .btn-furniture[aria-expanded="true"]::before {
   transform: rotate(90deg);
@@ -379,7 +376,6 @@ button.btn2 {
 .scrollarea {
   overflow-y: auto;
 }
-
 .dropdown-item:hover {
   background-color: rgba(120, 167, 167, 0.3) !important ;
 }
@@ -392,12 +388,10 @@ button.btn2 {
 .link-body-emphasis {
   color: #627FA3;
 }
-
 .left-items-list {
   text-align: center;
   margin-right: 20%;
 }
-
 .link-item {
   display: inline-flex;
   text-decoration: none;
@@ -418,23 +412,18 @@ button.btn2 {
 .button-container .containers-list .btn-furniture {
   padding-left: 10px;
 }
-
 .button-container .containers-list .containers-list .btn-furniture {
   padding-left: 15px;
 }
-
 .button-container .containers-list .containers-list .containers-list .btn-furniture {
   padding-left: 20px;
 }
-
 .button-container .containers-list .containers-list .containers-list .containers-list .btn-furniture {
   padding-left: 25px;
 }
-
 .button-container .containers-list .containers-list .containers-list .containers-list .containers-list .btn-furniture {
   padding-left: 30px;
 }
-
 .button-container .containers-list .containers-list .containers-list .containers-list .containers-list .containers-list .btn-furniture {
   padding-left: 35px;
 }
@@ -443,37 +432,30 @@ button.btn2 {
 .button-container .btn-room {
   font-size: 30px;
 }
-
   /* Decrease font size for the first level of nesting: 'Big box' and 'Small box' buttons */
 .button-container .containers-list .btn-furniture, .button-container .left-items-list li {
   font-size: 26px;
 }
-
 /* Further decrease for items under 'Big box' and 'Small box' */
 .button-container .containers-list .left-items-list li, .button-container .containers-list .containers-list .btn-furniture {
   font-size: 22px;
 }
-
 /* If there are more nested containers inside 'Big box' or 'Small box', decrease font size more */
 .button-container .containers-list .containers-list .containers-list .btn-furniture, .button-container .containers-list .containers-list .left-items-list li {
   font-size: 18px;
 }
-
 /* And decrease for items under these further nested containers */
 .button-container .containers-list .containers-list .containers-list .containers-list .btn-furniture, .button-container .containers-list .containers-list .containers-list .left-items-list li {
   font-size: 14px;
 }
-
 /* Adjust the font size for any further nesting if needed */
 .button-container .containers-list .containers-list .containers-list .containers-list .containers-list .btn-furniture, .button-container .containers-list .containers-list .containers-list .containers-list .left-items-list li {
   font-size: 10px;
 }
-
 /* Items under these triple nested containers */
 .button-container .containers-list .containers-list .containers-list .containers-list .containers-list .containers-list .btn-furniture, .button-container .containers-list .containers-list .containers-list .containers-list .containers-list .left-items-list li {
   font-size: 6px;
 }
-
 .btn3 {
   color: #ffffff;
   background-color: #6EA79E;
@@ -496,7 +478,6 @@ button.btn2 {
   margin-right: 100px;
   overflow: hidden; 
 }
-
 #save-picture-btn {
   color: #ffffff;
   background-color: #6EA79E;
@@ -549,7 +530,6 @@ button.btn2 {
 .boxquest:hover i {
   opacity: 0;
 }
-
 /* Modal windows styles*/
 .modal {
   display: none; /* Change from 'flex' to 'none' to initially hide the modal */
@@ -686,7 +666,6 @@ button.btn2 {
   margin-bottom: 10px;
   outline: none;
 }
-
 .dropdown-container {
   position: fixed;
   bottom: 0;
@@ -913,7 +892,6 @@ footer {
   width: 250px;
   height: 250px;
 }
-
 .image-option{
   width: 15%;
   height: 15%;
@@ -948,17 +926,14 @@ footer {
   height: 100%;
   margin-bottom: 20px;
 }
-
 .hidden {
   display: none;
 }
-
 .new-container-name-div.active {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-
 #new-item-image-input {
   display: none;
   margin: 0 auto;
@@ -972,12 +947,10 @@ footer {
   display: inline-block;
   width: 100%;
 }
-
 .search-input-container {
   position: relative;
   display: inline-block;
 }
-
 #search-results-dropdown {
   display: none;
   position: absolute;
@@ -989,47 +962,39 @@ footer {
   z-index: 1;
   width: 100%;
 }
-
 #search-results-dropdown a {
   color: black;
   padding: 10px 12px;
   text-decoration: none;
   display: block;
 }
-
 #search-results-dropdown a:hover {
   background-color: #f1f1f1;
 }
-
 .no-results-message {
   padding: 10px;
   text-align: center;
   color: #666;
   font-style: italic;
 }
-
 #right-container-header {
   display: flex;
 }
 
 /*Right container header with searching form and 'Add new item' button*/
-
 #right-container-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
 }
-
 #searching-form {
   display: flex;
   align-items: center;
 }
-
 #search-button {
   margin-left: 10px;
 }
-
 /* Styling for the search input and button to ensure they are aligned properly */
 #searching-input {
   min-width: 350px;
@@ -1037,7 +1002,6 @@ footer {
   border: 2px solid #ccc;
   border-radius: 4px;
 }
-
 #search-button {
   padding: 10px 15px;
   border: none;
@@ -1046,12 +1010,9 @@ footer {
   cursor: pointer;
   border-radius: 4px;
 }
-
 #search-button:hover {
   background-color: #627FA3;
 }
-
-
 #addbtn > button,
 #addbtn > a {
   padding: 15px;
@@ -1077,14 +1038,12 @@ footer {
   left: 0;
   transform: translate(10px, 10px);
 }
-
 .box-more-btn {
   color: #627fa3;
   background-color: transparent;
   border: none;
   padding: 0;
 }
-
 .box-more-btn::after {
   display: none;
 }
@@ -1094,15 +1053,12 @@ footer {
 #confirmation-modal {
   display: none;
 }
-
 .confirmation-window-content {
   width: 30%;
 }
-
 #confirmBtn, #cancelBtn {
   width: 40%;
 }
-
 .buttons {
   display: flex;
   justify-content: space-evenly;
@@ -1116,67 +1072,81 @@ footer {
 }
 
 /*Notification message modal*/
-
 #notification-message-modal {
   display: none;
 }
-
 #notification-message-modal .modal-content {
   width: 40%;
 }
-
 #notification-message-modal p {
   margin: 50px;
 }
 
-
-/* styles for modal windows to change password */
+/* Styles for modal windows to change password */
+input:-webkit-autofill {
+  -webkit-text-fill-color: #627FA3 !important;
+  -webkit-caret-color: #627FA3 !important;
+  -webkit-box-shadow: 0 0 0 1000px rgb(245, 248, 248) inset !important;
+}
 .modal-change-password {
   background-color: rgba(120, 117, 117, 0.2); 
 }
 #changePasswordModalLabel {
-  color:#6EA79E;
+  color: #6EA79E;
   font-family: Comfortaa, sans-serif;
   font-size: 30px;
+  text-align: left;
+  padding: 20px;
+  border-color: #6EA79E;
+}
+#currentPassword,
+#newPassword {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  color: #394243;
+  border: 2px solid #6EA79E;
+  border-radius: 8px;
+  outline: none;
+}
+#currentPassword:focus,
+#newPassword:focus {
+  border-color: #627FA3 !important;
+  color: rgb(102, 99, 99);
+  outline: none;
+  box-shadow: none; 
 }
 .modal-change-password .modal-dialog {
   max-width: 500px;
 }
-
 .modal-change-password .modal-content {
-  background-color: #ffff; 
+  background-color: #fff; 
   border-radius: 10px; 
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
 }
-
 .modal-change-password .modal-header {
   padding: 15px 20px; 
   border-bottom: 1px solid #e9ecef;
 }
-
 .modal-change-password .modal-body {
   padding: 20px; 
 }
-
 .modal-change-password .modal-title {
   font-size: 1.25rem; 
   color: #343a40; 
 }
-
 .modal-change-password .form-control {
   margin-bottom: 15px; 
 }
-
 .modal-change-password .btn-primary {
   background-color: #6EA79E; 
   color: #fff; 
   border: none; 
 }
-
 .modal-change-password .btn-primary:hover {
   background-color: #166c5f; 
 }
-
 .modal-change-password .close {
   position: absolute;
   top: 0;
@@ -1198,8 +1168,45 @@ footer {
   border: none;
   background-color: transparent;
 }
-
-
+/* Input styles */
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  text-align: left;
+  padding-left: 10px;
+  margin-bottom: 25px;
+  width: 330px;
+  height: 40px;
+  color: #394243;
+  border: 2px solid #6EA79E;
+  border-radius: 8px;
+  outline: none;
+}
+input[type="submit"] {
+  margin: 0 auto;
+  margin-bottom: 25px;
+  text-align: center;
+  width: 330px;
+  height: 40px;
+  color: #394243;
+  border-width: 0px;
+  border-radius: 8px;
+  background-color: #6EA79E;
+  color: white;
+}
+input[type="text"]:first-child {
+  margin-top: 40px;
+  text-align: left;
+  color: #394243;
+  padding-left: 10px;
+  outline: none;
+}
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border-color: #627FA3 !important;
+  color: rgb(102, 99, 99); 
+}
 
 /* Highlighted item style */
 
@@ -1208,7 +1215,6 @@ footer {
   box-shadow: 0 0 15px rgba(101, 224, 92, 0.9);
   animation: pulse 3s ease-out;
 }
-
 @keyframes pulse {
   0% {
     box-shadow: 0 0 10px rgba(101, 224, 92, 0.9);
@@ -1222,13 +1228,10 @@ footer {
 }
 
 /*Modal window for successful changing password*/
-
 #success-change-password-modal {
   display: none;
 }
-
 /*Invalid password message*/
-
 #invalid-password-message, #weak-password-message {
   display: none;
   font-size: 15px;
