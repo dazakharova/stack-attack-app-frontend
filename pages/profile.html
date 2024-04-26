@@ -208,10 +208,11 @@
                     <form id="changePasswordForm">
                         <input type="password" class="form-control mb-3" id="currentPassword" name="currentPassword" placeholder="Current Password" required>
                         <input type="password" class="form-control mb-3" id="newPassword" name="newPassword" placeholder="New Password" required>
+                        <p id="weak-password-message">Please create a more secure password</p>
                         <button type="submit" class="btn btn-primary">Change Password</button>
                     </form>
                 </div>
-                <p>The current password you entered is incorrect. Please try again.</p>
+                <p id="invalid-password-message">The current password you entered is incorrect. Please try again.</p>
             </div>
         </div>
     </div>

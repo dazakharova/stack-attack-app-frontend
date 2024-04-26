@@ -1222,7 +1222,7 @@ footer {
 
 /*Invalid password message*/
 
-#changePasswordModal .modal-content p {
+#invalid-password-message, #weak-password-message {
   display: none;
   font-size: 15px;
   color: #c67373;
