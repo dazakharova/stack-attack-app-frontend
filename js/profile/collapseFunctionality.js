@@ -3,7 +3,7 @@ import {Item} from "../class/Item.js";
 import {addContainerToPath, addRoomToPath} from "./locationPath.js";
 import { updateContentsInRightContainer, setupConfirmationModal } from './uiDynamicUpdate.js'
 
-import { assets } from './profile.js'
+import { assets, toggleDeleteMode } from './profile.js'
 
 const assetsBlocksDiv = document.querySelector(".space-container")
 const currentLocationPathDiv = document.getElementById("location-info")
@@ -198,6 +198,9 @@ const handleRoomDeletion = async (event, parentNode, roomId, roomName,  roomDiv)
 
             // Remove the roomDiv from the parentNode
             parentNode.removeChild(roomDiv)
+
+            // Exit delete mode
+            toggleDeleteMode()
         } catch (error) {
             console.error(error)
         }
