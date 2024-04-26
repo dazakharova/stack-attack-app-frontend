@@ -16,11 +16,8 @@ class UserProfileService {
                     'Content-Type': 'application/json'
                 }
             });
-            if (response.ok) {
-                const json = await response.json()
-                return json.profile_pic
-            }
-            return this.#userDetails;
+            const json = await response.json()
+            return json.profile_pic
         } catch (error) {
             console.error(error)
         }

@@ -143,7 +143,9 @@ async function updateProfilePicture(imageName) {
 async function loadProfilePictureFromServer() {
   try {
     const profilePictureName = await userSettings.fetchProfilePicture()
-    if (profilePictureName) {
+    if (!profilePictureName) {
+      localStorage.setItem('selectedPictureSrc', '')
+    } else {
       localStorage.setItem('selectedPictureSrc', profilePictureName)
     }
   } catch (error) {
