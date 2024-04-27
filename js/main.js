@@ -1,4 +1,3 @@
-// Set the video play only once before the page is loaded completely
 document.addEventListener('DOMContentLoaded', (event) => {
 
     document.getElementById('current-year').textContent = new Date().getFullYear().toString();
@@ -55,9 +54,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     window.location.href = '/pages/profile.html';
                 } else {
                     // User is not authenticated, handle accordingly (e.g., redirect to login page)
-                    alert('Please log in to access your profile.');
-                    // Example redirection to login page
-                    // window.location.href = '/login.html';
+                    displayNotificationMessage('Please log in to access your profile.');
                 }
             });
         });
@@ -83,7 +80,6 @@ function isAuthenticated() {
 
 function checkAuthenticationStatus() {
     // This function makes a fetch request to the server-side endpoint that checks authentication
-    // Replace '/api/auth/status' with the actual endpoint that returns the authentication status
     return fetch(`${backend_url}/auth/status`)
         .then(response => response.json())
         .then(data => data.isAuthenticated)
@@ -109,4 +105,20 @@ function displayRelevantHeader(isAuthenticated) {
         loggedHeader.classList.add('header-hidden')
         loggedHeader.classList.remove('header-active')
     }
+}
+
+function displayNotificationMessage(message) {
+    const notificationMessageModal = document.getElementById('notification-message-modal');
+    const notificationMessageParagraph = notificationMessageModal.querySelector('p');
+
+    // Set message to notify about session expiration
+    notificationMessageParagraph.textContent = message;
+
+    // Show redirection message
+    notificationMessageModal.style.display = 'block';
+
+    // Set a delay before redirecting to the homepage
+    setTimeout(function() {
+        notificationMessageModal.style.display = 'none';
+    }, 3000);
 }

@@ -2,7 +2,6 @@ import rightContainer from './containerRenderHelpers.js';
 import {Container} from "../class/Container.js";
 import {Item} from "../class/Item.js";
 
-const assetsBlocksDiv = document.querySelector(".space-container")
 
 const removeLastLocationIfSameParent = (lastLocation, triggeredLocationParentId) => {
     const lastLocationParentId = lastLocation.getAttribute("data-parentId");
@@ -55,6 +54,7 @@ const createContainerButton = (containerId, containerParentId, containerName, as
     return containerButton;
 }
 
+// Function to add container name to the upper location path block
 const addContainerToPath = (containerId, containerName, containerParentId, currentLocationPathDiv, assetsMap) => {
     const lastLocation = currentLocationPathDiv.lastElementChild;
 
@@ -75,7 +75,6 @@ const addContainerToPath = (containerId, containerName, containerParentId, curre
     currentLocationPathDiv.appendChild(containerButton);
 }
 
-//add room to path:
 
 const clearElementInnerHTML = (element) => {
     if (element) {
@@ -122,13 +121,14 @@ const createRoomButton = (roomName, roomId, assetsBlocksDiv, assetsMap) => {
     return roomButton;
 }
 
+// Function to add room name to the upper location path block
 const addRoomToPath = (roomId, roomName, currentLocationPathDiv, assetsMap) => {
     clearElementInnerHTML(currentLocationPathDiv);
     if (document.getElementById("room-name")) {
         return;
     }
 
-    const assetsBlocksDiv = document.querySelector('.space-container'); // Ensure this selector matches your HTML
+    const assetsBlocksDiv = document.querySelector('.space-container');
     const roomButton = createRoomButton(roomName, roomId, assetsBlocksDiv, assetsMap);
     currentLocationPathDiv.appendChild(roomButton);
 }

@@ -656,3 +656,14 @@ footer {
 #password-restrictions {
   font-size: 15px;
 }
+
+/*Notification message modal*/
+#notification-message-modal {
+  display: none;
+}
+#notification-message-modal .modal-content {
+  width: 40%;
+}
+#notification-message-modal p {
+  margin: 50px;
+}

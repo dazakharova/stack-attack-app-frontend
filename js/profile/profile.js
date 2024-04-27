@@ -1,10 +1,10 @@
 import { InventoryService } from "../class/InventoryService.js"
 import leftContainer from "./collapseFunctionality.js";
-import { updateContentsInLeftMenu, updateContentsInRightContainer, handleImageUploading } from './uiDynamicUpdate.js'
+import { updateContentsInLeftMenu, updateContentsInRightContainer, handleImageUploading } from './utils/uiDynamicUpdate.js'
 const backend_url = 'http://localhost:3001'
 import { isAuthenticated } from './redirectToHomePage.js'
-import { displayNotificationMessageAndRedirect } from './httpUtils.js'
-import { setupConfirmationModal } from './uiDynamicUpdate.js'
+import { displayNotificationMessageAndRedirect } from './utils/httpUtils.js'
+import { setupConfirmationModal } from './utils/uiDynamicUpdate.js'
 
 // Check if the user is logged in before rendering the page
 // If not, display the message and redirect to the homepage

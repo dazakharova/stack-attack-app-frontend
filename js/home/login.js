@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const loginModal = document.getElementById("loginModal");
   const loginLink = document.getElementById("loginLink");
   const closeButton = document.getElementsByClassName("close")[1];
+
+  const BACKEND_ROOT_URL = 'http://localhost:3001'
   
   loginLink.onclick = function (event) {
     event.preventDefault();
