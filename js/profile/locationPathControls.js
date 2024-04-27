@@ -54,6 +54,7 @@ const createContainerButton = (containerId, containerParentId, containerName, as
     return containerButton;
 }
 
+// Function to add container name to the upper location path block
 const addContainerToPath = (containerId, containerName, containerParentId, currentLocationPathDiv, assetsMap) => {
     const lastLocation = currentLocationPathDiv.lastElementChild;
 
@@ -73,7 +74,6 @@ const addContainerToPath = (containerId, containerName, containerParentId, curre
 
     currentLocationPathDiv.appendChild(containerButton);
 }
-
 
 
 const clearElementInnerHTML = (element) => {
@@ -121,6 +121,7 @@ const createRoomButton = (roomName, roomId, assetsBlocksDiv, assetsMap) => {
     return roomButton;
 }
 
+// Function to add room name to the upper location path block
 const addRoomToPath = (roomId, roomName, currentLocationPathDiv, assetsMap) => {
     clearElementInnerHTML(currentLocationPathDiv);
     if (document.getElementById("room-name")) {
