@@ -40,7 +40,7 @@ const updateContentsInRightContainer = (parentNode, contents, data) => {
 }
 
 const renderContainerContents = (event, parentNode, containerContents, containerId, containerName, containerParentId, data) => {
-    if (!event.target.matches('.edit-box-icon, .delete-box-icon, .edit-box-icon *, .delete-box-icon *, .ok-button, .title-input')) {
+    if (!event.target.matches('#box-dropdown *, .edit-box-icon, .delete-box-icon, .edit-box-icon *, .delete-box-icon *, .ok-button, .title-input')) {
         if (containerContents) {
             // Clean the assets block
             parentNode.innerHTML = ''

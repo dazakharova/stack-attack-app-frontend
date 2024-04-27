@@ -1,77 +1,31 @@
-import { addContainerToPath } from "./locationPath.js";
 import {Container} from "../class/Container.js";
 import {Item} from "../class/Item.js";
 import leftContainer from "./collapseFunctionality.js";
 import {assets, getBase64FromImageInput} from "./profile.js";
 import { setupConfirmationModal } from './utils/uiDynamicUpdate.js'
+import { createContainerDiv, createContainerFooter, createTitleSpan, handleContainerClick, setupNameEdit, setupNameSave, setupDelete } from './utils/rightContainerRenderer.js';
 
-const renderContainer = (parentNode, container, data) => {
-    // Get all data about container
-    const containerId = container.getId()
-    const containerParentId = container.getParentId()
-    const containerName = container.getName()
+function renderContainer(parentNode, container, data) {
+    const containerId = container.getId();
+    const containerParentId = container.getParentId();
+    const containerName = container.getName();
 
-    // Create block for container
-    const containerDiv = document.createElement('div')
-    containerDiv.className = 'box'
+    const containerDiv = createContainerDiv();
+    const containerFooter = createContainerFooter();
+    const containerSpan = createTitleSpan(containerId, containerParentId, containerName);
 
-    // Get container content (nested elements)
-    const containerContents = data.get(container.getId())
+    const { okNameBtn } = buildNewContainerNameInput(containerFooter);
 
-    // Create container footer
-    const containerDivFooter = document.createElement('div')
-    containerDivFooter.className = 'box-footer'
+    handleContainerClick(containerDiv, parentNode, data.get(container.getId()), containerId, containerName, containerParentId, data);
+    const { editContainerNameBtn, deleteContainerBtn } = buildContainerDropdown(containerDiv);
+    setupNameEdit(editContainerNameBtn, containerSpan, containerFooter);
+    setupNameSave(okNameBtn, containerSpan, containerId, containerParentId, data);
+    setupDelete(deleteContainerBtn, containerName, containerId, containerDiv, parentNode, containerParentId, data);
 
-    // Create container dropdown menu and retrieve edit name and delete buttons
-   const { editContainerNameBtn, editContainerColorBtn, deleteContainerBtn } = buildContainerDropdown(containerDiv)
-
-    // Create span for container with its title inside
-    const containerSpan = document.createElement('span')
-    containerSpan.className = 'title'
-
-    // Set attributes holding its unique information in order to be able to access them later
-    containerSpan.setAttribute('data-id', containerId)
-    containerSpan.setAttribute('data-parentId', containerParentId)
-    containerSpan.innerText = containerName
-
-    // Create new container name form which is invisible by default
-    buildNewContainerNameInput(containerDivFooter)
-
-    // Render container contents while clicking on container div
-    containerDiv.onclick = (event) => {
-        renderContainerContents(event, parentNode, containerContents, containerId, containerName, containerParentId, data)
-    }
-
-    editContainerNameBtn.onclick = () => {
-        // Initiate container rename
-        replaceTitleWithEditableInput(containerDivFooter, containerSpan)
-
-        // Get ok button for submitting container name changes
-        const okButton = document.querySelector('.ok-button');
-
-        okButton.onclick = () => {
-            return updateContainerNameAndRefreshUI(containerSpan, containerId, containerParentId, data)
-        }
-    }
-
-    editContainerColorBtn.onclick = () => {
-        return
-    }
-
-    deleteContainerBtn.onclick = (event) => {
-       return handleContainerDeletion(event, containerName, containerId, containerDiv, parentNode, containerParentId, data)
-    }
-
-    // Append elements to container div footer
-    containerDivFooter.appendChild(containerSpan)
-
-    // Append footer to div
-    containerDiv.appendChild(containerDivFooter)
-
-    // Append div to parent node given as an argument
-    parentNode.appendChild(containerDiv)
+    containerFooter.appendChild(containerSpan);
+    containerDiv.appendChild(containerFooter);
+    parentNode.appendChild(containerDiv);
 }
-
 
 const renderItem = (parentNode, item, data) => {
     const itemId = item.getId()
@@ -233,15 +187,7 @@ const updateContentsInRightContainer = (parentNode, contents, data) => {
     }
 }
 
-const renderContainerContents = (event, parentNode, containerContents, containerId, containerName, containerParentId, data) => {
-        if (!event.target.matches('#box-dropdown *, .ok-button, .title-input')) {
-            console.log('clicked', event.target)
-            addContainerToPath(containerId, containerName, containerParentId, document.getElementById('location-info'), data)
-            updateContentsInRightContainer(parentNode, containerContents, data)
-        }
-}
-
-const buildNewContainerNameInput = (containerDivFooter, containerSpan) => {
+const buildNewContainerNameInput = (containerDivFooter) => {
     const newContainerNameDiv = document.createElement('div')
     newContainerNameDiv.classList.add('new-container-name-div', 'hidden')
 
@@ -257,73 +203,11 @@ const buildNewContainerNameInput = (containerDivFooter, containerSpan) => {
     newContainerNameDiv.appendChild(okButton)
 
     containerDivFooter.appendChild(newContainerNameDiv)
-}
-
-const replaceTitleWithEditableInput = (containerDivFooter, containerSpan) => {
-    containerSpan.style.display = 'none'
-
-    // Show input new container name
-    const newContainerNameDiv = document.querySelector('.new-container-name-div')
-    // newContainerNameDiv.style.display = 'block'
-    newContainerNameDiv.classList.remove('hidden')
-    newContainerNameDiv.classList.add('active')
-
-
-    // Put the value of the container name into the input field
-    const newContainerNameInput = document.querySelector('.title-input')
-    newContainerNameInput.value = containerSpan.textContent
-
-    // Focus on the input and select its content
-    newContainerNameInput.focus()
-    newContainerNameInput.select()
+    return { okNameBtn: okButton }
 }
 
 // updateContainerNameAndRefreshUI(containerSpan, containerId, containerParentId, data)
-const updateContainerNameAndRefreshUI = async (containerSpan, containerId, containerParentId, data) => {
 
-    const newContainerNameDiv = document.querySelector('.new-container-name-div')
-
-    const newContainerNameInput = document.querySelector('.title-input')
-
-    try {
-        // Update container name in UI
-        containerSpan.textContent = newContainerNameInput.value
-        newContainerNameDiv.classList.remove('active')
-        newContainerNameDiv.classList.add('hidden')
-
-        containerSpan.style.display = 'block'
-
-        // Apply container name changes in local Map and send them to the server
-        const response = await assets.editContainerName(containerId, newContainerNameInput.value)
-
-        updateContentsInLeftMenu(containerParentId, data)
-    } catch (error) {
-        console.error(error)
-    }
-}
-
-const handleContainerDeletion = async (event, containerName, containerId, containerDiv, parentNode, containerParentId, data) => {
-    // Setup the confirmation modal and pass the confirm logic as a callback function
-    const confirmBtn = setupConfirmationModal(containerName, async () => {
-        try {
-            // Close the modal
-            document.getElementById('confirmation-modal').style.display = 'none'
-
-            // API call to remove the container
-            const response = await assets.removeContainer(containerId)
-
-            // Prevent the event from bubbling
-            event.stopPropagation()
-
-            // Update the UI
-            const containerParentContents = data.get(parseInt(containerParentId))
-            updateContentsInRightContainer(parentNode, containerParentContents, assets.getAssets())
-            updateContentsInLeftMenu(containerParentId, assets.getAssets())
-        } catch (error) {
-            console.error(error)
-        }
-    })
-}
 
 const replaceItemNameWithEditableInput = (newItemNameDiv, newItemNameInput, modalTitle) => {
     // Replace item title with new div for editing
@@ -404,29 +288,6 @@ const handleItemDeletion = async (event, itemName, itemId, itemParentId, itemMod
             console.error(error)
         }
     })
-
-    // const isConfirmed = confirm(`Are you sure you want to delete "${itemName}"?`);
-
-    // if (isConfirmed) {
-    //     try {
-    //         const response = await assets.removeItem(itemId)
-    //
-    //         // Prevent the event from bubbling up to the room button click listener
-    //         event.stopPropagation();
-    //
-    //         // Remove item modal window
-    //         itemModal.style.display = "none";
-    //
-    //         // Rerender left menu container with updated contents
-    //         updateContentsInLeftMenu(itemParentId, data)
-    //
-    //         const itemParentContents = data.get(parseInt(itemParentId))
-    //         // Re-render all the contents of the current container
-    //         updateContentsInRightContainer(parentNode, itemParentContents, data)
-    //     } catch (error) {
-    //         console.error(error)
-    //     }
-    // }
 }
 
 const handleClosingItemModalWindow = (newItemNameDiv, modalTitle, itemModal, parentNode, data, itemParentId) => {
@@ -493,14 +354,6 @@ function buildContainerDropdown(containerDiv) {
     changeNameLink.textContent = 'Change Name';
     dropdownMenu.appendChild(changeNameLink);
 
-    // Change "Change color" link
-    const changeColorLink = document.createElement('a');
-    changeColorLink.className = 'dropdown-item';
-    changeColorLink.href = '#';
-    changeColorLink.id = 'change-color';
-    changeColorLink.textContent = 'Change Color';
-    dropdownMenu.appendChild(changeColorLink);
-
     // Create "Delete Place" link
     const deletePlaceLink = document.createElement('a');
     deletePlaceLink.className = 'dropdown-item';
@@ -514,7 +367,6 @@ function buildContainerDropdown(containerDiv) {
     // Return the anchor tags
     return {
         editContainerNameBtn: changeNameLink,
-        editContainerColorBtn: changeColorLink,
         deleteContainerBtn: deletePlaceLink,
     };
 }
