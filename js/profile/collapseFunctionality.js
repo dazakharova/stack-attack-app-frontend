@@ -1,7 +1,7 @@
 import {Container} from "../class/Container.js";
 import {Item} from "../class/Item.js";
 import {addContainerToPath, addRoomToPath} from "./locationPath.js";
-import { updateContentsInRightContainer, setupConfirmationModal } from './uiDynamicUpdate.js'
+import { updateContentsInRightContainer, setupConfirmationModal } from './utils/uiDynamicUpdate.js'
 
 import { assets, toggleDeleteMode } from './profile.js'
 

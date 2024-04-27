@@ -3,7 +3,7 @@ import {Container} from "../class/Container.js";
 import {Item} from "../class/Item.js";
 import leftContainer from "./collapseFunctionality.js";
 import {assets, getBase64FromImageInput} from "./profile.js";
-import { setupConfirmationModal } from './uiDynamicUpdate.js'
+import { setupConfirmationModal } from './utils/uiDynamicUpdate.js'
 
 const renderContainer = (parentNode, container, data) => {
     // Get all data about container

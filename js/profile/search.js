@@ -1,5 +1,5 @@
 import {assets} from "./profile.js"
-import {updateContentsInRightContainer} from "./uiDynamicUpdate.js";
+import {updateContentsInRightContainer} from "./utils/uiDynamicUpdate.js";
 import {Container} from "../class/Container.js";
 import { addRoomToPath, addContainerToPath } from "./locationPath.js";
 
