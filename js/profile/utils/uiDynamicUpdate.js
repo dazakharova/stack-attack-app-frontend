@@ -1,7 +1,7 @@
 import {Container} from "../../class/Container.js";
 import leftContainer from "../collapseFunctionality.js";
 import {Item} from "../../class/Item.js";
-import {addContainerToPath} from "../locationPath.js";
+import {addContainerToPath} from "../locationPathControls.js";
 import {assets} from "../profile.js";
 import rightContainer from "../containerRenderHelpers.js";
 

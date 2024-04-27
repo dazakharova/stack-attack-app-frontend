@@ -1,5 +1,5 @@
 import { renderContents } from "../collapseFunctionality.js";
-import {addRoomToPath} from "../locationPath.js";
+import {addRoomToPath} from "../locationPathControls.js";
 import { updateContentsInRightContainer, setupConfirmationModal } from './uiDynamicUpdate.js'
 import {assets, toggleDeleteMode} from '../profile.js'
 

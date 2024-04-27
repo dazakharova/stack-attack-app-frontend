@@ -1,5 +1,5 @@
 import { updateContentsInRightContainer } from './uiDynamicUpdate.js';
-import { addContainerToPath } from '../locationPath.js';
+import { addContainerToPath } from '../locationPathControls.js';
 import { assets } from '../profile.js';
 
 const assetsBlocksDiv = document.querySelector(".space-container")

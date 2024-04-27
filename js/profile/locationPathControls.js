@@ -2,7 +2,6 @@ import rightContainer from './containerRenderHelpers.js';
 import {Container} from "../class/Container.js";
 import {Item} from "../class/Item.js";
 
-const assetsBlocksDiv = document.querySelector(".space-container")
 
 const removeLastLocationIfSameParent = (lastLocation, triggeredLocationParentId) => {
     const lastLocationParentId = lastLocation.getAttribute("data-parentId");
@@ -75,7 +74,7 @@ const addContainerToPath = (containerId, containerName, containerParentId, curre
     currentLocationPathDiv.appendChild(containerButton);
 }
 
-//add room to path:
+
 
 const clearElementInnerHTML = (element) => {
     if (element) {
@@ -128,7 +127,7 @@ const addRoomToPath = (roomId, roomName, currentLocationPathDiv, assetsMap) => {
         return;
     }
 
-    const assetsBlocksDiv = document.querySelector('.space-container'); // Ensure this selector matches your HTML
+    const assetsBlocksDiv = document.querySelector('.space-container');
     const roomButton = createRoomButton(roomName, roomId, assetsBlocksDiv, assetsMap);
     currentLocationPathDiv.appendChild(roomButton);
 }

@@ -1,7 +1,7 @@
 import {assets} from "./profile.js"
 import {updateContentsInRightContainer} from "./utils/uiDynamicUpdate.js";
 import {Container} from "../class/Container.js";
-import { addRoomToPath, addContainerToPath } from "./locationPath.js";
+import { addRoomToPath, addContainerToPath } from "./locationPathControls.js";
 
 // Retrieve elements from the DOM
 const searchingForm = document.getElementById("searching-form")
