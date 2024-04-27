@@ -1,27 +1,28 @@
-const BACKEND_ROOT_URL = "http://localhost:3001";
-const registrationForm = document.getElementById("registrationForm");
-const signupModal = document.getElementById("signupModal");
-const signupLink = document.getElementById("signupLink");
-const closeButton = document.getElementsByClassName("close")[0];
+document.addEventListener('DOMContentLoaded', (event) => {
+  const BACKEND_ROOT_URL = "http://localhost:3001";
+  const registrationForm = document.getElementById("registrationForm");
+  const signupModal = document.getElementById("signupModal");
+  const signupLink = document.getElementById("signupLink");
+  const closeButton = document.getElementsByClassName("close")[0];
 
-signupLink.onclick = function (event) {
-  event.preventDefault();
-  // When the user clicks on the button, open the modal
-  signupModal.style.display = "block";
-  document.body.style.overflow = "hidden"; // Prevent scrolling
-};
+  signupLink.onclick = function (event) {
+    event.preventDefault();
+    // When the user clicks on the button, open the modal
+    signupModal.style.display = "block";
+    document.body.style.overflow = "hidden"; // Prevent scrolling
+  };
 
-// When the user clicks on <span> (x), close the modal
-closeButton.onclick = function() {
-  signupModal.style.display = "none";
-  document.body.style.overflow = "auto"; // Enable scrolling
+  // When the user clicks on <span> (x), close the modal
+  closeButton.onclick = function () {
+    signupModal.style.display = "none";
+    document.body.style.overflow = "auto"; // Enable scrolling
 
-  // Remove all the warning messages if there is one
- removeWeakPasswordMessage();
+    // Remove all the warning messages if there is one
+    removeWeakPasswordMessage();
 
-  // Reset form input fields
-  resetInputFields();
-}
+    // Reset form input fields
+    resetInputFields();
+  }
 
   document.getElementById("switchToLogin").onclick = function () {
     signupModal.style.display = "none";
@@ -31,35 +32,36 @@ closeButton.onclick = function() {
   };
 
 
-registrationForm.onsubmit = function (event) {
-  //
-  event.preventDefault(); // prevent default
+  registrationForm.onsubmit = function (event) {
+    //
+    event.preventDefault(); // prevent default
 
-  const nameInput = document.getElementById("registerName");
-  const emailInput = document.getElementById("registerEmail")
-  const passwordInput = document.getElementById("registerPassword");
+    const nameInput = document.getElementById("registerName");
+    const emailInput = document.getElementById("registerEmail")
+    const passwordInput = document.getElementById("registerPassword");
 
-  const name = nameInput.value;
-  const email = emailInput.value;
-  const password = passwordInput.value;
+    const name = nameInput.value;
+    const email = emailInput.value;
+    const password = passwordInput.value;
 
-  // Remove weak password message if there is one while changing password
-  passwordInput.onfocus = removeWeakPasswordMessage;
+    // Remove weak password message if there is one while changing password
+    passwordInput.onfocus = removeWeakPasswordMessage;
 
-  //regex for password
-  const passwordRegex =
-    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#$%^&!])[A-Za-z\d@#$%^&!]{8,}$/;
+    //regex for password
+    const passwordRegex =
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#$%^&!])[A-Za-z\d@#$%^&!]{8,}$/;
 
-  // regex to check password
-  // "Password must be at least 8 characters long and include at least one letter, one number, and one special character (e.g., @, #, $, %)."
-  if (!passwordRegex.test(password)) {
-    document.getElementById("weak-password-message").style.display = "block";
-    return; // interrupt the code
-  }
+    // regex to check password
+    // "Password must be at least 8 characters long and include at least one letter, one number, and one special character (e.g., @, #, $, %)."
+    if (!passwordRegex.test(password)) {
+      document.getElementById("weak-password-message").style.display = "block";
+      return; // interrupt the code
+    }
 
-  // in case of successfull check
-  sendDataToBackend(name, email, password);
-};
+    // in case of successfull check
+    sendDataToBackend(name, email, password);
+  };
+});
 
 function sendDataToBackend(name, email, password) {
   const requestOptions = {
