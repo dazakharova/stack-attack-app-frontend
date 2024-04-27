@@ -1,6 +1,6 @@
 import { Item } from './Item.js';
 import { Container } from './Container.js';
-import { handleHttpResponseError, processNetworkError } from '../profile/httpUtils.js'
+import { handleHttpResponseError, processNetworkError } from '../profile/utils/httpUtils.js'
 
 class InventoryService {
     #assets = new Map();
