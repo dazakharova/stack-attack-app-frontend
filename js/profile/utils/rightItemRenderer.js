@@ -1,5 +1,6 @@
-import {assets, getBase64FromImageInput} from "../profile.js";
-import {setupConfirmationModal, updateContentsInLeftMenu, updateContentsInRightContainer} from "./uiDynamicUpdate.js";
+import { assets } from "../profile.js";
+import { getBase64FromImageInput } from'./imageUtils.js';
+import { setupConfirmationModal, updateContentsInLeftMenu, updateContentsInRightContainer } from "./uiDynamicUpdate.js";
 
 function getItemData(item) {
     const itemId = item.getId()
