@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     const urlParams = new URLSearchParams(window.location.search)
 
-    if (!urlParams) {
+    if (urlParams.size === 0) {
         checkAuthenticationStatus().then(isAuthenticated => {
             displayRelevantHeader(isAuthenticated);
         })
@@ -80,7 +80,10 @@ function isAuthenticated() {
 
 function checkAuthenticationStatus() {
     // This function makes a fetch request to the server-side endpoint that checks authentication
-    return fetch(`${backend_url}/auth/status`)
+    return fetch(`${backend_url}/auth/status`,{
+        method: 'GET',
+        credentials: 'include'
+    })
         .then(response => response.json())
         .then(data => data.isAuthenticated)
         .catch(error => {
