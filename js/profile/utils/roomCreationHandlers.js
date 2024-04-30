@@ -12,18 +12,11 @@ function toggleRoomFormVisibility(newRoomButton, newRoomFormDiv, isVisible) {
 }
 
 function setupOutsideClickHandler(newRoomButton, newRoomFormDiv) {
-    let triggerCount = 0;
-    const clickHandler = function(e) {
-        console.log(e.target);
-        if (!newRoomFormDiv.contains(e.target) && e.target !== newRoomButton) {
+    document.onclick = (event) => {
+        if (!newRoomFormDiv.contains(event.target) && event.target !== newRoomButton) {
             toggleRoomFormVisibility(newRoomButton, newRoomFormDiv, false);
         }
-        triggerCount++;
-        if (triggerCount >= 2) {
-            document.removeEventListener('click', clickHandler);
-        }
-    };
-    document.addEventListener('click', clickHandler);
+    }
 }
 
 const handleNewRoomFormSubmit = async (event, newRoomNameInput, roomsHierarchy, newRoomButton, newRoomFormDiv) => {
