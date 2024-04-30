@@ -237,7 +237,7 @@ button.btn2 {
   margin-bottom: 20px;
 }
 #room-name-input {
-  width: 90%;
+  width: 70%;
   padding: 10px;
   margin-bottom: 20px;
   border: 2px solid #6EA79E;
@@ -483,7 +483,7 @@ button.btn2 {
   margin-left: auto;
   margin-right: auto;
   margin-top: 2%;
-  padding: 20px;
+  padding: 15px;
   border-radius: 20px;
   border: 0.2px solid #6EA79E;
 }
@@ -829,7 +829,7 @@ footer {
 }
 #item-window-content {
   padding: 0px;
-  width: 60%;
+  width: 50%;
 }
 .dropdown {
   position: relative;
@@ -883,6 +883,9 @@ footer {
   width: 30px;
   height: 30px; 
 }
+#picture-modal .modal-content {
+  width: 60%;
+}
 #current-picture {
   display: block; 
   margin: 0 auto; 
@@ -907,7 +910,7 @@ footer {
   margin: 10% auto;
   padding: 20px;
   border: 1px solid #ffffff;
-  width: 40%;
+  width: 30%;
   height: auto;
   text-align: center;
   position: relative;

@@ -100,7 +100,11 @@ nav a:hover {
   color:#627FA3;
   border-radius: 10px;
   outline: none;
-  width: 40%;
+  width: 30%;
+}
+
+#loginModal input[type="text"], #loginModal input[type="password"], #registrationForm input  {
+  width: 70%;
 }
 
 .modal-content h2 {
