@@ -41,6 +41,7 @@ searchingForm.onsubmit = (event) => {
     handleSearch()
 }
 
+
 // Event listener for keyup to enable search on 'Enter' press
 searchingInput.onkeyup = (event) => {
     if (event.key === 'Enter') {
@@ -66,7 +67,8 @@ const renderResultLink = (item, resultsDropdown) => {
     resultLink.textContent = item.getName()
 
     // Once the link clicked, render it in the right section and specify the path to it in the location-info section
-    resultLink.onclick = function() {
+    resultLink.onclick = function(event) {
+        event.preventDefault()
         // Clear search input and hide dropdown
         searchingInput.value = '' // Clear the search input when an item is selected
         resultsDropdown.style.display = "none"

@@ -50,7 +50,9 @@ function initializeEventListeners() {
   let imageOptions = document.querySelectorAll('.image-option');
 
   // Show modal on new picture button click
-  newPictureBtn.onclick = function () {
+  newPictureBtn.onclick = function (event) {
+    event.preventDefault()
+
     let pictureModal = document.getElementById('picture-modal');
     pictureModal.style.display = 'block';
   };

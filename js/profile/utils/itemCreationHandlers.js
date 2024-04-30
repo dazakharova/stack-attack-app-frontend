@@ -2,7 +2,9 @@ import { getBase64FromImageInput } from "./imageUtils.js";
 import { showNotification } from "./notifications.js";
 import { updateContentsInRightContainer } from "./uiDynamicUpdate.js";
 
-const setupNewItemModal = (newItemModal, currentLocationPathDiv, assets, assetsBlocksDiv) => {
+const setupNewItemModal = (event, newItemModal, currentLocationPathDiv, assets, assetsBlocksDiv) => {
+    event.preventDefault()
+    
     // If no room selected, then show notification
     if (document.getElementById('location-info').innerHTML === '') {
         showNotification()

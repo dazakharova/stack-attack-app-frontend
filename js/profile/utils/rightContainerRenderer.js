@@ -1,10 +1,6 @@
 import { assets } from "../profile.js";
-import {
-    setupConfirmationModal,
-    renderContainerContents,
-    updateContentsInLeftMenu,
-    updateContentsInRightContainer
-} from "./uiDynamicUpdate.js";
+import { setupConfirmationModal, renderContainerContents, updateContentsInLeftMenu, updateContentsInRightContainer } from "./uiDynamicUpdate.js";
+
 
 function createContainerDiv() {
     const div = document.createElement('div');
