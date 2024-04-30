@@ -5,7 +5,7 @@ import {assets} from "../profile.js";
 const setupNewPlaceModal = (event, newPlaceModal, currentLocationPathDiv, assetsBlocksDiv) => {
     event.preventDefault()
 
-    if (document.getElementById('location-info').innerHTML === '') {
+    if (document.querySelector('#location-info button') === null) {
         showNotification();
         return;
     }
