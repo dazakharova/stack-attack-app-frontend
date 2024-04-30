@@ -100,7 +100,7 @@ nav a:hover {
   color:#627FA3;
   border-radius: 10px;
   outline: none;
-  width: 30%;
+  width: 40%;
 }
 
 .modal-content h2 {
@@ -533,9 +533,6 @@ margin-left: 3% !important;
 }
 
 /*Back to top button*/
-
-
-
 .noselect {
   -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -786,7 +783,6 @@ footer {
 
 /* Media queries for mobile devices */
 @media (max-width: 770px) {
-
   .modal-content {
     width: 60%;
   }
@@ -826,6 +822,10 @@ footer {
   nav ul a {
     margin: 0;
     font-size: 20px;
+  }
+
+  nav li {
+    margin-bottom: 5px;
   }
 
   .navbar_nav {
@@ -1088,10 +1088,11 @@ footer {
     padding: 0;
   }
 
-  nav a {
+  nav ul a {
     font-size: 16px;
     margin: 0;
     padding: 0;
+    margin-bottom: 10px;
   }
 
   .slogan {
