@@ -78,7 +78,7 @@ nav a:hover {
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  z-index: 1000; /* Sit on top */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
@@ -95,13 +95,14 @@ nav a:hover {
   margin: 15% auto; /* 15% from the top and centered */
   padding: 10px;
   border: 1px solid #98AEB1;
-  width: 400px; /* Could be more or less, depending on screen size */
   text-align: center;
   font-family: Comfortaa, sans-serif;
   color:#627FA3;
   border-radius: 10px;
   outline: none;
+  width: 40%;
 }
+
 .modal-content h2 {
   margin-top: 20px; 
   margin-bottom: 0px;
@@ -135,7 +136,7 @@ input:-webkit-autofill {
 input[type="text"] {
   text-align: center;
   margin-bottom: 25px;
-  width: 330px;
+  width: 80%;
   height: 40px;
   color: #394243;
   border: 2px solid #6EA79E;
@@ -147,7 +148,7 @@ input[type="email"] {
   text-align: left;
   padding-left: 10px;
   margin-bottom: 25px;
-  width: 330px;
+  width: 80%;
   height: 40px;
   color: #394243;
   border: 2px solid #6EA79E;
@@ -158,7 +159,7 @@ input[type="password"] {
   text-align: left;
   padding-left: 10px;
   margin-bottom: 25px;
-  width: 330px;
+  width: 80%;
   height: 40px;
   color: #394243;
   border: 2px solid #6EA79E;
@@ -169,7 +170,7 @@ input[type="submit"] {
   margin: 0 auto;
   margin-bottom: 25px;
   text-align: center;
-  width: 330px;
+  width: 80%;
   height: 40px;
   color: #394243;
   border-width: 0px;
@@ -532,9 +533,6 @@ margin-left: 3% !important;
 }
 
 /*Back to top button*/
-
-
-
 .noselect {
   -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -673,36 +671,57 @@ footer {
 }
 
 
-
 /* Media queries for tablet devices */
 @media (min-width: 768px) and (max-width: 991px) {
-  header {
+  .header-active {
     flex-direction: row;
     justify-content: space-between;
     align-content: center;
     align-items: center;
+    padding-left: 0;
+    padding-right: 0;
   }
 
   #password-restrictions {
     padding: 0 10px;
   }
 
+  #head-logo {
+    width: 35%;
+  }
+
   .navbar {
+    position: relative;
     right: 0;
+  }
+  
+  nav ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-top: 0;
+    padding-left: 0;
   }
 
   nav a {
     font-size: 25px;
+    margin: 0;
+    text-align: center;
   }
 
   .modal-content {
-    width: 60%; /* Adjust modal width on tablets */
+    width: 50%;
   }
 
-  #howItWorksSection .wrapper {
-    grid-template-columns: repeat(4, 200px);
-    justify-content: center;
-    gap: 10px;
+  .feedback p, .howItHelps .column, .item .item-textdex,
+  .item .item-textsecond,
+  .item .item-textlast,
+  .item .item-textthird {
+    font-size: 20px;
+  }
+
+  .item p, .column h4, .feedback h4  {
+    font-size: 25px;
   }
 
   #howItWorksSection .item {
@@ -711,20 +730,37 @@ footer {
   }
 
   .howItHelps .wrapper, #feedbackSection .wrapper {
-    grid-template-columns: repeat(3, 250px);
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;
+    flex-wrap: wrap;
   }
 
-  .slogan {
-    font-size: 60px; /* Smaller text in slogan for better fitting */
+  .howItHelps .wrapper .column, .feedback .wrapper .column2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: stretch;
+    padding: 15px;
+    width: 30%;
   }
 
-  .item {
-    flex-direction: row; /* Change item layout to row for more horizontal space */
-    justify-content: space-evenly;
+  .feedback h4 {
+    margin-bottom: 10%;
+  }
+
+  #help-img {
+    width: 30%;
+    height: auto;
+  }
+
+  .slogan, #subTitle {
+    font-size: 50px;
   }
 
   .item img {
-    max-width: 50%; /* Larger screens allow for larger images but still contained */
+    max-width: 50%;
   }
 
   .item-content {
@@ -732,81 +768,200 @@ footer {
   }
 
   .column2 {
-    display: flex; /* Enable Flexbox */
-    flex-direction: column; /* Stack children vertically */
-    align-items: center; /* Center items horizontally */
-    justify-content: center; /* Center items vertically */
-    text-align: center; /* Ensures text within children is centered */
-    height: 100%; /* Optional: Set to 100% of parent's height if needed */
-    padding: 20px; /* Padding to prevent content touching the edges */
-    box-sizing: border-box; /* Includes padding in the element's total width and height */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
   }
 
 
 }
 
 /* Media queries for mobile devices */
-@media (max-width: 767px) {
+@media (max-width: 770px) {
+  .modal-content {
+    width: 60%;
+  }
+
+  body {
+    padding: 15px;
+  }
+
+  .header-active {
+    padding: 0;
+    flex-direction: row;
+    justify-content: stretch;
+  }
+
+  .header-active {
+    padding: 5px;
+    align-items: start;
+  }
+
+  #head-logo, #head-redirect {
+    width: 40%;
+    padding-top: 8px;
+    margin-left: 0;
+  }
+
   .navbar {
     position: relative;
     right: 0;
-    flex-direction: column;
-    align-items: center;
   }
 
-  .modal-content {
-    width: 90%; /* Modal takes more screen space on mobile */
+  nav ul {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+  }
+
+  nav ul a {
+    margin: 0;
+    font-size: 20px;
+  }
+
+  nav li {
+    margin-bottom: 5px;
+  }
+
+  .navbar_nav {
+    padding-right: 10px;
+  }
+
+  #feedbackSection {
+    padding: 10px;
+  }
+
+  #howItWorksSection .wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  #select-pic, #capture-pic, #mark-pic, #voila-pic {
+    width: 50%;
+    height: auto;
+  }
+
+  .item {
+    max-width: 80%;
+  }
+
+  .item:first-child {
+    font-size: 20px;
+  }
+
+  .item p {
+    font-size: 25px;
+    margin-top: 0;
+  }
+
+  .item-content {
+    padding: 5px;
+  }
+
+  .item-text {
+    margin-top: 0;
+  }
+
+  .item .item-textdex, .item .item-textsecond, .item .item-textlast, .item .item-textthird {
+    font-size: 17px;
+  }
+
+  .howItHelps .wrapper, .feedback .wrapper, .team-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .howItHelps .wrapper .column, .feedback .wrapper .column2, .team-member, .item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: stretch;
+    padding: 15px;
+    font-size: 3vw;
+  }
+
+  .column h4 {
+    font-size: calc(1.275rem + .3vw);
+  }
+
+  .feedback h3 {
+    margin-bottom: 80px;
+    margin-top: 80px;
+  }
+
+  .ourTeam h4 {
+    font-size: calc(1.275rem + .3vw)
+  }
+
+  .modal {
+    font-size: 16px;
+  }
+
+  .modal h2 {
+    font-size: 24px;
   }
 
   .slogan {
-    font-size: 40px; /* Even smaller text for mobile devices */
-    padding: 10px; /* Reduce padding */
+    font-size: 30px;
+    padding: 10px;
+    height: 300px;
   }
 
-  /*.header-active {*/
-  /*  flex-direction: column; !* Stack logo and nav vertically *!*/
-  /*  align-items: center; !* Center everything in the header *!*/
-  /*}*/
-
-  #head-logo, #head-redirect {
-    width: 50%; /* Larger logo for better visibility */
-    margin-left: 0; /* Adjust logo margin */
-  }
-
-  .wrapper {
-    grid-template-columns: 1fr; /* Single column layout for grids */
+  #subTitle {
+    font-size: 30px;
   }
 
   .column2 {
-    padding: 10px; /* Less padding on smaller screens */
+    padding: 10px;
+    min-width: 45%;
   }
 
-  .column2 p {
-    font-size: 4vw; /* Smaller text on smaller screens */
+  .column2 {
+  calc(1.275rem + .3vw)
   }
 
   .feedback, .howItHelps {
-    padding: 20px; /* Less padding on smaller screens */
+    padding: 20px;
   }
 
   button {
     width: 60px;
     height: 60px;
   }
-}
 
-/* High-resolution and large desktop screens */
-@media (min-width: 1200px) {
-  .modal-content {
-    width: 30%; /* Smaller modal width on large screens */
+  footer {
+    font-size: 15px;
+    padding: 5px;
   }
 
-  .navbar {
-    justify-content: flex-end; /* Align nav to the right on large screens */
+  .social-media a img {
+    width: 15px;
+    height: auto;
+    margin-right: 4px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 40px;
   }
 
-  .slogan {
-    font-size: 100px; /* Larger font for large displays */
+  #backToTopButton {
+    width: 25px;
+    height: 25px;
+  }
+
+  button svg {
+    width: 15px;
+    height: 15px;
   }
 }
 
@@ -853,12 +1008,6 @@ footer {
   }
 }
 
-@media (max-height: 1024px) {
-  .slogan, #subTitle {
-    font-size: 60px;
-  }
-}
-
 
 @media (min-width: 991px) and (max-width: 1024px) {
   header {
@@ -899,73 +1048,59 @@ footer {
   }
 }
 
+@media (max-width: 550px) {
+  .modal-content {
+    width: 70%;
+  }
+
+}
+
 @media (min-width: 320px) and (max-width: 400px) {
   body {
     padding: 5px;
   }
 
+  .modal-content {
+    width: 80%;
+  }
+
   header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-content: center;
     padding: 5px;
   }
 
   .header-active {
     padding: 5px;
+    align-items: start;
   }
 
   #head-logo {
-    width: 30%;
+    width: 40%;
+    padding-top: 8px;
   }
 
-  nav a {
-    font-size: 11px;
+  .navbar ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+  }
+
+  nav ul a {
+    font-size: 16px;
     margin: 0;
     padding: 0;
+    margin-bottom: 10px;
   }
 
   .slogan {
-    height: 200px;
+    height: 300px;
   }
 
   .slogan, #subTitle {
-    font-size: 20px;
-  }
-
-  header {
-    flex-direction: row;
-    justify-content: space-between;
-    align-content: center;
-  }
-
-  nav ul {
-    padding: 0;
-  }
-
-  .navbar {
-    display: flex;
-    position: relative;
-    flex-direction: row;
-  }
-
-  #howItWorksSection .wrapper {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    padding: 0 5px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  .item {
-    padding: 5px;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: flex-start;
-    width: 45%;
+    font-size: 25px;
   }
 
   .item p {
@@ -974,18 +1109,6 @@ footer {
 
   .item-content {
     padding: 5px;
-  }
-
-  #select-pic, #capture-pic img {
-    width: 80%;
-    height: auto;
-    margin: 0 auto;
-  }
-
-  #mark-pic, #voila-pic {
-    width: 80%;
-    height: auto;
-    margin: 0 auto;
   }
 
   .item .item-textdex, .item .item-textsecond, .item .item-textlast, .item .item-textthird  {
@@ -997,31 +1120,16 @@ footer {
     margin: 0;
   }
 
-  .feedback, .howItHelps, .ourTeam, #howItWorksSection {
-    padding: 3px;
-    margin-bottom: 6%;
+  .howItHelps {
+    padding: 0;
   }
 
-  .team-wrapper {
-    font-size: 3vw;
-    justify-content: space-between;
+  .howItHelps .wrapper {
+    padding: 0 20px;
   }
 
-  .team-wrapper h4 {
+  .column h4 {
     font-size: 14px;
-  }
-
-  .team-member {
-    margin: 2px;
-  }
-
-  .column2 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-    padding: 5px;
-    width: 30%;
   }
 
   .column2 p {
@@ -1032,46 +1140,30 @@ footer {
     font-size: 14px;
   }
 
-  #feedbackSection .wrapper  {
-    display: flex;
-    flex-direction: row;
-    padding: 0;
-    justify-content: space-between;
-  }
-
-  .howItHelps .wrapper  {
-    display: flex;
-    flex-direction: row;
-    padding: 0;
-    justify-content: stretch;
-  }
-
-  .howItHelps .wrapper .column {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 10px;
+  .team-wrapper {
     font-size: 3vw;
-   width: 30%;
   }
 
   #help-img {
-    width: 30%;
+    width: 15%;
     height: auto;
   }
 
-  .column h4 {
+  .team-wrapper h4 {
     font-size: 14px;
   }
 
+  .team-member {
+    margin: 2px;
+  }
+
   footer {
-    font-size: 10px;
+    font-size: 15px;
     padding: 5px;
   }
 
   .social-media a img {
-    width: 10px;
+    width: 15px;
     height: auto;
     margin-right: 4px;
     margin-top: 10px;
@@ -1088,5 +1180,4 @@ footer {
     width: 15px;
     height: 15px;
   }
-
 }

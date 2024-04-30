@@ -69,7 +69,6 @@ nav a:hover {
 /* MAIN*/
 body {
   margin: 0;
-  padding: 0;
   width: 100%;
   background-color: #ffffff;
   color: #627FA3;
@@ -109,14 +108,13 @@ h2 {
 /* right container*/
 .right-container {
   flex: 1;
-  margin: 40px;
+  margin: 40px 40px 40px 10px;
   padding: 20px;
   background-color: #ffffff;
   background-image: url("../image/profile/boxes.png");
   background-repeat: no-repeat;
   background-size: 40% 50%;
   background-position: calc(100% - 3%) calc(100% - 1%);;
-  margin-left: 10px;
   border-radius: 10px;
   font-family: Comfortaa, sans-serif; 
   font-size: 20px;
@@ -156,13 +154,15 @@ button.btn2 {
 /* left container*/
 .left-container {
   flex: 0.5;
-  margin: 40px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 40px 10px 40px 40px;
   padding: 20px;
   background-color: #ffffff;
   background-image: url(''); /*  */
   background-position: center;
   background-repeat: no-repeat;
-  margin-right: 20px;
   border-radius: 10px;
   font-family: Comfortaa, sans-serif;
   overflow:hidden;
@@ -178,14 +178,11 @@ button.btn2 {
 }
 .button-container {
   font-family: Comfortaa, sans-serif;
-  /*font-size: 20px;*/
-  margin-left: 0px;
-  padding: auto;
+  margin-left: 0;
 }
 .btn-toggle {
   padding: 5px;
   font-family: Comfortaa, sans-serif;
-  /*font-size: 20px;*/
   color: var(--bs-emphasis-color);
   background-color: transparent;
   margin-top: 20px;
@@ -240,7 +237,7 @@ button.btn2 {
   margin-bottom: 20px;
 }
 #room-name-input {
-  width: 100%;
+  width: 90%;
   padding: 10px;
   margin-bottom: 20px;
   border: 2px solid #6EA79E;
@@ -343,7 +340,7 @@ button.btn2 {
   display: inline-block; 
   width: 20px; 
   height: 20px; 
-  margin-right: 30px !important; 
+  margin-right: 30px;
 }
 .btn-furniture:hover,
 .btn-furniture:focus {
@@ -638,10 +635,10 @@ button.btn2 {
   width: 100%;
   text-align: center;
   background-color: rgba(255, 255, 255, 0.3);
-  padding: 5px;
+  padding: 10px;
   display: flex;
   align-items: center;
-  height: 50px;
+  /*height: 50px;*/
 }
 .box-footer, .item .title {
   background-color: rgba(247, 247, 247, 0.5);
@@ -992,9 +989,7 @@ footer {
   display: flex;
   align-items: center;
 }
-#search-button {
-  margin-left: 10px;
-}
+
 /* Styling for the search input and button to ensure they are aligned properly */
 #searching-input {
   min-width: 350px;
@@ -1004,11 +999,12 @@ footer {
 }
 #search-button {
   padding: 10px 15px;
+  margin-left: 10px;
   border: none;
   background-color: #6EA79E;
   color: white;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 10px;
 }
 #search-button:hover {
   background-color: #627FA3;
@@ -1142,7 +1138,8 @@ input:-webkit-autofill {
 .modal-change-password .btn-primary {
   background-color: #6EA79E; 
   color: #fff; 
-  border: none; 
+  border: none;
+  padding: 15px;
 }
 .modal-change-password .btn-primary:hover {
   background-color: #166c5f; 
@@ -1173,10 +1170,10 @@ input:-webkit-autofill {
 #changePasswordModal input[type="email"],
 #changePasswordModal input[type="password"] {
   text-align: left;
-  padding-left: 10px;
+  padding: 10px;
   margin-bottom: 25px;
-  width: 330px;
-  height: 40px;
+  width: 80%;
+
   color: #394243;
   border: 2px solid #6EA79E;
   border-radius: 8px;
@@ -1236,4 +1233,518 @@ input:-webkit-autofill {
   display: none;
   font-size: 15px;
   color: #c67373;
+}
+
+@media (max-width: 1157px) {
+  body {
+    font-size: 18px;
+  }
+
+  header {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  nav ul {
+    padding: 0;
+  }
+
+  nav li {
+    padding-bottom: 0;
+  }
+
+  nav a {
+    font-size: 25px;
+  }
+
+  h2 {
+    font-size: 35px;
+  }
+
+  .left-container {
+    margin-left: 20px;
+  }
+
+  .right-container {
+    margin-right: 20px;
+  }
+  /* Set the font size for the top-level 'Hall' button inside '.button-container' */
+  .button-container .btn-room {
+    font-size: 26px;
+  }
+  /* Decrease font size for the first level of nesting: 'Big box' and 'Small box' buttons */
+  .button-container .containers-list .btn-furniture, .button-container .left-items-list li {
+    font-size: 22px;
+  }
+  /* Further decrease for items under 'Big box' and 'Small box' */
+  .button-container .containers-list .left-items-list li, .button-container .containers-list .containers-list .btn-furniture {
+    font-size: 18px;
+  }
+  /* If there are more nested containers inside 'Big box' or 'Small box', decrease font size more */
+  .button-container .containers-list .containers-list .containers-list .btn-furniture, .button-container .containers-list .containers-list .left-items-list li {
+    font-size: 14px;
+  }
+  /* And decrease for items under these further nested containers */
+  .button-container .containers-list .containers-list .containers-list .containers-list .btn-furniture, .button-container .containers-list .containers-list .containers-list .left-items-list li {
+    font-size: 10px;
+  }
+  /* Adjust the font size for any further nesting if needed */
+  .button-container .containers-list .containers-list .containers-list .containers-list .containers-list .btn-furniture, .button-container .containers-list .containers-list .containers-list .containers-list .left-items-list li {
+    font-size: 6px;
+  }
+  /* Items under these triple nested containers */
+  .button-container .containers-list .containers-list .containers-list .containers-list .containers-list .containers-list .btn-furniture, .button-container .containers-list .containers-list .containers-list .containers-list .containers-list .left-items-list li {
+    font-size: 2px;
+  }
+
+  .right-container {
+    font-size: 18px;
+  }
+
+  #right-container-header {
+    padding: 0;
+  }
+
+  #searching-input {
+    min-width: 300px;
+  }
+
+  #addbtn > button, #new-room-btn, .btn5 {
+    padding: 10px;
+    font-size: 18px;
+  }
+
+  footer {
+    font-size: 25px;
+  }
+
+  .social-media a img {
+    width: 30px;
+    height: auto;
+  }
+}
+
+@media (max-width: 970px) {
+  body {
+    padding: 10px;
+  }
+
+  .left-container {
+    margin-left: 10px;
+    padding: 10px;
+  }
+
+  .btn-room {
+    margin: 0;
+  }
+
+  .btn-room::before, .btn-furniture::before {
+    width: 0.7em;
+    margin-left: 0;
+    margin-right: 20px;
+  }
+
+  .right-container {
+    margin-right: 10px;
+  }
+}
+
+@media (max-width: 935px) {
+  header {
+    align-items: flex-start;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  #head-logo {
+    width: 40%;
+  }
+
+  nav ul a {
+    margin: 0;
+    padding: 3px 5px;
+    font-size: 20px;
+  }
+
+  nav li {
+    margin-top: 5px;
+  }
+
+  nav ul {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+  }
+
+  .navbar_nav {
+    padding-right: 10px;
+  }
+
+  #right-container-header {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .right-container h2 {
+    margin-bottom: 30px;
+  }
+
+  #searching-form {
+    justify-content: center;
+  }
+
+  #addbtn {
+    margin-top: 10px;
+  }
+
+  #addbtn > button {
+    margin-top: 20px;
+    padding: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  #small-image  {
+    margin-left: 0;
+  }
+
+  .modal-content {
+    width: 70%;
+  }
+
+  .modal-window {
+    width: 50%;
+  }
+
+  #current-picture {
+    width: 180px;
+    height: 180px;
+  }
+
+  #save-picture-btn {
+    font-size: 18px;
+    padding: 10px;
+    width: 35%;
+  }
+
+  #changePasswordForm input {
+    width: 50%;
+    height: auto;
+  }
+
+  .modal-change-password .btn-primary {
+    padding: 10px;
+    margin-top: 5px;
+  }
+
+  main {
+    flex-direction: column;
+  }
+
+ .left-container, .right-container {
+   margin: 20px 60px 20px 60px;
+ }
+
+  .left-container {
+    margin-top: 40px;
+    padding-bottom: 20px;
+  }
+
+  .left-container h2 {
+    margin-bottom: 30px;
+  }
+
+  #room-name-input {
+    width: 60%;
+    margin: 0 40px 20px 40px;
+    padding: 5px;
+  }
+
+  button.btn2 {
+    margin-top: 30px;
+  }
+
+  .btn5 {
+    margin-bottom: 50px;
+  }
+
+  .button-container {
+    margin-left: 50px;
+    margin-right: 50px;
+    justify-content: center;
+  }
+
+  .right-container {
+    font-size: 15px;
+    padding: 10px;
+  }
+
+  #searching-input {
+    min-width: 260px;
+  }
+
+  #addbtn > button, #new-room-btn, .btn5 {
+    padding: 10px;
+    /*font-size: 15px;*/
+  }
+
+  .item, .box {
+    min-height: 170px;
+  }
+
+  .space-container {
+    font-size: 15px;
+  }
+
+  #small-image {
+    width: 100px;
+    height: 100px;
+  }
+
+  footer {
+    font-size: 15px;
+    padding: 5px;
+  }
+
+  .social-media a img {
+    width: 20px;
+    height: auto;
+    margin-right: 4px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 40px;
+  }
+
+  /* Set the font size for the top-level 'Hall' button inside '.button-container' */
+  .button-container .btn-room {
+    font-size: 22px;
+  }
+  /* Decrease font size for the first level of nesting: 'Big box' and 'Small box' buttons */
+  .button-container .containers-list .btn-furniture, .button-container .left-items-list li {
+    font-size: 18px;
+  }
+  /* Further decrease for items under 'Big box' and 'Small box' */
+  .button-container .containers-list .left-items-list li, .button-container .containers-list .containers-list .btn-furniture {
+    font-size: 14px;
+  }
+  /* If there are more nested containers inside 'Big box' or 'Small box', decrease font size more */
+  .button-container .containers-list .containers-list .containers-list .btn-furniture, .button-container .containers-list .containers-list .left-items-list li {
+    font-size: 10px;
+  }
+  /* And decrease for items under these further nested containers */
+  .button-container .containers-list .containers-list .containers-list .containers-list .btn-furniture, .button-container .containers-list .containers-list .containers-list .left-items-list li {
+    font-size: 6px;
+  }
+  /* Adjust the font size for any further nesting if needed */
+  .button-container .containers-list .containers-list .containers-list .containers-list .containers-list .btn-furniture, .button-container .containers-list .containers-list .containers-list .containers-list .left-items-list li {
+    font-size: 2px;
+  }
+  /* Items under these triple nested containers */
+  .button-container .containers-list .containers-list .containers-list .containers-list .containers-list .containers-list .btn-furniture, .button-container .containers-list .containers-list .containers-list .containers-list .containers-list .left-items-list li {
+    font-size: 2px;
+  }
+
+}
+
+@media (max-width: 600px) {
+  .modal-window {
+    width: 60%;
+  }
+
+  body {
+    font-size: 15px;
+  }
+
+  #addbtn > button, #new-room-btn, .btn5 {
+    padding: 10px;
+    font-size: 15px;
+  }
+
+  .left-container, .right-container {
+    margin: 20px 30px 20px 30px;
+  }
+}
+
+@media (max-width: 500px) {
+  .left-container, .right-container {
+    margin: 10px 45px 10px 45px;
+    padding: 5px;
+  }
+
+  header {
+    margin-bottom: 10px;
+  }
+
+  h2, #changePasswordModalLabel {
+    font-size: 25px;
+  }
+
+  #searching-input {
+    min-width: 200px;
+    padding: 3px;
+  }
+
+  .search-input-container input::placeholder {
+    font-size: 12px;
+  }
+
+  #addbtn > button, #new-room-btn, .btn5, #search-button, #save-picture-btn, #create-room, .ok-button {
+    padding: 6px;
+    font-size: 15px;
+  }
+
+  #new-room-form {
+    margin-bottom: 10px;
+  }
+
+  #room-name-input {
+    margin: 0 40px 10px 40px;
+  }
+
+  #current-picture {
+    width: 120px;
+    height: 120px;
+  }
+
+  #new-item-menu, #box-menu, #item-menu {
+    padding: 0;
+  }
+
+  #new-item-menu a, #box-menu a, #item-menu a {
+    text-align: center;
+    padding: 4px;
+    font-size: 15px;
+  }
+
+  .new-item-name-div {
+    margin-bottom: 10px;
+  }
+
+  .item-title-input {
+    width: 40%;
+  }
+
+  #modal-description {
+    font-size: 15px;
+  }
+
+  #close-item, #more-btn {
+    font-size: 25px;
+  }
+
+  .space-container {
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .box, .item {
+    width: 40%;
+  }
+
+  /* Set the font size for the top-level 'Hall' button inside '.button-container' */
+  .button-container .btn-room {
+    font-size: 20px;
+  }
+  /* Decrease font size for the first level of nesting: 'Big box' and 'Small box' buttons */
+  .button-container .containers-list .btn-furniture, .button-container .left-items-list li {
+    font-size: 16px;
+  }
+  /* Further decrease for items under 'Big box' and 'Small box' */
+  .button-container .containers-list .left-items-list li, .button-container .containers-list .containers-list .btn-furniture {
+    font-size: 12px;
+  }
+  /* If there are more nested containers inside 'Big box' or 'Small box', decrease font size more */
+  .button-container .containers-list .containers-list .containers-list .btn-furniture, .button-container .containers-list .containers-list .left-items-list li {
+    font-size: 8px;
+  }
+  /* And decrease for items under these further nested containers */
+  .button-container .containers-list .containers-list .containers-list .containers-list .btn-furniture, .button-container .containers-list .containers-list .containers-list .left-items-list li {
+    font-size: 4px;
+  }
+  /* Adjust the font size for any further nesting if needed */
+  .button-container .containers-list .containers-list .containers-list .containers-list .containers-list .btn-furniture, .button-container .containers-list .containers-list .containers-list .containers-list .left-items-list li {
+    font-size: 2px;
+  }
+  /* Items under these triple nested containers */
+  .button-container .containers-list .containers-list .containers-list .containers-list .containers-list .containers-list .btn-furniture, .button-container .containers-list .containers-list .containers-list .containers-list .containers-list .left-items-list li {
+    font-size: 2px;
+  }
+}
+
+@media (min-width: 320px) and (max-width: 400px) {
+  body {
+    padding: 5px;
+  }
+
+  #item-window-content, .modal-content {
+    width: 80%;
+  }
+
+  .modal-content {
+    padding: 10px;
+  }
+
+  .modal-header, .modal-body {
+    padding: 0;
+  }
+
+  #changePasswordModal input[type="text"], #changePasswordModal input[type="email"], #changePasswordModal input[type="password"]  {
+    width: 90%;
+  }
+
+  .left-container, .right-container {
+    margin: 10px;
+  }
+
+  .btn5 {
+    margin-bottom: 30px;
+  }
+
+  .box, .item {
+    width: 45%;
+  }
+
+  #small-image {
+    width: 80px;
+    height: 80px;
+  }
+
+  #head-logo {
+    width: 40%;
+  }
+
+  nav ul {
+    padding-right: 10px;
+  }
+
+  nav ul a {
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .modal-window {
+    width: 75%;
+  }
+
+  #room-name-input {
+    width: 70%;
+  }
+
+  footer {
+    font-size: 15px;
+    padding: 5px;
+  }
+
+  .social-media a img {
+    width: 15px;
+    height: auto;
+    margin-right: 4px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 40px;
+  }
+
 }
