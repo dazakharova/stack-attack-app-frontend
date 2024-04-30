@@ -2,7 +2,9 @@ import { showNotification } from "./notifications.js";
 import {updateContentsInLeftMenu, updateContentsInRightContainer} from "./uiDynamicUpdate.js";
 import {assets} from "../profile.js";
 
-const setupNewPlaceModal = (newPlaceModal, currentLocationPathDiv, assetsBlocksDiv) => {
+const setupNewPlaceModal = (event, newPlaceModal, currentLocationPathDiv, assetsBlocksDiv) => {
+    event.preventDefault()
+
     if (document.getElementById('location-info').innerHTML === '') {
         showNotification();
         return;

@@ -74,14 +74,14 @@ const attachEventListenersToDynamicContent = () => {
     const newItemModal = document.getElementById('new-item-modal');
 
     // Add event listener for add-new-item button
-    document.getElementById("new-item-btn").onclick = () => setupNewItemModal(newItemModal, currentLocationPathDiv, assets, assetsBlocksDiv);
+    document.getElementById("new-item-btn").onclick = (event) => setupNewItemModal(event, newItemModal, currentLocationPathDiv, assets, assetsBlocksDiv);
 
 
     // Get new place form modal window
     const newPlaceModal = document.getElementById('new-place-modal')
 
     // Add event listener for add-new-place button
-    document.getElementById("new-place-btn").onclick = () => setupNewPlaceModal(newPlaceModal, currentLocationPathDiv, assetsBlocksDiv)
+    document.getElementById("new-place-btn").onclick = (event) => setupNewPlaceModal(event, newPlaceModal, currentLocationPathDiv, assetsBlocksDiv)
 
     // Get delete mode button
     const toggleDeleteBtn = document.getElementById('toggle-delete-mode-btn');
