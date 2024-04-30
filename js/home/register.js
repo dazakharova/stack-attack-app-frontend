@@ -59,11 +59,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
 
     // in case of successfull check
-    sendDataToBackend(name, email, password);
+    sendDataToBackend(BACKEND_ROOT_URL, name, email, password);
   };
 });
 
-function sendDataToBackend(name, email, password) {
+function sendDataToBackend(BACKEND_ROOT_URL, name, email, password) {
   const requestOptions = {
     method: "POST",
     headers: {
