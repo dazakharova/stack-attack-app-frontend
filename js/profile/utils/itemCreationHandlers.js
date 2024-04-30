@@ -6,7 +6,7 @@ const setupNewItemModal = (event, newItemModal, currentLocationPathDiv, assets, 
     event.preventDefault()
     
     // If no room selected, then show notification
-    if (document.getElementById('location-info').innerHTML === '') {
+    if (document.querySelector('#location-info button') === null) {
         showNotification()
         return
     }
