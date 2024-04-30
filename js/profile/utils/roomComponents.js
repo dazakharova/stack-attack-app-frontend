@@ -72,6 +72,10 @@ const handleRoomDeletion = async (event, parentNode, roomId, roomName,  roomDiv)
             // Remove the roomDiv from the parentNode
             parentNode.removeChild(roomDiv);
 
+            // Reset location path div
+            document.getElementById('location-info').innerHTML = ''
+            document.querySelector('.space-container').innerHTML = ''
+
             // Exit delete mode
             toggleDeleteMode();
         } catch (error) {
