@@ -1,6 +1,7 @@
 import { assets } from "../profile.js";
 import { getBase64FromImageInput } from'./imageUtils.js';
 import { setupConfirmationModal, updateContentsInLeftMenu, updateContentsInRightContainer } from "./uiDynamicUpdate.js";
+import {displayNotificationMessage} from "./notifications";
 
 function getItemData(item) {
     const itemId = item.getId()
@@ -166,6 +167,7 @@ const updateItemNameAndRefreshUI = async (modalTitle, newItemNameInput, newItemN
         const response = await assets.editItemName(itemId, modalTitle.textContent)
 
     } catch (error) {
+        displayNotificationMessage('Something went wrong. Please, try again later.')
         console.error(error)
     }
 }
@@ -192,6 +194,7 @@ const updateItemDescriptionAndRefreshUI = async (modalDescription, newDescriptio
         const response = await assets.editItemDescription(itemId, modalDescription.textContent)
 
     } catch (error) {
+        displayNotificationMessage('Something went wrong. Please, try again later.')
         console.error(error)
     }
 }
@@ -219,6 +222,7 @@ const handleItemDeletion = async (event, itemName, itemId, itemParentId, itemMod
             // Re-render all the contents of the current container
             updateContentsInRightContainer(parentNode, itemParentContents, assets.getAssets())
         } catch (error) {
+            displayNotificationMessage('Something went wrong. Please, try again later.')
             console.error(error)
         }
     })

@@ -1,4 +1,5 @@
 import {UserProfileService} from "../class/UserProfileService.js";
+import { displayNotificationMessage } from './utils/notifications.js';
 const backend_url = 'https://stack-attack-backend.onrender.com'
 
 const userSettings = new UserProfileService(backend_url)
@@ -138,6 +139,7 @@ async function updateProfilePicture(imageName) {
     loadSelectedPictureFromLocalStorage()
     document.getElementById('picture-modal').style.display = 'none';
   } catch (error) {
+    displayNotificationMessage('Something went wrong. Please, try again later.')
     console.error(error)
   }
 }
@@ -151,6 +153,7 @@ async function loadProfilePictureFromServer() {
       localStorage.setItem('selectedPictureSrc', profilePictureName)
     }
   } catch (error) {
+    displayNotificationMessage('Something went wrong. Please, try again later.')
     console.error(error)
   }
 }
@@ -167,20 +170,4 @@ if (changePasswordLink) {
     e.preventDefault();
     showChangePasswordModal();
   };
-}
-
-const displayNotificationMessage = (message) => {
-  const notificationMessageModal = document.getElementById('notification-message-modal')
-  const notificationMessageParagraph = notificationMessageModal.querySelector('p')
-
-  // Set message to notify about session expiration
-  notificationMessageParagraph.textContent = message
-
-  // Show redirection message
-  notificationMessageModal.style.display = 'block'
-
-  // Set a delay before redirecting to the homepage
-  setTimeout(function() {
-    notificationMessageModal.style.display = 'none'
-  }, 3000);
 }
