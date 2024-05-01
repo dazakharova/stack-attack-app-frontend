@@ -1,4 +1,4 @@
-import { renderContents } from "../collapseFunctionality.js";
+import leftContainer from "../collapseFunctionality.js";
 import {addRoomToPath} from "../locationPathControls.js";
 import { updateContentsInRightContainer, setupConfirmationModal } from './uiDynamicUpdate.js'
 import {assets, toggleDeleteMode} from '../profile.js'
@@ -54,7 +54,7 @@ const handleDeleteButtonClick = (deleteBtn, parentNode, room, roomDiv) => {
 // Function to render room contents
 const renderRoomContents = (roomContents, containersUl, data) => {
     if (roomContents) {
-        renderContents(roomContents, containersUl, data);
+        leftContainer.renderContents(roomContents, containersUl, data);
     }
 };
 
