@@ -5,7 +5,11 @@ import {Item} from "../class/Item.js";
 
 const removeLastLocationIfSameParent = (lastLocation, triggeredLocationParentId) => {
     const lastLocationParentId = lastLocation.getAttribute("data-parentId");
-    if (triggeredLocationParentId === lastLocationParentId) {
+    if (triggeredLocationParentId == lastLocationParentId) {
+        // Remove the preceding arrow icon
+        const previousElement = lastLocation.previousElementSibling;
+        previousElement.remove();
+
         lastLocation.remove();
     }
 }
