@@ -1,4 +1,4 @@
-const backend_url = 'http://localhost:3001'
+const backend_url = 'https://stack-attack-backend.onrender.com'
 
 // Function to check if the user is authenticated
 function isAuthenticated() {
