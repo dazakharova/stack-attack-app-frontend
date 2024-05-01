@@ -70,7 +70,7 @@ const controlRoomButton = (collapses, index) => {
     }
 }
 
-export const renderContents = (contents, containersNode, data) => {
+const renderContents = (contents, containersNode, data) => {
     contents.forEach(entity => {
         if (entity instanceof Container) {
             renderContainer(containersNode, entity, data)
