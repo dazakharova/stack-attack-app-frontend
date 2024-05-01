@@ -69,6 +69,9 @@ function isAuthenticated() {
 
     return fetch(`${backend_url}/auth/status`, {
         method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
         credentials: 'include'
     })
         .then(response => response.json())
@@ -82,8 +85,12 @@ function isAuthenticated() {
 
 function checkAuthenticationStatus() {
     // This function makes a fetch request to the server-side endpoint that checks authentication
+    const token = sessionStorage.getItem('token');
     return fetch(`${backend_url}/auth/status`,{
         method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
         credentials: 'include'
     })
         .then(response => response.json())

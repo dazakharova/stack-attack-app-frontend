@@ -40,6 +40,7 @@ const handleNewPlaceFormSubmit = async (event, newPlaceModal, currentLocationPat
     } catch (error) {
         console.error(error)
     }
+
 }
 
 export { setupNewPlaceModal }

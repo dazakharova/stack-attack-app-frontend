@@ -89,14 +89,20 @@ document.addEventListener("DOMContentLoaded", function () {
           return response.json(); // For successful responses, parse as JSON.
         })
         .then((data) => {
-          // Reset input fields
-          resetLoginInputFields();
+          if (data.token) {
+            sessionStorage.setItem('token', data.token);
 
-          // Close login form window
-          loginModal.style.display = "block";
+            // Reset input fields
+            resetLoginInputFields();
 
-          // Redirect user to their profile page
-          window.location.href = 'pages/profile.html';
+            // Close login form window
+            loginModal.style.display = "block";
+
+            // Redirect user to their profile page
+            window.location.href = 'pages/profile.html';
+          } else {
+            throw new Error(data.message || 'Failed to login');
+          }
         })
         .catch((error) => {
           console.error("There was an error!", error);
