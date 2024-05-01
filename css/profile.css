@@ -1607,7 +1607,7 @@ input:-webkit-autofill {
     font-size: 12px;
   }
 
-  #addbtn > button, #new-room-btn, .btn5, #search-button, #save-picture-btn, #create-room, .ok-button {
+  #addbtn > button, #new-room-btn, .btn5, #search-button, #save-picture-btn, #create-room, .ok-button, #confirmBtn, #cancelBtn {
     padding: 6px;
     font-size: 15px;
   }
@@ -1701,7 +1701,7 @@ input:-webkit-autofill {
   }
 
   .modal-content {
-    padding: 10px;
+    padding: 20px;
   }
 
   .modal-header, .modal-body {
