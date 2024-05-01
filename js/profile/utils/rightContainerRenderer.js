@@ -1,6 +1,6 @@
 import { assets } from "../profile.js";
 import { setupConfirmationModal, renderContainerContents, updateContentsInLeftMenu, updateContentsInRightContainer } from "./uiDynamicUpdate.js";
-import {displayNotificationMessage} from "./notifications";
+import {displayNotificationMessage} from "./notifications.js";
 
 
 function createContainerDiv() {

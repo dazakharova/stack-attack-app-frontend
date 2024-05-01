@@ -1,6 +1,6 @@
 import { assets } from "../profile.js";
 import leftContainer from "../collapseFunctionality.js";
-import {displayNotificationMessage} from "./notifications";
+import {displayNotificationMessage} from "./notifications.js";
 
 function setupNewRoomButton(newRoomButton, newRoomFormDiv) {
     toggleRoomFormVisibility(newRoomButton, newRoomFormDiv, true);
