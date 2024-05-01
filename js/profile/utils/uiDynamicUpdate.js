@@ -11,7 +11,6 @@ const updateContentsInLeftMenu = (entityParentId, data) => {
     // Get parent node for containers in left menu
     const parentNode= document.querySelector(`#${parentName.replace(/\s/g, '')}${entityParentId}-collapse > .containers-list`)
 
-    console.log('parentContainersNode', parentNode)
     // Clean areas in parent containers and items node to draw it with updated data
     parentNode.innerHTML = ''
 
