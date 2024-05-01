@@ -652,10 +652,11 @@ footer {
 
 /*Weak password message in the signup modal window */
 
-#weak-password-message, #warning-message, #invalid-credentials-message {
+#weak-password-message, #warning-message, #invalid-credentials-message, #already-exists-message {
   display: none;
   font-size: 15px;
   color: #c67373;
+  overflow-wrap: break-word;
 }
 
 
@@ -788,6 +789,10 @@ footer {
 /* Media queries for mobile devices */
 @media (max-width: 770px) {
   .modal-content {
+    width: 60%;
+  }
+
+  #notification-message-modal .modal-content {
     width: 60%;
   }
 
@@ -1066,6 +1071,14 @@ footer {
 
   .modal-content {
     width: 80%;
+  }
+
+  #notification-message-modal .modal-content {
+    width: 80%;
+  }
+
+  #notification-message-modal p {
+    margin: 5px;
   }
 
   header {
