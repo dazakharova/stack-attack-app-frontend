@@ -100,7 +100,6 @@ const processRooms = (data) => {
     }
     // Extract only parent containers from the given data (which have 'null' as a parent_id):
     const roomsArray = data.get(null)
-    console.log("Rooms array", roomsArray)
     // If current user has rooms, render them
     if (roomsArray) {
         roomsArray.forEach(room => {

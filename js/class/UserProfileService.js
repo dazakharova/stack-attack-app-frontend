@@ -44,7 +44,6 @@ class UserProfileService {
             });
             if (response.ok) {
                 const json = await response.json();
-                console.log('got json', json)
             }
         } catch (error) {
             console.error(error)
