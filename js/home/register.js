@@ -74,9 +74,6 @@ function sendDataToBackend(BACKEND_ROOT_URL, name, email, password) {
 
   fetch(BACKEND_ROOT_URL + "/auth/register", requestOptions)
     .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
       return response.json();
     })
     .then((json) => {

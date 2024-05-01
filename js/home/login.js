@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const loginLink = document.getElementById("loginLink");
   const closeButton = document.getElementsByClassName("close")[1];
 
-  const BACKEND_ROOT_URL = 'http://localhost:3001'
+  const BACKEND_ROOT_URL = 'https://stack-attack-backend.onrender.com'
   
   loginLink.onclick = function (event) {
     event.preventDefault();
