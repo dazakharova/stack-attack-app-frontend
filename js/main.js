@@ -65,6 +65,8 @@ const backend_url = 'https://stack-attack-backend.onrender.com'
 
 // Function to check if the user is authenticated
 function isAuthenticated() {
+    const token = sessionStorage.getItem('token');
+
     return fetch(`${backend_url}/auth/status`, {
         method: 'GET',
         credentials: 'include'
