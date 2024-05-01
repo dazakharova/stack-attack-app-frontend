@@ -78,8 +78,6 @@ function sendDataToBackend(BACKEND_ROOT_URL, name, email, password) {
 
   fetch(BACKEND_ROOT_URL + "/auth/register", requestOptions)
     .then((response) => {
-<<<<<<< Updated upstream
-=======
       if (!response.ok) {
         return response.json().then(errData => {
           if (response.status === 400) {
@@ -93,7 +91,6 @@ function sendDataToBackend(BACKEND_ROOT_URL, name, email, password) {
           }
         })
       }
->>>>>>> Stashed changes
       return response.json();
     })
     .then((json) => {
