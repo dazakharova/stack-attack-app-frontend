@@ -61,6 +61,7 @@ const handleRoomDeletion = async (event, parentNode, roomId, roomName,  roomDiv)
     // Setup the confirmation modal and pass the confirm logic as a callback function
     setupConfirmationModal(roomName, async () => {
         try {
+            event.preventDefault()
             // Close the modal
             document.getElementById('confirmation-modal').style.display = 'none';
 
