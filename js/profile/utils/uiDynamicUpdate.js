@@ -59,18 +59,6 @@ const renderContainerContents = (event, parentNode, containerContents, container
     }
 }
 
-const handleImageUploading = () => {
-    const reader = new FileReader();
-    reader.onload = convertImageToBase64;
-    reader.readAsDataURL(this.files[0]);
-
-}
-
-function convertImageToBase64(event) {
-    const base64String = event.target.result.replace("data:", "").replace(/^.+,/, "");
-    return base64String
-}
-
 // Function to set up the confirmation modal
 function setupConfirmationModal(entityName, confirmCallback) {
     const confirmationModal = document.getElementById('confirmation-modal');
