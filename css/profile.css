@@ -1751,6 +1751,11 @@ input:-webkit-autofill {
     width: 70%;
   }
 
+  .image-option {
+    width: 25%;
+    height: 25%;
+  }
+
   footer {
     font-size: 15px;
     padding: 5px;
