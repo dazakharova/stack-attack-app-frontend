@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const profileLink = document.getElementById("profilePageLink")
 
     if (profileLink) {
-        profileLink.addEventListener('click', (event) => {
+        profileLink.onclick = (event) => {
             // Prevent the default link behavior
             event.preventDefault();
 
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     displayNotificationMessage('Please log in to access your profile.');
                 }
             });
-        });
+        };
     }
 });
 

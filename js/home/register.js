@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // Remove all the warning messages if there is one
     removeWeakPasswordMessage();
+    removeEmailAlreadyExistsMessage();
 
     // Reset form input fields
     resetInputFields();
@@ -43,6 +44,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const name = nameInput.value;
     const email = emailInput.value;
     const password = passwordInput.value;
+
+    // Remove email already exists message if there is one while changing email
+    emailInput.onfocus = removeEmailAlreadyExistsMessage;
 
     // Remove weak password message if there is one while changing password
     passwordInput.onfocus = removeWeakPasswordMessage;
@@ -74,13 +78,26 @@ function sendDataToBackend(BACKEND_ROOT_URL, name, email, password) {
 
   fetch(BACKEND_ROOT_URL + "/auth/register", requestOptions)
     .then((response) => {
+      if (!response.ok) {
+        return response.json().then(errData => {
+          if (response.status === 400) {
+            if (errData.message === "Username already exists") {
+              displayEmailAlreadyExistsMessage()
+              throw new Error("Email Already Exists");
+            }
+          } else {
+            console.error("There was a problem with the request:", errData.message);
+            throw new Error(errData.message);
+          }
+        })
+      }
       return response.json();
     })
     .then((json) => {
       const successRegistrationModal = document.getElementById('success-login-modal')
 
       // Close sign up window
-      signupModal.style.display = 'none'
+      document.getElementById("signupModal").style.display = 'none'
 
       const newUserNameSpan = successRegistrationModal.querySelector('#user-name')
       newUserNameSpan.textContent = json.name
@@ -107,5 +124,16 @@ const resetInputFields = () => {
 const removeWeakPasswordMessage = () => {
   if (document.getElementById("weak-password-message").style.display === "block") {
     document.getElementById("weak-password-message").style.display = "none";
+  }
+}
+
+const displayEmailAlreadyExistsMessage = () => {
+  document.getElementById("already-exists-message").style.display = "block";
+  document.getElementById("already-exists-message").textContent = "The email address you entered is already associated with an account. Please use a different email address or log in to your existing account.";
+}
+
+const removeEmailAlreadyExistsMessage = () => {
+  if (document.getElementById("already-exists-message")) {
+    document.getElementById("already-exists-message").style.display = "none";
   }
 }
