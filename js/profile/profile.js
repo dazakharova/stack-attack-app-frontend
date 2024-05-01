@@ -6,7 +6,7 @@ import { displayNotificationMessageAndRedirect } from './utils/httpUtils.js';
 import { setupNewItemModal } from './utils/itemCreationHandlers.js';
 import { setupNewPlaceModal } from  './utils/placeCreationHandlers.js';
 import { setupNewRoomButton, setupOutsideClickHandler, handleNewRoomFormSubmit } from './utils/roomCreationHandlers.js'
-import {displayNotificationMessage} from "./utils/notifications";
+import { displayNotificationMessage } from "./utils/notifications.js";
 
 // Check if the user is logged in before rendering the page
 // If not, display the message and redirect to the homepage

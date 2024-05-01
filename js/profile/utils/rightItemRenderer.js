@@ -1,7 +1,7 @@
 import { assets } from "../profile.js";
 import { getBase64FromImageInput } from'./imageUtils.js';
 import { setupConfirmationModal, updateContentsInLeftMenu, updateContentsInRightContainer } from "./uiDynamicUpdate.js";
-import {displayNotificationMessage} from "./notifications";
+import {displayNotificationMessage} from "./notifications.js";
 
 function getItemData(item) {
     const itemId = item.getId()
