@@ -24,8 +24,6 @@ const updateContentsInLeftMenu = (entityParentId, data) => {
 }
 
 const updateContentsInRightContainer = (parentNode, contents, data) => {
-    console.log('parent node before', parentNode)
-    console.log('got contents', contents)
     parentNode.innerHTML = ''
     if (contents) {
         contents.forEach(c => {
@@ -57,18 +55,6 @@ const renderContainerContents = (event, parentNode, containerContents, container
             addContainerToPath(containerId, containerName, containerParentId, document.getElementById('location-info'), data)
         }
     }
-}
-
-const handleImageUploading = () => {
-    const reader = new FileReader();
-    reader.onload = convertImageToBase64;
-    reader.readAsDataURL(this.files[0]);
-
-}
-
-function convertImageToBase64(event) {
-    const base64String = event.target.result.replace("data:", "").replace(/^.+,/, "");
-    return base64String
 }
 
 // Function to set up the confirmation modal

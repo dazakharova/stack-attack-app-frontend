@@ -1,3 +1,5 @@
+import { displayNotificationMessage } from "../profile/utils/notifications.js";
+
 class UserProfileService {
     #backendUrl = '';
     #userDetails = {};
@@ -22,6 +24,7 @@ class UserProfileService {
             return json.profile_pic
         } catch (error) {
             console.error(error)
+            displayNotificationMessage('Someting went wrong. Please try again later.')
         }
     };
 
@@ -45,6 +48,7 @@ class UserProfileService {
             }
         } catch (error) {
             console.error(error)
+            displayNotificationMessage('Someting went wrong. Please try again later.')
         }
     };
 

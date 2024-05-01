@@ -2,6 +2,7 @@ import { renderContents } from "../collapseFunctionality.js";
 import {addRoomToPath} from "../locationPathControls.js";
 import { updateContentsInRightContainer, setupConfirmationModal } from './uiDynamicUpdate.js'
 import {assets, toggleDeleteMode} from '../profile.js'
+import {displayNotificationMessage} from "./notifications";
 
 // Function to create the room button
 const createRoomButton = (room, collapseTarget) => {
@@ -61,6 +62,7 @@ const handleRoomDeletion = async (event, parentNode, roomId, roomName,  roomDiv)
     // Setup the confirmation modal and pass the confirm logic as a callback function
     setupConfirmationModal(roomName, async () => {
         try {
+            event.preventDefault()
             // Close the modal
             document.getElementById('confirmation-modal').style.display = 'none';
 
@@ -79,6 +81,7 @@ const handleRoomDeletion = async (event, parentNode, roomId, roomName,  roomDiv)
             // Exit delete mode
             toggleDeleteMode();
         } catch (error) {
+            displayNotificationMessage('Something went wrong. Please, try again later.')
             console.error(error);
         }
     })

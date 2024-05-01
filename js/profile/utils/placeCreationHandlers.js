@@ -1,4 +1,4 @@
-import { showNotification } from "./notifications.js";
+import {displayNotificationMessage, showNotification} from "./notifications.js";
 import {updateContentsInLeftMenu, updateContentsInRightContainer} from "./uiDynamicUpdate.js";
 import {assets} from "../profile.js";
 
@@ -38,6 +38,7 @@ const handleNewPlaceFormSubmit = async (event, newPlaceModal, currentLocationPat
         // Hide the modal after handling the data
         newPlaceModal.style.display = 'none';
     } catch (error) {
+        displayNotificationMessage('Something went wrong. Please, try again later.')
         console.error(error)
     }
 

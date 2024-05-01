@@ -1,5 +1,6 @@
 import { assets } from "../profile.js";
 import { setupConfirmationModal, renderContainerContents, updateContentsInLeftMenu, updateContentsInRightContainer } from "./uiDynamicUpdate.js";
+import {displayNotificationMessage} from "./notifications";
 
 
 function createContainerDiv() {
@@ -89,6 +90,7 @@ const updateContainerNameAndRefreshUI = async (containerSpan, containerId, conta
 
         updateContentsInLeftMenu(containerParentId, data)
     } catch (error) {
+        displayNotificationMessage('Something went wrong. Please, try again later.')
         console.error(error)
     }
 }
@@ -111,6 +113,7 @@ const handleContainerDeletion = async (event, containerName, containerId, contai
             updateContentsInRightContainer(parentNode, containerParentContents, assets.getAssets())
             updateContentsInLeftMenu(containerParentId, assets.getAssets())
         } catch (error) {
+            displayNotificationMessage('Something went wrong. Please, try again later.')
             console.error(error)
         }
     })

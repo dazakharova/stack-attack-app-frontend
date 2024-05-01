@@ -11,4 +11,20 @@ function showNotification() {
     locationInfoDiv.appendChild(notification);
 }
 
-export { showNotification }
+const displayNotificationMessage = (message) => {
+    const notificationMessageModal = document.getElementById('notification-message-modal')
+    const notificationMessageParagraph = notificationMessageModal.querySelector('p')
+
+    // Set message to notify about session expiration
+    notificationMessageParagraph.textContent = message
+
+    // Show redirection message
+    notificationMessageModal.style.display = 'block'
+
+    // Set a delay before redirecting to the homepage
+    setTimeout(function() {
+        notificationMessageModal.style.display = 'none'
+    }, 3000);
+}
+
+export { showNotification, displayNotificationMessage }
