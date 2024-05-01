@@ -1,6 +1,6 @@
 import { InventoryService } from "../class/InventoryService.js";
 import leftContainer from "./collapseFunctionality.js";
-const backend_url = 'http://localhost:3001';
+const backend_url = 'https://stack-attack-backend.onrender.com';
 import { isAuthenticated } from './utils/auth.js';
 import { displayNotificationMessageAndRedirect } from './utils/httpUtils.js';
 import { setupNewItemModal } from './utils/itemCreationHandlers.js';

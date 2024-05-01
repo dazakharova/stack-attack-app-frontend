@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', (event) => {
-  const BACKEND_ROOT_URL = "http://localhost:3001";
+  const BACKEND_ROOT_URL = "https://stack-attack-backend.onrender.com";
   const registrationForm = document.getElementById("registrationForm");
   const signupModal = document.getElementById("signupModal");
   const signupLink = document.getElementById("signupLink");

@@ -1,4 +1,4 @@
-const BACKEND_ROOT_URL = 'http://localhost:3001'
+const BACKEND_ROOT_URL = 'https://stack-attack-backend.onrender.com'
 document.addEventListener("DOMContentLoaded", function() {
   const logoutLink = document.getElementById("logoutLink");
 
