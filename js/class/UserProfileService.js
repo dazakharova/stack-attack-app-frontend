@@ -9,11 +9,13 @@ class UserProfileService {
     // Fetch user profile initially and cache it
     fetchProfilePicture = async () => {
         try {
+            const token = sessionStorage.getItem('token')
             const response = await fetch(`${this.#backendUrl}/users/getPicture`, {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 }
             });
             const json = await response.json()
@@ -26,12 +28,14 @@ class UserProfileService {
     // Update user profile picture
     setProfilePicture = async (imageSrc) => {
         try {
+            const token = sessionStorage.getItem('token');
             const body = JSON.stringify({image: imageSrc});
             const response = await fetch(`${this.#backendUrl}/users/updatePicture`, {
                 method: 'PUT',
                 credentials: 'include',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: body
             });
@@ -46,12 +50,14 @@ class UserProfileService {
 
     changePassword = async (currentPassword, newPassword) => {
         try {
+            const token = sessionStorage.getItem('token');
             const body = JSON.stringify({ currentPassword: currentPassword, newPassword: newPassword })
             const response = await fetch(`${this.#backendUrl}/users/changePassword`, {
                 method: 'PUT',
                 credentials: 'include',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: body
             })

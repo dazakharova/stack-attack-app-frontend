@@ -14,11 +14,13 @@ class InventoryService {
     getContainers = async () => {
         try {
             const url = this.#backendUrl + '/containers'
+            const token = sessionStorage.getItem('token');
             const response = await fetch(url, {
                 method: 'GET',
                 credentials: 'include', // Ensure credentials are included with cross-site requests
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 }
             })
             if (response.ok) {
@@ -36,11 +38,13 @@ class InventoryService {
     getItems = async () => {
         try {
             const url = this.#backendUrl + '/items'
+            const token = sessionStorage.getItem('token');
             const response = await fetch(url, {
                 method: 'GET',
                 credentials: 'include', // Ensure credentials are included with cross-site requests
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 }
             })
             if (response.ok) {
@@ -109,12 +113,14 @@ class InventoryService {
     addNewContainer = async (name, parent_id) => {
         try {
             const url = `${this.#backendUrl}/containers`
+            const token = sessionStorage.getItem('token');
             const body = JSON.stringify({name, parent_id})
             const response = await fetch(url, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: body
             })
@@ -136,12 +142,14 @@ class InventoryService {
     addNewItem = async (name, description, container_id, image) => {
         try {
             const url = `${this.#backendUrl}/items`
+            const token = sessionStorage.getItem('token')
             const body = JSON.stringify({name, description, container_id, image})
             const response = await fetch(url, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: body
             })
@@ -159,12 +167,14 @@ class InventoryService {
     editContainerName = async (id, name) => {
         try {
             const url = `${this.#backendUrl}/containers/${id}`
+            const token = sessionStorage.getItem('token');
             const body = JSON.stringify({name: name})
             const response = await fetch(url, {
                 method: 'PUT',
                 credentials: 'include',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: body
             })
@@ -182,8 +192,12 @@ class InventoryService {
     removeContainer = async (id) => {
         try {
             const url = `${this.#backendUrl}/containers/${id}`
+            const token = sessionStorage.getItem('token')
             const response = await fetch(url, {
                 method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
                 credentials: 'include'
             })
             if (response.ok) {
@@ -200,8 +214,12 @@ class InventoryService {
     removeItem = async (id) => {
         try {
             const url = `${this.#backendUrl}/items/${id}`
+            const token = sessionStorage.getItem('token')
             const response = await fetch(url, {
                 method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
                 credentials: 'include'
             })
             if (response.ok) {
@@ -218,12 +236,14 @@ class InventoryService {
     editItemName = async (id, name) => {
         try {
             const url = `${this.#backendUrl}/items/${id}`
+            const token = sessionStorage.getItem('token')
             const body = JSON.stringify({name: name})
             const response = await fetch(url, {
                 method: 'PUT',
                 credentials: 'include',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: body
             })
@@ -241,12 +261,14 @@ class InventoryService {
     editItemDescription = async (id, description) => {
         try {
             const url = `${this.#backendUrl}/items/${id}`
+            const token = sessionStorage.getItem('token')
             const body = JSON.stringify({description: description})
             const response = await fetch(url, {
                 method: 'PUT',
                 credentials: 'include',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: body
             })
@@ -264,12 +286,14 @@ class InventoryService {
     editItemImage = async (id, imageStr) => {
         try {
             const url = `${this.#backendUrl}/items/${id}`
+            const token = sessionStorage.getItem('token')
             const body = JSON.stringify({image: imageStr})
             const response = await fetch(url, {
                 method: 'PUT',
                 credentials: 'include',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: body
             })

@@ -65,8 +65,12 @@ const backend_url = 'https://stack-attack-backend.onrender.com'
 
 // Function to check if the user is authenticated
 function isAuthenticated() {
+    const token = localStorage.getItem('token');
     return fetch(`${backend_url}/auth/status`, {
         method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
         credentials: 'include'
     })
         .then(response => response.json())
@@ -80,8 +84,12 @@ function isAuthenticated() {
 
 function checkAuthenticationStatus() {
     // This function makes a fetch request to the server-side endpoint that checks authentication
+    const token = sessionStorage.getItem('token');
     return fetch(`${backend_url}/auth/status`,{
         method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
         credentials: 'include'
     })
         .then(response => response.json())
