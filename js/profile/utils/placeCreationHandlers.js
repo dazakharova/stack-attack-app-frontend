@@ -31,6 +31,8 @@ const handleNewPlaceFormSubmit = async (event, newPlaceModal, currentLocationPat
     updateContentsInLeftMenu(parentId, assets.getAssets())
     updateContentsInRightContainer(assetsBlocksDiv, parentCurrentContainerContents, assets.getAssets())
 
+    document.getElementById("place-name-input").value = ''
+
     // Hide the modal after handling the data
     newPlaceModal.style.display = 'none';
 }
