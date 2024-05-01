@@ -71,10 +71,6 @@ function displayModalWindow(itemId, itemParentId, itemName, itemDescription, ite
     itemModal.style.display = "block";
 }
 
-function handleItemDivClick(itemId, itemParentId, itemName, itemDescription, itemImageStr, parentNode, data) {
-    displayModalWindow(itemId, itemParentId, itemName, itemDescription, itemImageStr, parentNode, data)
-}
-
 // Setup events for editing item properties
 function setupEditEvents(modalTitle, modalDescription, modalImage, itemId) {
     document.getElementById('edit-item-name').onclick = () => {
@@ -235,4 +231,4 @@ const handleClosingItemModalWindow = (modalTitle, itemModal, parentNode, data, i
     updateContentsInRightContainer(parentNode, itemParentContents, data)
 }
 
-export { getItemData, createItemDiv, createItemImage, createItemSpan, handleItemDivClick }
+export { getItemData, createItemDiv, createItemImage, createItemSpan, displayModalWindow }

@@ -1,5 +1,5 @@
 import { createContainerDiv, createContainerFooter, createTitleSpan, handleContainerClick, setupNameEdit, setupNameSave, setupDelete } from './utils/rightContainerRenderer.js';
-import { getItemData, createItemDiv, createItemImage, createItemSpan, handleItemDivClick } from "./utils/rightItemRenderer.js";
+import { getItemData, createItemDiv, createItemImage, createItemSpan, displayModalWindow } from "./utils/rightItemRenderer.js";
 
 function renderContainer(parentNode, container, data) {
     const containerId = container.getId();
@@ -28,7 +28,7 @@ const renderItem = (parentNode, item, data) => {
     const itemDiv = createItemDiv()
 
     itemDiv.onclick = () => {
-        handleItemDivClick(itemId, itemParentId, itemName, itemDescription, itemImageStr, parentNode, data)
+        displayModalWindow(itemId, itemParentId, itemName, itemDescription, itemImageStr, parentNode, data)
     }
 
     createItemImage(itemImageStr, itemDiv)
