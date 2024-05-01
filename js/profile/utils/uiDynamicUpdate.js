@@ -75,4 +75,4 @@ function setupConfirmationModal(entityName, confirmCallback) {
     return confirmBtn;  // Return the confirm button if needed outside this function
 }
 
-export { updateContentsInLeftMenu, updateContentsInRightContainer, renderContainerContents, handleImageUploading, setupConfirmationModal }
+export { updateContentsInLeftMenu, updateContentsInRightContainer, renderContainerContents, setupConfirmationModal }
