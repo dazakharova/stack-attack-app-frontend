@@ -2,7 +2,7 @@ import { renderContents } from "../collapseFunctionality.js";
 import {addRoomToPath} from "../locationPathControls.js";
 import { updateContentsInRightContainer, setupConfirmationModal } from './uiDynamicUpdate.js'
 import {assets, toggleDeleteMode} from '../profile.js'
-import {displayNotificationMessage} from "./notifications";
+import {displayNotificationMessage} from "./notifications.js";
 
 // Function to create the room button
 const createRoomButton = (room, collapseTarget) => {
