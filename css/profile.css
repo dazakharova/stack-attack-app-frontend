@@ -1415,6 +1415,14 @@ input:-webkit-autofill {
     width: 70%;
   }
 
+  #notification-message-modal .modal-content {
+    width: 70%;
+  }
+
+  #notification-message-modal p {
+    margin: 10px;
+  }
+
   .modal-window {
     width: 50%;
   }
@@ -1552,6 +1560,14 @@ input:-webkit-autofill {
 @media (max-width: 600px) {
   .modal-window {
     width: 60%;
+  }
+
+  #notification-message-modal .modal-content {
+    width: 60%;
+  }
+
+  #notification-message-modal p {
+    margin: 5px;
   }
 
   body {

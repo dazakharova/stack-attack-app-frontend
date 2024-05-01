@@ -15,26 +15,32 @@ const setupNewPlaceModal = (event, newPlaceModal, currentLocationPathDiv, assets
 }
 
 const handleNewPlaceFormSubmit = async (event, newPlaceModal, currentLocationPathDiv, assetsBlocksDiv) => {
-    event.preventDefault(); // Prevent the form from submitting to a server
+    try {
+        event.preventDefault(); // Prevent the form from submitting to a server
 
-    // Get id of parent container inside which a new place must be rendered
-    const parentId = parseInt(currentLocationPathDiv.lastElementChild.getAttribute("data-id"))
+        // Get id of parent container inside which a new place must be rendered
+        const parentId = parseInt(currentLocationPathDiv.lastElementChild.getAttribute("data-id"))
 
-    // Get given name for a new place
-    const placeName = document.getElementById("place-name-input").value
+        // Get given name for a new place
+        const placeName = document.getElementById("place-name-input").value
 
-    // Returns just added new item id
-    const newContainer = await assets.addNewContainer(placeName, parentId)
+        // Returns just added new item id
+        const newContainer = await assets.addNewContainer(placeName, parentId)
 
-    // Get current parent container contents and rerender them in both sections
-    const parentCurrentContainerContents = assets.getAssets().get(parentId)
-    updateContentsInLeftMenu(parentId, assets.getAssets())
-    updateContentsInRightContainer(assetsBlocksDiv, parentCurrentContainerContents, assets.getAssets())
+        // Get current parent container contents and rerender them in both sections
+        const parentCurrentContainerContents = assets.getAssets().get(parentId)
+        updateContentsInLeftMenu(parentId, assets.getAssets())
+        updateContentsInRightContainer(assetsBlocksDiv, parentCurrentContainerContents, assets.getAssets())
 
-    document.getElementById("place-name-input").value = ''
+        // Reset input field
+        document.getElementById("place-name-input").value = ''
 
-    // Hide the modal after handling the data
-    newPlaceModal.style.display = 'none';
+        // Hide the modal after handling the data
+        newPlaceModal.style.display = 'none';
+    } catch (error) {
+        console.error(error)
+    }
+
 }
 
 export { setupNewPlaceModal }
