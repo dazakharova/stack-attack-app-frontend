@@ -3,8 +3,8 @@ import leftContainer from "../collapseFunctionality.js";
 import {displayNotificationMessage} from "./notifications";
 
 function setupNewRoomButton(newRoomButton, newRoomFormDiv) {
-        toggleRoomFormVisibility(newRoomButton, newRoomFormDiv, true);
-        setupOutsideClickHandler(newRoomButton, newRoomFormDiv);
+    toggleRoomFormVisibility(newRoomButton, newRoomFormDiv, true);
+    setupOutsideClickHandler(newRoomButton, newRoomFormDiv);
 }
 
 function toggleRoomFormVisibility(newRoomButton, newRoomFormDiv, isVisible) {

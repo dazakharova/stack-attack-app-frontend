@@ -24,8 +24,6 @@ const updateContentsInLeftMenu = (entityParentId, data) => {
 }
 
 const updateContentsInRightContainer = (parentNode, contents, data) => {
-    console.log('parent node before', parentNode)
-    console.log('got contents', contents)
     parentNode.innerHTML = ''
     if (contents) {
         contents.forEach(c => {

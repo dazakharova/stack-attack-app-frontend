@@ -352,7 +352,6 @@ class InventoryService {
         const updatedParentContainerArray = this.#assets.get(parentId).filter(asset => !(asset instanceof Container && asset.getId() === id))
         this.#assets.set(parentId, updatedParentContainerArray)
         this.#assets.delete(id)
-        console.log(`deleted id: ${id}, new assets map`)
     }
 
     #addItemToMap = (id, name, description, container_id, user_id, image) => {
@@ -367,7 +366,6 @@ class InventoryService {
 
     #addToContainersMap = (id, name, parent_id, user_id) => {
         const newContainer = new Container(id, name, parent_id, user_id)
-        console.log('Add to map new: ', newContainer)
         if (!this.#assets.get(newContainer.getParentId())) {
             this.#assets.set(newContainer.getParentId(), []);
         }
@@ -376,7 +374,6 @@ class InventoryService {
     }
 
     #readJsonContainers = containersAsJson => {
-        console.log('Containers as JSON', containersAsJson)
         containersAsJson.forEach(c => {
             const container = new Container(c.id, c.name, c.parent_id, c.user_id)
             if (!this.#assets.get(c.parent_id)) {
@@ -388,7 +385,6 @@ class InventoryService {
     }
 
     #readJsonItems = (itemsAsJson) => {
-        console.log('Items as JSON', itemsAsJson)
         itemsAsJson.forEach(i => {
             const item = new Item(i.id, i.name, i.description, i.container_id, i.user_id, i.image)
             if (!this.#assets.get(i.container_id)) {

@@ -6,8 +6,6 @@ const assetsBlocksDiv = document.querySelector(".space-container")
 const currentLocationPathDiv = document.getElementById("location-info")
 
 const renderRoom = (parentNode, room, data) => {
-    console.log('Current room is ', room);
-
     const collapseTarget = `#${room.getName().replace(/\s+/g, '')}${room.getId()}-collapse`;
 
     const roomButton = createRoomButton(room, collapseTarget);
@@ -30,8 +28,6 @@ const renderRoom = (parentNode, room, data) => {
 };
 
 const renderContainer = (parentNode, container, data) => {
-    console.log('Got box', container);
-
     const containerId = container.getId();
     const containerName = container.getName();
     const containerParentId = container.getParentId();
